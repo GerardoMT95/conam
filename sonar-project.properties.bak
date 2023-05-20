@@ -13,4 +13,4 @@ sonar.java.binaries=.
 sonar.exclusions=sonar.exclusions = **/*.sql
 
 # Encoding of the source code. Default is default system encoding
-sonar.sourceEncoding=UTF-16
+#sonar.sourceEncoding=UTF-8
