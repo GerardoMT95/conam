@@ -6,7 +6,7 @@ sonar.organization=gerardomt95
 #sonar.projectVersion=1.0
 
 # Path is relative to the sonar-project.properties file. Replace "\" by "/" on Windows.
-sonar.sources=conam-master\conambl\src, conam-master\conamdb\src, conam-master\conamwcl\src
+sonar.sources="conam-master\conambl\src, conam-master\conamdb\src, conam-master\conamwcl\src"
 #sonar.java.binaries=build
 #sonar.java.libraries=lib/*.jar
 
