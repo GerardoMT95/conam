@@ -1,0 +1,107 @@
+# This repository adheres to the publiccode.yml standard by including this 
+# metadata file that makes public software easily discoverable.
+# More info at https://github.com/italia/publiccode.yml
+
+publiccodeYmlVersion: '0.2'
+applicationSuite: CONAM
+categories:
+  - business-process-management
+  - document-management
+dependsOn:
+  open:
+    - name: PostgreSQL
+      optional: true
+      version: 9.2.6
+      versionMax: ''
+      versionMin: '9'
+    - name: APACHE 2
+      optional: true
+      version: 2.2.31
+      versionMax: ''
+      versionMin: '2'
+    - name: JBOSS
+      optional: true
+      version: EAP 6.4.5.GA
+      versionMax: ''
+      versionMin: EAP 6
+description:
+  it:
+    features:
+      - >- 
+      - CONAM gestisce il procedimento amministrativo sanzionatorio nelle materie di competenza regionale.
+    genericName: CONAM
+    localisedName: CONAM
+    longDescription: >
+      Il sistema Contenzioso amministrativo (CONAM) consente la gestione del procedimento amministrativo sanzionatorio per le materie di competenza regionale. Per i verbali di accertamento non pagati in misura ridotta e inviati dagli organi accertatori alla Regione, il sistema permette la creazione dei relativi fascicoli da istruire, la gestione della fase istruttoria del contenzioso amministrativo, l’emanazione del provvedimento finale di archiviazione o di ingiunzione, la riscossione volontaria e quella coattiva. 
+      
+      L’applicativo comprende le seguenti macro-funzionalità:
+      
+      - **Gestione fascicolo**
+      Ricomprende le funzionalità necessarie alla creazione del fascicolo digitalizzato del verbale:
+      - Acquisizione del verbale di accertamento e di tutti gli allegati prodotti dall’organo accertatore che ha elevato la violazione.
+      - Inserimento dei dati descrittivi della violazione commessa (data, luogo, norma violata, soggetti coinvolti).
+      - Protocollazione e fascicolazione.
+      
+      - **Gestione contenzioso amministrativo**
+      Ricomprende le funzionalità necessarie per accrescere il fascicolo con gli atti tipici della fase istruttoria prodotti sia dai funzionari istruttori dell’ufficio Contenzioso che dalle parti coinvolte nell’illecito.
+      
+      - **Gestione fase giurisdizionale**
+      Ricomprende le funzionalità necessarie per accrescere il fascicolo con gli atti tipici della fase giurisdizionale in particolare con l’acquisizione degli atti provenienti dalle cancellerie degli organi giurisdizionali e la predisposizione di atti difensivi. Nell’ambito della gestione della fase giurisdizionale è inoltre ricompresa la gestione del calendario udienze.
+      
+      - **Riscossione**
+      Ricomprende le funzionalità per predisporre il sollecito di pagamento per un’ordinanza ingiunzione insoluta prima della sua iscrizione nel carico da inviare al concessionario della riscossione. In caso di morosità persistente, ricomprende le funzionalità per la predisposizione del carico con i soggetti debitori, e i relativi debiti, per il concessionario della riscossione che dovrà procedere con l’emissione dell’ingiunzione fiscale.
+      
+      - **Gestione pagamenti**
+      Ricomprende le funzionalità per la riconciliazione dei pagamenti del verbale, dell’ordinanza ingiunzione, delle rate e per la predisposizione dei piani di rateizzazione dell’ordinanza ingiunzione.
+      
+      - **Utility norme**
+      Ricomprende le funzionalità per l’inserimento e la modifica del prontuario delle norme sulle quali la Regione ha potere sanzionatorio se violate.
+      
+      - **Gestione pregresso**
+      Ricomprende le funzonalità  per l’acquisizione in CONAM dei documenti definiti storici per far proseguire il procedimento sanzionatorio all’interno dell’applicativo.
+
+
+
+      
+    shortDescription: Sistema Contenzioso Amministrativo
+developmentStatus: stable
+it:
+  conforme:
+    gdpr: true
+    lineeGuidaDesign: true
+    misureMinimeSicurezza: true
+    modelloInteroperabilita: true
+  countryExtensionVersion: '0.2'
+  piattaforme:
+    anpr: false
+    cie: false
+    pagopa: false
+    spid: false
+  riuso:
+    codiceIPA: r_piemon
+landingURL: 'https://github.com/regione-piemonte/conam'
+legal:
+  license: EUPL-1.2
+  mainCopyrightOwner: Regione Piemonte
+  repoOwner: Regione Piemonte
+localisation:
+  availableLanguages:
+    - it
+  localisationReady: false
+logo: |-
+  image/CONAM.png
+maintenance:
+  contacts:
+    - email: giovanna.bertinetti@csi.it
+      name: GIOVANNA BERTINETTI
+  type: internal
+name: CONAM
+platforms:
+  - web
+  - linux
+  - windows
+  - mac
+releaseDate: '2022-03-04'
+softwareType: standalone/web
+softwareVersion: 3.4.1
+url: 'https://github.com/regione-piemonte/conam.git'

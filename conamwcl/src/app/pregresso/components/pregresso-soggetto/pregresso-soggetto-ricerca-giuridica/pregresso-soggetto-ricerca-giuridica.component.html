@@ -1,0 +1,50 @@
+<form #soggettiGiuridico="ngForm" (ngSubmit)="emitRicerca()">
+    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <h4 class="border-title"><strong>Dati aziendali</strong></h4>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <label for="regioneSociale" class="control-label">Ragione sociale</label>
+        <input type="text" id="regioneSociale" class="form-control " [disabled]="isDisable('RS')" name="regioneSociale" [(ngModel)]="soggetto.ragioneSociale"
+            required #ragioneSociale="ngModel">
+        <div *ngIf="ragioneSociale.invalid && (ragioneSociale.dirty || ragioneSociale.touched)" class="alert alert-danger">
+            <div *ngIf="ragioneSociale.errors.required ">
+                La ragione Sociale è richiesta
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <label for="codiceFiscalePG" class="control-label">Codice Fiscale</label>
+        <input type="text" id="codiceFiscalePG" class="form-control" name="codiceFiscalePG" [(ngModel)]="soggetto.codiceFiscale"
+            [disabled]="isDisable('CF')" required #codiceFiscalePg="ngModel" pattern="^([a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]|[0-9]{11})$"
+            maxlength="16">
+        <div *ngIf="codiceFiscalePg.invalid && (codiceFiscalePg.dirty || codiceFiscalePg.touched)" class="alert alert-danger">
+            <div *ngIf="codiceFiscalePg.errors.required ">
+                Il codice Fiscale è richiesto
+            </div>
+            <div *ngIf="codiceFiscalePg.errors.pattern ">
+                Il codice Fiscale non è nel formato corretto
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <label for="pIva" class="control-label">Partita Iva</label>
+        <input type="text" id="pIva" class="form-control " name="pIva" [disabled]="isDisable('PI')" [(ngModel)]="soggetto.partitaIva"
+            required #piva="ngModel" pattern="[0-9]{11}" maxlength="11">
+        <div *ngIf="piva.invalid && (piva.dirty || piva.touched)" class="alert alert-danger">
+            <div *ngIf="piva.errors.required ">
+                La partita Iva è richiesta
+            </div>
+            <div *ngIf="piva.errors.pattern ">
+                La partita Iva è nel formato corretto
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right padding-top-15">
+        <button type="button" class="btn-conam button-garnet" (click)="emitPulisci()">
+            <i class="glyphicon glyphicon-erase btn-glyphicon img-circle text-garnet-conam"></i>
+            Pulisci filtri</button>
+        <button type="submit" class="btn-conam button-yellow" *ngIf="modalita=='R'" [disabled]="!soggettiGiuridico.form.valid">
+            <i class="glyphicon glyphicon-search btn-glyphicon img-circle text-yellow-conam"></i>
+            Ricerca anagrafica</button>
+    </div>
+</form>

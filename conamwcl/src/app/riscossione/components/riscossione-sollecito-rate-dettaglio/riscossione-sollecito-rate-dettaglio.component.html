@@ -1,0 +1,136 @@
+
+
+<div class="container-fluid"> 
+    <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+    <shared-spinner *ngIf="!loaded"></shared-spinner>
+    <div id="scrollTop"></div>
+    <div class="principal-div col-xs-12 col-sm-12 col-md-10 col-lg-10" *ngIf="loaded" style="padding-top: 30px">
+        <div class="panel-primary-conam panel-conam">
+            <div class="panel-heading-conam">
+                <strong>Creazione Sollecito di Pagamento</strong>
+            </div>
+            <shared-alert [message]="messageTop" [type]="typeMessageTop" *ngIf="showMessageTop"></shared-alert>
+            <form>
+                <div class="panel-body panel-body-background">
+                    <div class="form-group row">
+
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <shared-ordinanza-dettaglio [idSoggettiOrdinanza]="idOrdinanzaVerbaleSoggetto">
+                            </shared-ordinanza-dettaglio>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-group row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <h4 class="border-title"><strong>Dati soggetto</strong></h4>
+
+                                        <datatable [data]="soggettoSollecito" [config]="configSoggetti" (onInfo)="onInfo($event)">
+                                        </datatable>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <shared-ordinanza-sentenza
+                            *ngIf="idOrdinanzaVerbaleSoggetto!=null && idOrdinanzaVerbaleSoggetto.length>0"
+                            [idOrdinanzaVerbaleSoggetto]="idOrdinanzaVerbaleSoggetto[0]">
+                        </shared-ordinanza-sentenza>
+                        <shared-pagamenti-dettaglio-piano  *ngIf="piano"  [piano]="piano"></shared-pagamenti-dettaglio-piano>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <datatable *ngIf="rate" [data]="rate" [config]="configRate"> </datatable>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <shared-riscossione-sollecito-dettaglio-rate
+                                    *ngIf="piano && sollecito" 
+                                    [sollecito]="sollecito"
+                                    [piano]="piano"
+                                    [flgModifica]="(isNuovo || modificabile)"
+                                    (onChangeData)="onChangeDataDettaglioRate($event)">
+                                </shared-riscossione-sollecito-dettaglio-rate>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            
+                            <div *ngIf="sollecito?.downloadBollettiniEnable && loadedAction" 
+                            class="alert alert-warning col-xs-12 col-sm-12 col-md-12 col-lg-12" role="alert">
+                                    <strong>Attenzione!</strong> La richiesta di creazione bollettini è stata inviata alla piattaforma dei pagamenti online PiemontePAY.
+                                     Per poter generare il PDF dei bollettini, cliccare sul pulsante "Scarica Bollettini".
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right padding-top-25">
+                                <button type="button" class="btn-conam button-green" (click)="annullaModifica()"
+                                    *ngIf="isModifica && loadedAction">
+                                    <i
+                                        class="glyphicon glyphicon-floppy-save btn-glyphicon img-circle text-green-conam"></i>
+                                    Nuovo</button>
+
+                                <button type="button" class="btn-conam button-blue" (click)="goToCreaNotifica()"
+                                    *ngIf="isModifica && !modificabile && !sollecito.isNotificaCreata && loadedAction">
+                                    <i
+                                        class="glyphicon glyphicon-share-alt btn-glyphicon img-circle text-blue-conam"></i>
+                                    Aggiungi notifica</button>
+                                <button type="button" class="btn-conam button-blue" (click)="goToVisualizzaNotifica()"
+                                    *ngIf="isModifica && !modificabile && sollecito.isNotificaCreata">
+                                    <i
+                                        class="glyphicon glyphicon-share-alt btn-glyphicon img-circle text-blue-conam"></i>
+                                    Visualizza notifica</button>
+
+
+                                <button type="button" class="btn-conam button-blue" (click)="creaSollecitoRate()"
+                                    [disabled]="isDisabledCreaSollecito()" *ngIf="isModifica && modificabile">
+                                    <i
+                                        class="glyphicon glyphicon-share-alt btn-glyphicon img-circle text-blue-conam"></i>
+                                    Completa lettera piano</button>
+                                
+                                <button type="button" class="btn-conam button-red" (click)="richiediEliminazioneSollecito()"
+                                    [disabled]="isDisabledCreaSollecito()" *ngIf="isModifica && modificabile">
+                                    <i
+                                        class="glyphicon glyphicon-erase btn-glyphicon img-circle text-garnet-conam"></i>
+                                    Elimina sollecito</button>
+
+                                <button type="button" class="btn-conam button-green" (click)="creaSollecitoRate()"
+                                    [disabled]="isDisabledCreaSollecito()" *ngIf="!isModifica">
+                                    <i class="glyphicon glyphicon-floppy-save btn-glyphicon img-circle text-green-conam"></i>
+                                    Crea sollecito
+                                </button>
+
+                                <button type="button" class="btn-conam button-green"
+                                    (click)="inviaRichiestaBollettini()"
+                                    *ngIf="sollecito?.bollettinoDaCreare && loadedAction">
+                                    <i class="glyphicon glyphicon-send btn-glyphicon img-circle text-green-conam"></i>
+                                    Invia Richiesta Bollettini</button>
+
+                                <button type="button" class="btn-conam button-grey"
+                                    *ngIf="sollecito?.downloadBollettiniEnable && loadedAction"
+                                    (click)="downloadBollettini()">
+                                    <i
+                                        class="glyphicon glyphicon-floppy-save btn-glyphicon img-circle text-grey-conam"></i>
+                                    Scarica Bollettini
+                                </button>
+
+                                <button type="button" class="btn-conam button-grey"
+                                    *ngIf="!modificabile && !isNuovo && loadedAction" (click)="downloadLettera()">
+                                    <i class="glyphicon glyphicon-print btn-glyphicon img-circle text-grey-conam"></i>
+                                    Scarica Lettera</button>
+
+                                <shared-spinner-form *ngIf="!loadedAction" [diameter]="30" [position]="'right'">
+                                </shared-spinner-form>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <datatable [data]="listaSolleciti" [config]="configSolleciti"
+                                (selected)="modificaVediSollecito($event)">
+                            </datatable>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+            <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+        </div>
+    </div>
+</div>
+<shared-dialog [titolo]="'Attenzione'" [subMessages]="subMessages" [buttonConfirmText]="buttonConfirmText"
+    [buttonAnnullaText]="buttonAnnullaText"></shared-dialog>

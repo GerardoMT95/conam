@@ -1,0 +1,33 @@
+<div class="container-fluid">
+    <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+    <div class="principal-div col-xs-12 col-sm-12 col-md-10 col-lg-10" style="padding-top: 30px">
+        <div class="panel-primary-conam panel-conam">
+            <div class="panel-heading-conam">
+                <strong>Aggiungi Notifica Ordinanza</strong>
+            </div>
+            <div class="panel-body panel-body-background">
+                <div class="form-group row">
+                    <!--
+                    <shared-view-notifica [idOrdinanza]="idOrdinanza"></shared-view-notifica>
+                    -->
+                    <shared-inserimento-notifica [idOrdinanza]="idOrdinanza" (save)="save($event)" (importNotificaInserito)="importNotificaInseritoHandler($event)">
+                    </shared-inserimento-notifica>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">                        
+                        <shared-ordinanza-dettaglio [idOrdinanza]="idOrdinanza"></shared-ordinanza-dettaglio>                        
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <shared-ordinanza-dettaglio-soggetti [idOrdinanza]="idOrdinanza" [config]="configSoggetti">
+                        </shared-ordinanza-dettaglio-soggetti>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right padding-top-25">
+                        <button type="button" class="btn-conam button-light-blue" (click)="goToRiepilogoOrdinanza()">
+                            <i class="glyphicon glyphicon-arrow-left btn-glyphicon img-circle text-light-blue-conam"></i>
+                            Indietro</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+        </div>
+    </div>
+</div>

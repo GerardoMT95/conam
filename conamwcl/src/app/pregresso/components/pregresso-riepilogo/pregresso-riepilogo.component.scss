@@ -1,0 +1,23 @@
+.panel-title > a:before {
+    float: right !important;
+    font-family: FontAwesome;
+    content:"\f0aa";
+    padding-right: 5px;
+}
+.panel-title > a.collapsed:before {
+    float: right !important;
+    content:"\f0ab";
+}
+.panel-title > a:hover, 
+.panel-title > a:active, 
+.panel-title > a:focus  {
+    text-decoration:none;
+}
+
+a{
+    display: block;
+}
+
+.opa0{
+    opacity: 0;
+}

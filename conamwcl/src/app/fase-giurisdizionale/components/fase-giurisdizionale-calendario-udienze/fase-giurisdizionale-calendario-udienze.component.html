@@ -1,0 +1,4 @@
+<div id="scrollTop"></div>
+<shared-alert [message]="messageTop" [type]="typeMessageTop" *ngIf="showMessageTop"></shared-alert>
+<calendar [eventInCalendar]="event" [saveError]="saveError" (saveEvent)="saveEvent($event)" (deleteEvent)="deleteEvent($event)"
+    (changeMonth)="getEvent($event)"></calendar>

@@ -1,0 +1,531 @@
+<div class="row">
+  <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+  <div
+    *ngIf="allegatiMultipli"
+    class="col-xs-10 col-sm-10 col-md-10 col-lg-10 checkbox"
+    style="padding-left: 0px"
+  >
+    <label class="radio-label"
+      ><input
+        type="checkbox"
+        name="allegatoM"
+        id="allegatoM"
+        class="checkbox-input"
+        [(ngModel)]="allegatoM"
+        (click)="isMultipli()"
+      />Allegati multipli
+    </label>
+  </div>
+</div>
+
+<form *ngIf="!allegatoM" #metadatiAllegato="ngForm">
+  <div
+    class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left"
+    style="padding-bottom: 30px"
+  >
+    <div
+      class="col-xs-12 col-sm-12 col-md-2 col-lg-2 paddig-10px"
+      style="padding-top: 30px"
+    >
+      <label for="categoriaDocumento" class="control-label"
+        >Categoria documento</label
+      >
+    </div>
+    <div
+      class="col-xs-12 col-sm-12 col-md-4 col-lg-4"
+      style="padding-top: 30px"
+    >
+      <select
+        [disabled]="disableSelectCategoria"
+        class="form-control"
+        id="categoriaDocumento"
+        [(ngModel)]="tipoAllegatoSelezionato"
+        name="categoriaDocumento"
+        [compareWith]="byId"
+        (change)="mostraMetadati()"
+        required
+      >
+        <option *ngFor="let tipoAll of tipoAllegatoModel" [ngValue]="tipoAll">
+          {{ tipoAll.denominazione }}
+        </option>
+      </select>
+    </div>
+    <div
+      *ngIf="!senzaAllegatiForce && !senzaAllegati"
+      class="col-xs-12 col-sm-12 col-md-3 col-lg-3 text-center"
+      style="padding-top: 30px"
+    >
+      <button
+        type="button"
+        class="btn-conam button-red"
+        [disabled]="isDisabledCaricaAllegato()"
+        (click)="upload.actions.addFile()"
+      >
+        <i
+          class="
+            glyphicon glyphicon-paperclip
+            btn-glyphicon
+            img-circle
+            text-red-conam
+          "
+        ></i>
+        Carica Allegato
+      </button>
+    </div>
+    <div
+      *ngIf="!senzaAllegatiForce && !senzaAllegati && !isCreaOrdinanza"
+      class="col-xs-12 col-sm-12 col-md-3 col-lg-3 text-center"
+      style="padding-top: 30px"
+    >
+      <button
+        type="button"
+        class="btn-conam button-green"
+        [disabled]="isConfermaDisabled()"
+        (click)="conferma()"
+      >
+        <i
+          class="
+            glyphicon glyphicon-ok
+            btn-glyphicon
+            img-circle
+            text-green-conam
+          "
+        ></i>
+        Conferma Allegato
+      </button>
+    </div>
+    <input
+      *ngIf="!senzaAllegati"
+      type="file"
+      #file
+      style="display: none"
+      (change)="upload.actions.onFilesAdded()"
+    />
+  </div>
+  <div
+    class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left"
+    style="padding-bottom: 30px"
+  >
+    <div
+      *ngIf="!senzaAllegati && nomeAllegatoTmp != null"
+      class="col-xs-12 col-sm-12 col-md-10 col-lg-10 paddig-10px"
+    >
+      <label for="nomeFile" class="control-label"> Nome file: </label>
+      <span> {{ nomeAllegatoTmp }}</span>
+    </div>
+  </div>
+  <div *ngIf="sizeAlert" class="alert alert-danger" role="alert">
+    <strong>Attenzione!</strong> L'allegato supera le dimensioni massime
+    consentite.
+  </div>
+  <div *ngIf="typeAlert" class="alert alert-danger" role="alert">
+    <strong>Attenzione!</strong> {{ allowedFilesTypeMessage }}.
+  </div>
+
+  <!--Metadati degli allegati-->
+  <div *ngIf="loadedConfig">
+    <div
+      *ngIf="tipoAllegatoSelezionato && tipoAllegatoSelezionato.id==7 && riepilogoVerbale.verbale && riepilogoVerbale.verbale.importoResiduo"
+      class="col-xs-12 col-sm-12 col-md-2 col-lg-2"
+    ></div>
+    <div
+      *ngIf="tipoAllegatoSelezionato && tipoAllegatoSelezionato.id==7 && riepilogoVerbale.verbale && riepilogoVerbale.verbale.importoResiduo"
+      class="col-xs-12 col-sm-12 col-md-10 col-lg-10"
+      style="padding-bottom: 30px"
+    >
+      <strong
+        >Importo da pagare residuo:
+        {{ riepilogoVerbale.verbale.importoResiduo | currency: "EUR":"symbol" }}
+      </strong>
+    </div>
+    <ng-container *ngFor="let cc of configAllegatoSelezionato; let j = index">
+      <div
+        class="
+          col-xs-12 col-sm-12 col-mFaggiungid-12 col-lg-12
+          allineamento-top
+        "
+      >
+        <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2"></div>
+        <ng-container *ngFor="let r of cc; let i = index">
+          <div class="form-group col-md-4">
+            <label for="{{ r.label }}" [ngClass]="{ 'control-label': true }">{{
+              r.label
+            }}</label>
+            <ng-container *ngIf="!typeAction.isCombo(r.fieldType)">
+              <div
+                [ngClass]="{
+                  'input-group':
+                    typeAction.isDate(r.fieldType) ||
+                    typeAction.isDataOra(r.fieldType),
+                  date:
+                    typeAction.isDate(r.fieldType) ||
+                    typeAction.isDataOra(r.fieldType)
+                }"
+                id="datetimepicker_{{current}}_{{ r.idModel }}"
+              >
+                {{ r.nomeCampo }}
+                <input
+                  [(ngModel)]="tmpModel[r.idModel].value"
+                  type="{{ typeAction.getInputType(r.fieldType) }}"
+                  name="{{ r.label }}"
+                  id="{{ r.label }}"
+                  [ngClass]="{
+                    'form-control': !typeAction.isCheckbox(r.fieldType),
+                    'date-picker':
+                      typeAction.isDate(r.fieldType) ||
+                      typeAction.isDataOra(r.fieldType)
+                  }"
+                  [maxlength]="r.maxLength"
+                  min="1"
+                  step = "r.scale"
+                  [required]="r.required"
+                  (change)="check(r.idModel, r.fieldType)"
+                  (blur)="onBlur($event, r.idModel, r.fieldType)"
+                  [disabled]="disableAll"
+                  (keydown)="isKeyPressed($event.keyCode, r.fieldType, r.label)"
+                  decimalPlaces="r.fieldType.id"
+               
+                />
+                <!--
+                                [pattern]="dynamicForm.getPattern(r.fieldType)"
+                            -->
+                <span
+                  *ngIf="
+                    typeAction.isDate(r.fieldType) ||
+                    typeAction.isDataOra(r.fieldType)
+                  "
+                  class="input-group-addon"
+                >
+                  <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+              </div>
+            </ng-container>
+            <!--div *ngIf="r.connectorType==1 &&
+                                typeAction.isDate(r.fieldType) && 
+                                metadata.form.controls[dynamicForm.camelize(r.nomeCampo)] && 
+                                metadata.form.controls[dynamicForm.camelize(r.nomeCampo)].invalid &&
+                                (metadata.form.controls[dynamicForm.camelize(r.nomeCampo)].dirty || 
+                                    metadata.form.controls[dynamicForm.camelize(r.nomeCampo)].touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="metadata.form.controls[dynamicForm.camelize(r.nomeCampo)].errors.required">
+                        La data è richiesta.
+                    </div>
+                    <div *ngIf="metadata.form.controls[dynamicForm.camelize(r.nomeCampo)].errors.dateWrong">
+                        La data di fine deve essere successiva a quella di inizio.
+                    </div>
+                </div-->
+            <ng-container *ngIf="typeAction.isCombo(r.fieldType)">
+              <shared-spinner-form
+                [diameter]="30"
+                *ngIf="!comboLoaded[r.idModel]"
+              ></shared-spinner-form>
+              <ng-container *ngIf="comboLoaded[r.idModel]">
+                <select
+                  class="form-control"
+                  name="{{ r.label }}"
+                  [(ngModel)]="tmpModel[r.idModel].value"
+                  [required]="r.required"
+                  [compareWith]="byId"
+                  [disabled]="disableAll"
+                >
+                  <option
+                    *ngFor="let elem of comboModel[r.idModel]"
+                    [ngValue]="elem"
+                  >
+                    {{ elem.denominazione }}
+                  </option>
+                </select>
+              </ng-container>
+            </ng-container>
+          </div>
+        </ng-container>
+      </div>
+    </ng-container>
+  </div>
+  <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 text-right">
+    <button
+      type="button"
+      class="btn-conam button-green"
+      (click)="confermaMetadati()"
+      [disabled]="
+        !metadatiAllegato.form.valid || disableAll || !isComboLoaded()
+      "
+      *ngIf="loadedConfig && !senzaAllegati"
+    >
+      <i
+        class="glyphicon glyphicon-ok btn-glyphicon img-circle text-green-conam"
+      ></i>
+      Conferma Dati
+    </button>
+
+    <button
+      type="button"
+      class="btn-conam button-green"
+      (click)="confermaMetadatiSenzaAllegati()"
+      [disabled]="
+        !metadatiAllegato.form.valid || disableAll || !isComboLoaded()
+      "
+      *ngIf="loadedConfig && senzaAllegati"
+    >
+      <i
+        class="glyphicon glyphicon-ok btn-glyphicon img-circle text-green-conam"
+      ></i>
+      Conferma Dati
+    </button>
+  </div>
+  <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4"></div>
+</form>
+<!--FINE METADATI-->
+
+<form *ngIf="allegatoM" #metadatiAllegato="ngForm">
+  <div
+    class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center"
+    style="padding-bottom: 30px; padding-top: 30px"
+  >
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2 paddig-10px">
+      <label for="categoriaDocumento" class="control-label"
+        >Categoria documento</label
+      >
+    </div>
+    <div
+      class="col-xs-12 col-sm-12 col-md-12 col-lg-4"
+      style="padding-top: 30px"
+    >
+      <select
+        [disabled]="disableSelectCategoria"
+        class="form-control"
+        id="categoriaDocumento"
+        [(ngModel)]="tipoAllegatoSelezionato"
+        name="categoriaDocumento"
+        [compareWith]="byId"
+        (change)="changeCat()"
+        required
+      >
+        <option *ngFor="let tipoAll of tipoAllegatoModel" [ngValue]="tipoAll">
+          {{ tipoAll.denominazione }}
+        </option>
+      </select>
+    </div>
+
+    <div
+      class="col-xs-12 col-sm-12 col-md-12 col-lg-3 text-center"
+      style="padding-top: 30px"
+    >
+      <button
+        type="button"
+        class="btn-conam button-red"
+        [disabled]="isDisabledCaricaAllegato()"
+        (click)="upload.actions.addFileMaster()"
+      >
+        <i
+          class="
+            glyphicon glyphicon-paperclip
+            btn-glyphicon
+            img-circle
+            text-red-conam
+          "
+        ></i>
+        Aggiungi Allegato Master
+      </button>
+    </div>
+    <div
+      class="col-xs-12 col-sm-12 col-md-12 col-lg-3 text-left paddig-10px"
+      *ngIf="nomeAllegatoTmp != null"
+      style="padding-top: 30px"
+    >
+      <label for="nomeFile" class="control-label"> Nome file: </label>
+      <span> {{ nomeAllegatoTmp }}</span>
+    </div>
+    <input
+      type="file"
+      #file
+      style="display: none"
+      (change)="upload.actions.onFilesAdded()"
+    />
+  </div>
+
+  <div
+    class="row"
+    *ngIf="
+      flagAllegatoMaster &&
+      this.nuovoAllegato != null &&
+      this.nomeAllegatoTmp != null
+    "
+  >
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <h4 class="border-title">
+        <strong>Allegati alla lettera</strong>
+      </h4>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <shared-alert
+        #sharedAlert
+        [message]="messageTopM"
+        [type]="typeMessageTopM"
+        *ngIf="showMessageTop"
+      ></shared-alert>
+    </div>
+
+    <div
+      class="col-xs-12 col-sm-3 col-md-3 col-lg-3 text-center"
+      style="padding-top: 30px"
+    >
+      <button
+        *ngIf="(!confermaM && !eliminaM) || (confermaM && eliminaM)"
+        type="button"
+        class="btn-conam button-green"
+        (click)="fileInput.click()"
+      >
+        <i
+          class="
+            glyphicon glyphicon-plus
+            btn-glyphicon
+            img-circle
+            text-green-conam
+          "
+        ></i>
+        Aggiungi
+      </button>
+      <span
+        style="
+          visibility: hidden;
+          position: absolute;
+          overflow: hidden;
+          width: 0px;
+          height: 0px;
+          border: none;
+          margin: 0;
+          padding: 0;
+        "
+      >
+        <input
+          type="file"
+          #fileInput
+          ng2FileSelect
+          [uploader]="uploaderM"
+          multiple
+          (click)="aggiungiM()"
+        />
+      </span>
+    </div>
+
+    <div
+      *ngIf="uploaderM.getNotUploadedItems().length"
+      class="col-xs-12 col-sm-7 col-md-7 col-lg-7 text-left"
+      style="padding-bottom: 30px; padding-top: 30px"
+    >
+      <table class="table">
+        <thead>
+          <tr>
+            <th width="50%">Nome allegati aggiunti</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of uploaderM.queue">
+            <td>{{ item?.file?.name }}</td>
+            <td class="text-left">
+              <span *ngIf="item.isError"
+                ><i class="glyphicon glyphicon-remove"></i
+              ></span>
+            </td>
+            <td nowrap class="text-right">
+              <button
+                type="button"
+                class="btn-conam button-garnet btn-xs"
+                (click)="eliminaFile(item, null)"
+              >
+                <i
+                  class="
+                    glyphicon glyphicon-trash
+                    btn-glyphicon
+                    img-circle
+                    text-garnet-conam
+                  "
+                ></i>
+                Elimina
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div>
+        <button
+          *ngIf="confermaM && eliminaM"
+          type="button"
+          class="btn-conam button-green"
+          (click)="confermaAllegato(uploaderM.queue)"
+          [disabled]="isDisabledConfermaAllegato()"
+        >
+          <i
+            class="
+              glyphicon glyphicon-ok
+              btn-glyphicon
+              img-circle
+              text-green-conam
+            "
+          ></i>
+          Conferma
+        </button>
+        <button
+          *ngIf="!confermaM || !eliminaM"
+          type="button"
+          class="btn-conam button-red"
+          (click)="uploadMultipli(uploaderM.queue)"
+          [disabled]="isDisabledCaricaAllegato()"
+        >
+          <i
+            class="
+              glyphicon glyphicon-paperclip
+              btn-glyphicon
+              img-circle
+              text-red-conam
+            "
+          ></i>
+          Allega
+        </button>
+        <button
+          type="button"
+          class="btn-conam button-garnet btn-glyphicon"
+          (click)="eliminaFile(null, uploaderM)"
+          [disabled]="!uploaderM.queue.length"
+        >
+          <i
+            class="
+              glyphicon glyphicon-trash
+              btn-glyphicon
+              img-circle
+              text-garnet-conam
+            "
+          ></i>
+          Elimina tutti
+        </button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="sizeAlert" class="alert alert-danger" role="alert">
+    <strong>Attenzione!</strong> L'allegato supera le dimensioni massime
+    consentite.
+  </div>
+</form>
+
+<shared-dialog
+  *ngIf="allegatoM"
+  [titolo]="'Attenzione'"
+  [subMessages]="subMessages"
+  [testo]="messageDialog"
+  [buttonConfirmText]="buttonConfirmText"
+  [buttonAnnullaText]="buttonAnnullaText"
+></shared-dialog>
+<shared-dialog
+  [titolo]="'Attenzione'"
+  [subMessages]="subMessages"
+  [testo]="messageDialog"
+  [buttonConfirmText]="buttonConfirmText"
+  [buttonAnnullaText]="buttonAnnullaText"
+></shared-dialog>
+<shared-alert
+  [message]="messageTop"
+  [type]="typeMessageTop"
+  *ngIf="showMessageTop"
+></shared-alert>

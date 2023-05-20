@@ -1,0 +1,117 @@
+<div class="container-fluid">
+    <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+    <shared-spinner *ngIf="!loaded"></shared-spinner>
+    <div id="scrollTop"></div>
+    <div class="principal-div col-xs-12 col-sm-12 col-md-10 col-lg-10" style="padding-top: 30px" *ngIf="loaded">
+        <form>
+            <div class="panel-conam panel-primary-conam">
+                <div class="panel-heading-conam">
+                    <strong>Riepilogo ordinanze pregresse collegate</strong>
+                </div>
+                <div class="panel-body panel-body-background">
+                    <div class="form-group row">
+                        <shared-alert [message]="messageTop" [type]="typeMessageTop" *ngIf="showMessageTop">
+                        </shared-alert>
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <shared-spinner *ngIf="!loaded"></shared-spinner>
+                
+                            <datatable [data]="ordinanze" [config]="config" *ngIf="showTable"
+                                (dettaglio)="onDettaglio($event)">
+                            </datatable>
+
+                            <div id="scrollBottom" *ngIf="showTable"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="container-fluid">
+        <div class="principal-div col-xs-12 col-sm-12 col-md-12 col-lg-1"></div>
+        <div class="principal-div col-xs-12 col-sm-12 col-md-12 col-lg-10" style="padding-top: 30px">
+            <div class="panel-conam panel-primary-conam" *ngIf="loadedOrdinanza">
+                <div class="panel-heading-conam">
+                    <strong>Riepilogo Ordinanza</strong>
+                </div>
+                <div class="panel-body panel-body-background">
+                    <shared-alert [message]="messageTop" [type]="typeMessageTop" *ngIf="showMessageTop"></shared-alert>
+                    <div class="form-group row">
+                        <div id="scrollTop"></div>
+                        <shared-ordinanza-riepilogo [idOrdinanza]="idOrdinanza" [isFirstDownloadBollettini]="isFirstDownloadBollettini"></shared-ordinanza-riepilogo>
+                        <div *ngIf="azione?.dowloadBollettiniEnable && loadedAction" class="alert alert-warning col-xs-12 col-sm-12 col-md-12 col-lg-12" role="alert">
+                                <strong>Attenzione!</strong> La richiesta di creazione bollettini è stata inviata alla piattaforma dei pagamenti online PiemontePAY.
+                                 Per poter generare il PDF dei bollettini, cliccare sul pulsante "Scarica Bollettini".
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">                            
+                            <button type="button" class="btn-conam  button-blue"
+                                *ngIf="azione?.dettaglioPianoEnable && loadedAction" (click)="goToPianiRateizzazione()">
+                                <i class="glyphicon glyphicon-share-alt btn-glyphicon img-circle text-blue-conam"></i>
+                                Piani di rateizzazione pregressi collegati</button>
+                            
+                            <button type="button" class="btn-conam  button-blue"
+                                *ngIf="azione?.dettaglioSollecitoEnable && loadedAction" (click)="goToSolleciti()">
+                                <i class="glyphicon glyphicon-share-alt btn-glyphicon img-circle text-blue-conam"></i>
+                                Solleciti pregressi collegati</button>
+
+                            <button type="button" class="btn-conam  button-blue"
+                            *ngIf="azione?.dettaglioDispGiudiceEnable && loadedAction" (click)="goToDisposizioni()">
+                                <i class="glyphicon glyphicon-share-alt btn-glyphicon img-circle text-blue-conam"></i>
+                                Disposizioni giudice pregresse collegate</button>
+                            
+                            <button type="button" class="btn-conam  button-blue"
+                            *ngIf="azione?.dettaglioRicevutaPagamentoEnable && loadedAction" (click)="goToRicevute()">
+                                <i class="glyphicon glyphicon-share-alt btn-glyphicon img-circle text-blue-conam"></i>
+                                Ricevute pagamenti pregressi collegati</button>
+
+                            <button *ngIf="azione?.aggiungiAllegatoEnable && loadedAction" type="button" class="btn-conam button-blue" (click)="goToVerbaleAllegato()">
+                                <i class="glyphicon glyphicon-share-alt btn-glyphicon img-circle text-blue-conam"></i>
+                                Aggiungi Allegato Pregresso</button>
+                            <shared-spinner-form *ngIf="!loadedAction" [diameter]="30" [position]="'right'">
+                            </shared-spinner-form>
+                        </div>
+                    </div>
+                    <form *ngIf="showMessageBottom || (loadedStatiOrdinanza  
+                    && statiOrdinanzaModel && statiOrdinanzaModel.length>0)" #statoForm="ngForm" (ngSubmit)="salvaStatoOrdinanza()"
+                        >
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <h4 class="border-title"><strong>Aggiornamento stato ordinanza pregressa</strong></h4>
+                            </div>
+                            <shared-alert [message]="messageBottom" [type]="typeMessageBottom" *ngIf="showMessageBottom"></shared-alert>
+                            <div *ngIf="!showMessageBottom" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 alert alert-warning" role="alert">
+                                <span [innerHTML]="alertWarning"></span>
+                            </div>
+                    
+                            <div *ngIf="!showMessageBottom && statiOrdinanzaModel && statiOrdinanzaModel.length>0" class="col-xs-12 col-sm-12 col-md-12 col-lg-6"
+                                >
+                                <label for="statoIstr" class="control-label">Stato</label>
+                                <shared-spinner-form [diameter]="30"
+                                    *ngIf="!loadedStatiOrdinanza;  else elseStatoIstr"></shared-spinner-form>
+                                <ng-template #elseStatoIstr>
+                                    <select class="form-control"
+                                        [(ngModel)]="salvaStatoOrdinanzaPregressiRequest.idStato" name="statoIstr" required>
+                                        <option *ngFor="let stato of statiOrdinanzaModel" [value]="stato.id">
+                                            {{stato.denominazione}}</option>
+                                    </select>
+                                </ng-template>
+                            </div>
+                            <div *ngIf="!showMessageBottom && statiOrdinanzaModel && statiOrdinanzaModel.length>0" class="col-xs-12 col-sm-12 col-md-12 col-lg-12  padding-top-23"
+                                >
+                                <button type="submit" class="btn-conam button-green"
+                                    [disabled]="!statoForm.form.valid">
+                                    <i
+                                        class="glyphicon glyphicon-transfer btn-glyphicon img-circle text-green-conam"></i>
+                                    Aggiorna stato</button>
+                            </div>
+                        </div>
+                    </form>
+                    <shared-dialog [id]="'myModalPOR'" [titolo]="'Aggiornamento Stato Fascicolo Pregresso'" [subMessages]="subMessagess" [buttonConfirmText]="buttonConfirmTexts"
+                        [buttonAnnullaText]="buttonAnnullaTexts"
+                        ></shared-dialog>
+                    
+                </div>
+            </div>
+            <div class="principal-div col-xs-12 col-sm-12 col-md-12 col-lg-1"></div>
+        </div>
+    <div class="principal-div col-xs-12 col-sm-12 col/-md-1 col-lg-1"></div>
+</div>

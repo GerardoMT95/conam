@@ -1,0 +1,25 @@
+<div class="container-fluid">
+    <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+    <div class="principal-div col-xs-12 col-sm-12 col-md-10 col-lg-10" style="padding-top: 30px">
+
+        <div class="panel-conam panel-primary-conam">
+            <div class="panel-heading-conam">
+                <strong>Riepilogo</strong>
+            </div>
+            <div class="panel-body panel-body-background">
+                <shared-alert [message]="messageTop" [type]="typeMessageTop" *ngIf="showMessageTop"></shared-alert>
+                <shared-verbale-riepilogo></shared-verbale-riepilogo>
+
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                    <button type="button" class="btn-conam button-blue" (click)="goToAggiugiControdeduzioni()"
+                        *ngIf="allegatoEnable">
+                        <i class="glyphicon glyphicon-share-alt btn-glyphicon img-circle text-blue-conam"></i>
+                        Aggiungi
+                        Controdeduzioni
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+</div>

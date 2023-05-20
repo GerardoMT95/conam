@@ -1,0 +1,117 @@
+<style>
+    .errorDate{
+        border-left: 5px solid #a94442;
+    }
+</style>
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group row">
+            <form #creaSollecitoDettaglioForm="ngForm">
+
+                <h4 class="border-title"><strong>Dati del sollecito di pagamento</strong></h4>
+
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <label class="control-label">Data scadenza rata sollecito</label>
+                            <div class='input-group date' id='datetimepicker1' *ngIf="flgModifica">
+                                <input  [class.errorDate]="errorDate" type='text' id="dataSoll" [(ngModel)]="sollecito.dataScadenza" name="dataSoll"
+                                    #datePicker="ngModel" (blur)="manageDatePicker($event, 1)"
+                                    class="form-control date-picker">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                            <div *ngIf="!flgModifica">
+                                <div> {{sollecito.dataScadenza}}</div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <label class="control-label">Data fine validit&agrave; pagamento</label>
+                            <div class='input-group date' id='datetimepicker2' *ngIf="flgModifica">
+                                <input [class.errorDate]="errorDate" type='text' id="dataFineSoll" [(ngModel)]="sollecito.dataFineValidita" name="dataFineSoll"
+                                    #datePicker="ngModel" (blur)="manageDatePicker($event, 2)"
+                                    class="form-control date-picker" required>
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                            <div *ngIf="!flgModifica">
+                                <div> {{sollecito.dataFineValidita}}</div>
+                            </div>
+                        </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-top-15">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <label class="control-label">Importo da sollecitare</label>
+                            <input type="number" id="importoSoll" class="form-control" name="importoSoll"
+                                [(ngModel)]="sollecito.importoSollecitato" required step="1" [max]="1000000"
+                                (keydown)="isKeyPressed($event.keyCode)" *ngIf="flgModifica">
+                            <div *ngIf="!flgModifica">
+                                {{sollecito.importoSollecitato | currency:'EUR':'symbol'}}
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <label class="control-label">Maggiorazione</label>
+                            <input type="number" id="importoMagg" class="form-control" name="importoMagg"
+                                [(ngModel)]="sollecito.maggiorazione" required step="1" [max]="1000000"
+                                (keydown)="isKeyPressed($event.keyCode)" *ngIf="flgModifica">
+                            <div *ngIf="!flgModifica">
+                                {{sollecito.maggiorazione | currency:'EUR':'symbol'}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="pregresso" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-top-15">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <label class="control-label">Data pagamento</label>
+                            <div class='input-group date' id='datetimepicker3' *ngIf="flgModifica">
+                                <input type='text' id="dataPagamento" [(ngModel)]="sollecito.dataPagamento"
+                                    name="dataPagamento" #datePicker="ngModel" (blur)="manageDatePicker($event, 3)"
+                                    class="form-control date-picker">
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                            <div *ngIf="!flgModifica">
+                                {{sollecito.dataPagamento | currency:'EUR':'symbol'}}
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                            <label class="control-label">Importo Pagato</label>
+                            <input type="number" id="importoPagato" class="form-control" name="importoPagato"
+                                [(ngModel)]="sollecito.importoPagato" step="1" [max]="1000000"
+                                (keydown)="isKeyPressed($event.keyCode)" *ngIf="flgModifica">
+                            <div *ngIf="!flgModifica">
+                                {{sollecito.importoPagato | currency:'EUR':'symbol'}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="pregresso && isCreaSollecito" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-top-15">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
+                        <label for="statoSoll" class="control-label">Stato</label>
+                        <shared-spinner-form [diameter]="30" *ngIf="!loadedstatisoll;  else elseStatoSoll">
+                        </shared-spinner-form>
+                        <ng-template #elseStatoSoll>
+                            <select class="form-control" [(ngModel)]="sollecito.statoSollecito.id" name="statoSoll">
+                                <option *ngFor="let stato of statiSollModel" [value]="stato.id">
+                                    {{stato.denominazione}}</option>
+                            </select>
+                        </ng-template>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <shared-inserimento-notifica [idSollecito]="sollecito?.idSollecito" (save)="save($event)"
+        (importNotificaInserito)="importNotificaInseritoHandler($event)" *ngIf="flgModifica">
+    </shared-inserimento-notifica>
+    <shared-view-notifica [idSollecito]="sollecito?.idSollecito" *ngIf="!flgModifica"> </shared-view-notifica>
+
+</div>

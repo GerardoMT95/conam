@@ -1,0 +1,28 @@
+@import '../../../color.scss';
+
+.home{
+    background: url('/assets/home_01.jpg');   
+    height: 100vh;
+    width: 100vw; 
+    background-repeat:no-repeat; 
+    -webkit-background-size:cover; 
+    -moz-background-size:cover; 
+    -o-background-size:cover; 
+    background-size:cover; 
+    background-position:center; text-align: center;} 
+    
+.home h2{ 
+      margin-top: 0; 
+      color: #fff;   
+      font-size: 50px; 
+      font-weight: bold;
+      padding:40px;
+      text-shadow: 4px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+.home .homeMessage{
+    padding-top:50px;
+    color: #fff;   
+    font-size: 20px; 
+    text-align: center;
+}

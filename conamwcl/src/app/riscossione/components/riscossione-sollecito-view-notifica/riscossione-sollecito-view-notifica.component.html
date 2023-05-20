@@ -1,0 +1,42 @@
+<shared-spinner *ngIf="!loaded"></shared-spinner>
+<div class="container-fluid" *ngIf="loaded">
+    <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+    <div class="principal-div col-xs-12 col-sm-12 col-md-10 col-lg-10" style="padding-top: 30px">
+        <div class="panel-primary-conam panel-conam">
+            <div class="panel-heading-conam">
+                <strong>Notifica Sollecito</strong>
+            </div>
+            <shared-alert [message]="messageTop" [type]="typeMessageTop" *ngIf="showMessageTop"></shared-alert>
+            <div class="panel-body panel-body-background">
+                <div class="form-group row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <!--
+                        <shared-view-notifica [idSollecito]="idSollecito" (save)="save($event)">
+                        </shared-view-notifica>
+                        -->
+                        <shared-inserimento-notifica [idSollecito]="sollecito?.idSollecito" (save)="save($event)" (importNotificaInserito)="importNotificaInseritoHandler($event)" >
+                        </shared-inserimento-notifica>                        
+                    </div>
+                    <!--
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 ">
+                        <shared-riscossione-sollecito-dettaglio [sollecito]="sollecito" [flgModifica]="false"></shared-riscossione-sollecito-dettaglio>
+                    </div>
+                    -->                   
+
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-top: 50px">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group row">                                
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                                    <button type="button" class="btn-conam button-light-blue " (click)="goBack()">
+                                        <i class="glyphicon glyphicon-arrow-left btn-glyphicon img-circle text-light-blue-conam"></i>
+                                        Indietro</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,9 @@
+{
+    "beServer": "/conam",
+    "shibbolethSSOLogoutURL": "https://portale.ruparpiemonte.it/rpp_liv1_IRUP/Shibboleth.sso/Logout",
+    "otherParam": "production_param_value",
+    "publicPath": "/conam/",
+    "timeout": 180,
+    "infoLink": "http://www.sistemapiemonte.it",
+    "logLevel": "error"
+}

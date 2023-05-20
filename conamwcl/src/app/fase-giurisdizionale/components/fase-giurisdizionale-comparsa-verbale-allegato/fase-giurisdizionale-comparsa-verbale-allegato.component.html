@@ -1,0 +1,26 @@
+<div class="container-fluid">
+    <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+    <shared-spinner *ngIf="!loaded"></shared-spinner>
+    <div class="principal-div col-xs-12 col-sm-12 col-md-10 col-lg-10" *ngIf="loaded" style="padding-top: 30px">
+        <form>
+            <div class="panel-conam panel-primary-conam">
+                <div class="panel-heading-conam">
+                    <strong>Inserimento comparsa di costituzione e risposta</strong>
+                </div>
+                <div class="panel-body panel-body-background">
+                    <div class="form-group row">
+                        <shared-alert [message]="messageTop" [type]="typeMessageTop" *ngIf="showMessageTop">
+                        </shared-alert>
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <shared-allegato-metadati-inserimento *ngIf="loadedCategoriaAllegato"
+                                [tipoAllegatoInput]="tipoAllegatoModel"
+                                [allegatiMultipli]="allegatiMultipli" (onNewFile)="salvaAllegato($event)" (multipli)="setMultipli($event)">
+                            </shared-allegato-metadati-inserimento>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+</div>

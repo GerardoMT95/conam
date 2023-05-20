@@ -1,0 +1,252 @@
+<div class="container-fluid">
+    <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+    <div class="principal-div col-xs-12 col-sm-12 col-md-10 col-lg-10 padding-top-30">
+        <div class="panel-conam panel-primary-conam">
+            <div class="panel-heading-conam">
+                <strong>Soggetti collegati al verbale</strong>
+            </div>
+            <form #soggettoForm="ngForm" (ngSubmit)="salva()">
+                <div class="panel-body panel-body-background">
+                    <div class="form-group row">
+                        <shared-spinner *ngIf="!loadedSoggetti;else soggettiCaricati"></shared-spinner>
+                        <ng-template #soggettiCaricati>
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <shared-alert [message]="messageTop" [type]="typeMessageTop" *ngIf="showMessageTop">
+                                </shared-alert>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <h4 class="border-title"><strong>Soggetti collegati al verbale</strong></h4>
+                                </div>
+                            </div>
+                            <div class="container col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <datatable [data]="soggetti" [config]="config" (onDelete)="confermaEliminazione($event)">
+                                </datatable>
+                            </div>
+                            <div class="form-group col-xs-12 col-sm-12  col-md-12 col-lg-12 padding-top-10">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                                    <button type="button" class="btn-conam button-blue"
+                                        (click)="goToVerbaleRiepilogo()">
+                                        <i
+                                            class="glyphicon glyphicon-share-alt btn-glyphicon img-circle text-blue-conam"></i>
+                                        Riepilogo</button>
+
+                                    <button type="button" class="btn-conam button-blue" (click)="goToVerbaleDati()">
+                                        <i
+                                            class="glyphicon glyphicon-share-alt btn-glyphicon img-circle text-blue-conam"></i>
+                                        Modifica Dati Verbale</button>
+
+                                    <button type="button" class="btn-conam button-blue" (click)="goToVerbaleAllegato()">
+                                        <i
+                                            class="glyphicon glyphicon-share-alt btn-glyphicon img-circle text-blue-conam"></i>
+                                        Aggiungi Allegato</button>
+
+                                    <button type="button" class="btn-conam button-green"
+                                        (click)="isAggiungiSoggetto = true">
+                                        <i
+                                            class="glyphicon glyphicon-plus btn-glyphicon img-circle text-green-conam"></i>
+                                        Aggiungi Soggetto</button>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="!loadedSalvaRicerca">
+                            <shared-spinner></shared-spinner>
+                        </div>
+                        <div *ngIf="isAggiungiSoggetto && loadedSalvaRicerca">
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <h4 class="border-title"><strong>Aggiungi un nuovo soggetto</strong></h4>
+                                </div>
+                            </div>
+                            <shared-alert [message]="messageBottom" [type]="typeMessageBottom" *ngIf="showMessageBottom">
+                            </shared-alert>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                        style="border: 2px solid #0153a9; padding:30px;">
+                                        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 padding-top-15">
+                                            <div class="radio">
+                                                <input id="personaFisica" name="radio" type="radio"
+                                                    [checked]="soggetto.personaFisica" (click)="cambiaPersona('F')">
+                                                <label for="personaFisica" class="radio-label">Persona fisica</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 padding-top-15">
+                                            <div class="radio">
+                                                <input id="personaGiuridica" name="radio" type="radio"
+                                                    [checked]="!soggetto.personaFisica" (click)="cambiaPersona('G')">
+                                                <label for="personaGiuridica" class="radio-label">Persona
+                                                    giuridica</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--form inserimento persona fisica-->
+                            <div *ngIf="soggetto.personaFisica">
+                                <verbale-soggetto-ricerca-fisica [soggetto]="soggetto" (ricerca)="ricerca($event, 'F')"
+                                    (pulisci)="pulisciFiltri($event)" [modalita]="modalita" [comuneEstero]="comuneEstero"
+                                    [comuneEsteroDisabled]="comuneEsteroDisabled"
+                                    (formValid)="setFormValid($event,'F')"></verbale-soggetto-ricerca-fisica>
+                            </div>
+                            <!--form persona giuridica-->
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                *ngIf="!(soggetto.personaFisica)">
+                                <verbale-soggetto-ricerca-giuridica [soggetto]="soggetto" (ricerca)="ricerca($event, 'G')"
+                                    [modalita]="modalita" (pulisci)="pulisciFiltri($event)"
+                                    (formValid)="setFormValid($event,'G')"></verbale-soggetto-ricerca-giuridica>
+                            </div>
+                            <div *ngIf="showResidenza">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <h4 class="border-title"><strong>Dati di residenza</strong></h4>
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-3 padding-top-15">
+                                        <div class="radio" style="padding-left:30px">
+                                            <input id="residenzaItaliana" name="radioResidenza" type="radio"
+                                                [checked]="!soggetto.residenzaEstera" (click)="cambiaResidenza('I')">
+                                            <label for="residenzaItaliana" class="radio-label">Residenza italiana</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-3 padding-top-15">
+                                        <div class="radio" style="padding-left:30px">
+                                            <input id="residenzaEstera" name="radioResidenza" type="radio"
+                                                [checked]="soggetto.residenzaEstera" (click)="cambiaResidenza('E')">
+                                            <label for="residenzaEstera" class="radio-label">Residenza estera</label>
+                                        </div>
+                                    </div>                                    
+                                </div>
+                                <div *ngIf="!soggetto.residenzaEstera">
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        <label for="regioneResidenza" class="control-label">Regione</label>
+                                        <shared-spinner-form [diameter]="30"
+                                            *ngIf="!loaderRegioni;  else elseRegioneResidenza"></shared-spinner-form>
+                                        <ng-template #elseRegioneResidenza>
+                                            <select class="form-control" id="regioneResidenza"
+                                                [(ngModel)]="soggetto.regioneResidenza.id" name="regioneResidenza"
+                                                (change)="loadProvince(soggetto.regioneResidenza.id)"
+                                                [disabled]="isDisable('RR')">
+                                                <option *ngFor="let reg of regioneModel" [value]="reg.id">
+                                                    {{reg.denominazione}}</option>
+                                            </select>
+                                        </ng-template>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        <label for="provinciaResidenza" class="control-label">Provincia</label>
+                                        <shared-spinner-form [diameter]="30"
+                                            *ngIf="!loaderProvince;  else elseProvinciaResidenza"></shared-spinner-form>
+                                        <ng-template #elseProvinciaResidenza>
+                                            <select class="form-control" id="provinciaResidenza"
+                                                [(ngModel)]="soggetto.provinciaResidenza.id" name="provinciaResidenza"
+                                                [disabled]="isDisable('PR')"
+                                                (change)="loadComuni(soggetto.provinciaResidenza.id)">
+                                                <option *ngFor="let prov of provinciaModel" [value]="prov.id">
+                                                    {{prov.denominazione}}</option>
+                                            </select>
+                                        </ng-template>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        <label for="comuneResidenza" class="control-label">Comune</label>
+                                        <shared-spinner-form [diameter]="30"
+                                            *ngIf="!loaderComuni;  else elseComuneResidenza"></shared-spinner-form>
+                                        <ng-template #elseComuneResidenza>
+                                            <select class="form-control" id="comuneResidenza"
+                                                [(ngModel)]="soggetto.comuneResidenza.id" [disabled]="isDisable('CR')"
+                                                name="comuneResidenza">
+                                                <option *ngFor="let com of comuneModel" [value]="com.id">
+                                                    {{com.denominazione}}</option>
+                                            </select>
+                                        </ng-template>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        <label for="indirizzoPg" class="control-label">Indirizzo</label>
+                                        <input type="text" id="indirizzoPg" class="form-control"
+                                            [(ngModel)]="indirizzo" name="indirizzoPg"
+                                            [disabled]="isDisable('IR')">
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        <label for="civicoPg" class="control-label">Civico</label>
+                                        <input type="text" id="civicoPg" class="form-control"
+                                            [(ngModel)]="civico" name="civicoPg"
+                                            [disabled]="isDisable('CI')">
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        <label for="cap" class="control-label">Cap</label>
+                                        <input type="text" id="capPg" class="form-control" [(ngModel)]="cap"
+                                            name="cap" [disabled]="isDisable('CAP')" maxlength="5" pattern="[0-9]{5}">
+                                    </div>
+                                </div>
+                                <div *ngIf="soggetto.residenzaEstera">
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" >
+                                        <label for="nazioneResidenza" class="control-label">Stato estero</label>
+                                        <shared-spinner-form [diameter]="30"
+                                            *ngIf="!loaderNazioni;  else elseNazioneResidenza"></shared-spinner-form>
+                                        <ng-template #elseNazioneResidenza>
+                                            <select class="form-control" id="nazioneResidenza"
+                                                [(ngModel)]="soggetto.nazioneResidenza.id" name="nazioneResidenza">
+                                                <option *ngFor="let naz of nazioneResidenzaModel" [value]="naz.id">
+                                                    {{naz.denominazione}}</option>
+                                            </select>
+                                        </ng-template>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        <label for="comuneResidenzaEstero" class="control-label">Città</label>
+                                        <input type="text" id="comuneResidenzaEstero" class="form-control"
+                                            [(ngModel)]="soggetto.denomComuneResidenzaEstero" name="comuneResidenzaEstero">
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        <label for="indirizzoPgEstero" class="control-label">Indirizzo</label>
+                                        <input type="text" id="indirizzoPgEstero" class="form-control"
+                                            [(ngModel)]="indirizzoEstero" name="indirizzoPgEstero">
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        <label for="civicoPgEstero" class="control-label">Civico</label>
+                                        <input type="text" id="civicoPgEstero" class="form-control"
+                                            [(ngModel)]="civicoEstero" name="civicoPgEstero">
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        <label for="capEstero" class="control-label">Codice postale</label>
+                                        <input type="text" id="capEstero" class="form-control" [(ngModel)]="capEstero"
+                                            name="capEstero" maxlength="6">
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <h4 class="border-title"><strong>Altri dati</strong></h4>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <label for="ruoloPg" class="control-label">Ruolo</label>
+                                    <select class="form-control" id="ruoloPg" [(ngModel)]="soggetto.ruolo.id"
+                                        name="ruoloPg" required>
+                                        <option *ngFor="let ruo of ruoloModel" [value]="ruo.id">{{ruo.denominazione}}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" *ngIf="!(soggetto.personaFisica)">
+                                    <label for="note" class="control-label">Rapp.legale/Amministratore</label>
+                                    <input type="text" id="note" class="form-control"
+                                        [(ngModel)]="soggetto.noteSoggetto" name="note">
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-top-15">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                                        <button type="button" class="btn-conam button-green" (click)="salvaSoggetto()"
+                                            [disabled]="formDisabled(soggettoForm)">
+                                            <i
+                                                class="glyphicon glyphicon-ok btn-glyphicon img-circle text-green-conam"></i>
+                                            Conferma</button>
+                                        <button type="button" class="btn-conam button-light-blue"
+                                            (click)="pulisciFiltri()">
+                                            <i
+                                                class="glyphicon glyphicon-arrow-left btn-glyphicon img-circle text-light-blue-conam"></i>
+                                            Annulla</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+</div>
+<shared-dialog [titolo]="'Attenzione'" [subMessages]="subMessages" [testo]="messageDialog" [buttonConfirmText]="buttonConfirmText"
+    [buttonAnnullaText]="buttonAnnullaText"></shared-dialog>

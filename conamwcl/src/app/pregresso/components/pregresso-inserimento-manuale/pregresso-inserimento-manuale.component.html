@@ -1,0 +1,435 @@
+<div class="container-fluid">
+    <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+    <shared-spinner *ngIf="!loaded"></shared-spinner>
+    <div id="scrollTop"></div>
+    <div class="principal-div col-xs-12 col-sm-12 col-md-10 col-lg-10" *ngIf="loaded" style="padding-top: 30px">
+        <div class="panel-primary-conam panel-conam ">
+            <div class="panel-heading-conam">
+                <strong>Inserimento documento pregresso da dispositivo</strong>
+            </div>
+            <form #datiVerbale="ngForm">
+                <div class="panel-body panel-body-background">
+                    <shared-alert [message]="messageTop" [type]="typeMessageTop" *ngIf="showMessageTop">
+                    </shared-alert>
+                    <shared-allegato-metadati-inserimento [disableSelectCategoria]="showVerbale" [tipoAllegatoInput]="tipoAllegatoModel"
+                            (onNewFile)="salvaAllegato($event)">
+                    </shared-allegato-metadati-inserimento>
+                    <div  *ngIf="showVerbale" class="form-group row">                        
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <h4 class="border-title"><strong>Dati verbale</strong></h4>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <!--Numero verbale-->
+                                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                        <label for="numeroVerbale" class="control-label">Numero verbale</label>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                                        <input #numeroVerbale [class.ng-invalid-important]="verbale.numero?.length != 0 && verbale.numero?.length > 50" type="text" id="numeroVerbale" class="form-control" name="numeroVerbale"
+                                            [(ngModel)]="verbale.numero" required [disabled]="idVerbale!=null"
+                                            #numeroVerbale="ngModel">
+                                        <div *ngIf="verbale.numero?.length != 0 && verbale.numero?.length > 50"
+                                            class="alert alert-danger">
+                                                Il valore inserito è superiore al limite massimo consentito (50)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <!--Codice ente accertatore-->
+                                <div class="form-group col-xs-12 col-sm-12  col-md-12 col-lg-12">
+                                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                        <label for="codEnteAcc" class="control-label">Ente accertatore</label>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                                        <select class="form-control" id="codEnteAcc"
+                                            [(ngModel)]="verbale.enteAccertatore" name="codEnteAcc" [compareWith]="byId"
+                                            required #codiceEnteAccertatore="ngModel">
+                                            <option *ngFor="let ent of enteAccertatoreModel" [ngValue]="ent">
+                                                {{ent.denominazione}}</option>
+                                        </select>
+                                        <div *ngIf="codiceEnteAccertatore.invalid && (codiceEnteAccertatore.dirty || codiceEnteAccertatore.touched)"
+                                            class="alert alert-danger">
+                                            <div *ngIf="codiceEnteAccertatore.errors.required ">
+                                               Ente accertatore è richiesto
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <!--Codicecomune ente -->
+                                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                  <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                    <label for="codEnteAcc" class="control-label"
+                                      >Comune ente</label
+                                    >
+                                  </div>
+                               
+                                 
+                                    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                                      <select
+                                        class="form-control"
+                                        id="comuneEnte"
+                                        [(ngModel)]="verbale.comuneEnte"
+                                        name="comuneEnte"
+                                        [compareWith]="byId"
+                                        #comuneEnte="ngModel"
+                                       
+                                      >
+                                        <option
+                                          *ngFor="let ent of comuneEnteModel"
+                                          [ngValue]="ent"
+                                        >
+                                          {{ ent.denominazione }}
+                                        </option>
+                                      </select>
+                                    </div>
+                                  
+                                </div>
+                              </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <!--Data e ora processo verbale-->
+                                <div class="form-group col-xs-12 col-sm-12  col-md-12 col-lg-12">
+                                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                        <label for="dataOraViolazione" class="control-label">Data e ora processo verbale</label>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                                        <div class='input-group date' id='datetimepicker1'>
+                                            <input type='text' id="dataV" [(ngModel)]="verbale.dataOraViolazione"
+                                                name="dataOraViolazione" #datePicker="ngModel"
+                                                (blur)="manageDatePicker($event, 1)"  (ngModelChange)="modelChangeFn($event)"  class="form-control date-picker"
+                                                required [disabled]="datePicker1.invalid"/>
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                        <div *ngIf="datePicker.invalid && (datePicker.dirty || datePicker.touched)"
+                                            class="alert alert-danger">
+                                            <div *ngIf="datePicker.errors.required ">
+                                                La data ora violazione è richiesta
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <!--Data e ora processo verbale-->
+                                <div class="form-group col-xs-12 col-sm-12  col-md-12 col-lg-12">
+                                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                        <label for="dataOraViolazione" class="control-label">Data e ora processo verbale</label>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                                        <div class='input-group date' id='datetimepicker1'>
+                                            <input type='text' id="dataV" [(ngModel)]="verbale.dataOraViolazione"
+                                                name="dataOraViolazione" #datePicker="ngModel"
+                                                (blur)="manageDatePicker($event, 1)"  (ngModelChange)="modelChangeFn($event)"  class="form-control date-picker"
+                                                required [disabled]="datePicker1.invalid"/>
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                        <div *ngIf="datePicker.invalid && (datePicker.dirty || datePicker.touched)"
+                                            class="alert alert-danger">
+                                            <div *ngIf="datePicker.errors.required ">
+                                                La data ora violazione è richiesta
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <!--Importo in misura ridotta-->
+                                <div class="form-group col-xs-12 col-sm-12  col-md-12 col-lg-12">
+                                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                        <label for="impMisRidotta" class="control-label">Importo in misura
+                                            ridotta</label>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                                        <input type="number" id="impMisRidotta" class="form-control"
+                                            name="impMisRidotta" #importomisuraRidotta="ngModel"
+                                            [(ngModel)]="verbale.importo" [min]="0" [max]="1000000" required
+                                            (keydown)="isKeyPressed($event.keyCode)" decimalPlaces>
+                                        <div *ngIf="importomisuraRidotta.invalid && (importomisuraRidotta.dirty || importomisuraRidotta.touched)"
+                                            class="alert alert-danger">
+                                            <div *ngIf="importomisuraRidotta.errors.required">
+                                                Importo in misura ridotta è richiesto
+                                            </div>
+                                            <div *ngIf="importomisuraRidotta.errors.decimalPlaces">
+                                                Importo in misura ridotta deve contenere solamente due cifre decimali
+                                            </div>
+                                            <div *ngIf="importomisuraRidotta.errors.negativeNumber">
+                                                Importo in misura ridotta deve essere maggiore di zero
+                                            </div>
+                                            <div *ngIf="importomisuraRidotta.errors.maxNumber">
+                                                Importo in misura ridotta deve essere minore di 100000000
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <!--Stato del verbale-->
+                                <div class="form-group col-xs-12 col-sm-12  col-md-12 col-lg-12">
+                                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                        <label for="impMisRidotta" class="control-label">Stato del fascicolo</label>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                                        Incompleto
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="showLocalita" class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                style="padding-left: 20px; padding-right: 20px; padding-top: 20px">
+                                <h4 class="border-title"><strong>Località violazione</strong></h4>
+                                <!--regione provincia violazione-->
+                                <div class="form-group col-xs-12 col-sm-12  col-md-12 col-lg-12">
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        <label for="regione" class="control-label">Regione</label>
+                                        <shared-spinner-form [diameter]="30"
+                                            *ngIf="!loadedRegioni;  else elseRegioniCaricate"></shared-spinner-form>
+                                        <ng-template #elseRegioniCaricate>
+                                            <select class="form-control" id="regione" [(ngModel)]="verbale.regione"
+                                                #regione="ngModel" [compareWith]="byId"  [disabled]="isDisabledRegione()"  name="regione"
+                                                (change)="changeRegione(verbale.regione.id)" required>
+                                                <option *ngFor="let reg of regioneModel" [ngValue]="reg">
+                                                    {{reg.denominazione}}</option>
+                                            </select>
+                                            <div *ngIf="regione.invalid && (regione.dirty || regione.touched)"
+                                                class="alert alert-danger">
+                                                <div *ngIf="regione.errors.required ">
+                                                    La regione è richiesta
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        <label for="provincia" class="control-label">Provincia</label>
+                                        <shared-spinner-form [diameter]="30"
+                                            *ngIf="!loadedProvince;  else elseProvinciaCaricate"></shared-spinner-form>
+                                        <ng-template #elseProvinciaCaricate>
+                                            <select class="form-control" id="provincia" [(ngModel)]="verbale.provincia"
+                                                [compareWith]="byId" [disabled]="isDisabledProvincia()" name="provincia"
+                                                #provincia="ngModel" (change)="changeProvincia(verbale.provincia.id)"
+                                                required>
+                                                <option *ngFor="let prov of provinciaModel" [ngValue]="prov">
+                                                    {{prov.denominazione}}</option>
+                                            </select>
+                                            <div *ngIf="provincia.invalid && (provincia.dirty || provincia.touched)"
+                                                class="alert alert-danger">
+                                                <div *ngIf="provincia.errors.required ">
+                                                    La provincia è richiesta
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </div>
+                                </div>
+                                <!--Indirizzo comune-->
+                                <div class="form-group col-xs-12 col-sm-12  col-md-12 col-lg-12">
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        <label for="comune" class="control-label">Comune</label>
+                                        <shared-spinner-form [diameter]="30"
+                                            *ngIf="!loadedComuni;  else elseComuniCaricati"></shared-spinner-form>
+                                        <ng-template #elseComuniCaricati>
+                                            <select class="form-control" id="comune" [(ngModel)]="verbale.comune"
+                                                name="comune" #comune="ngModel" [compareWith]="byId"
+                                                [disabled]="isDisabledComune()" required>
+                                                <option *ngFor="let com of comuneModel" [ngValue]="com">
+                                                    {{com.denominazione}}</option>
+                                            </select>
+                                            <div *ngIf="comune.invalid && (comune.dirty || comune.touched)"
+                                                class="alert alert-danger">
+                                                <div *ngIf="comune.errors.required ">
+                                                    Il comune è richiesta
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        <label for="indirizzo" class="control-label">Indirizzo</label>
+                                        <input type="text" id="indirizzo" class="form-control" name="indirizzo"
+                                            #indirizzo="ngModel" [(ngModel)]="verbale.indirizzo" required>
+                                        <div *ngIf="indirizzo.invalid && (indirizzo.dirty || indirizzo.touched)"
+                                            class="alert alert-danger">
+                                            <div *ngIf="indirizzo.errors.required ">
+                                                L'indirizzo è richiesto
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="checkbox col-xs-12 col-sm-12 col-md-3 col-lg-3 padding-top-15">
+                                        <label><input type="checkbox" name="cont" id="cont"
+                                                [(ngModel)]="verbale.contestato"
+                                                (ngModelChange)="changeVerbaleContestato($event)"><strong>Contestato
+                                                Immediatamente
+                                            </strong></label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div *ngIf="showRiferimentiNormativi" class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                style="padding-left: 20px; padding-right: 20px; padding-top: 20px">
+                                <h4 class="border-title"><strong>Riferimenti normativi</strong></h4>
+                                <div class="form-group row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <div
+                                            class="col-xs-12 col-sm-12 col-md-8 col-lg-8  padding-top-15 padding-bottom-15">
+                                        </div>
+                                        <div
+                                            class="col-xs-12 col-sm-12 col-md-4 col-lg-4  padding-top-15 padding-bottom-15">
+                                            <label for="ente" class="control-label">Ente</label>
+                                            <select class="form-control" id="ente"
+                                                [(ngModel)]="verbale.enteRiferimentiNormativi" name="ente"
+                                                [compareWith]="byId"
+                                                (change)="changeEnte(verbale.enteRiferimentiNormativi.id)" required
+                                                *ngIf="!singoloEnte; else elseSingoloEnte">
+                                                <option *ngFor="let e of enteModel" [ngValue]="e">{{e.denominazione}}
+                                                </option>
+                                            </select>
+                                            <ng-template #elseSingoloEnte>
+                                                {{verbale.enteRiferimentiNormativi.denominazione}}
+                                            </ng-template>
+                                        </div>
+                                        <div
+                                            *ngFor="let rif of verbale.riferimentiNormativi; let i = index; trackBy: trackByFn">
+                                            <ng-container *ngIf="isVisible[i]"
+                                                class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
+                                                    <label for="ambito_{{i}}" class="control-label">Acronimo ambito
+                                                    </label>
+                                                    <shared-spinner-form [diameter]="30"
+                                                        *ngIf="!(loadedAmbito[i]); else elseAmbito">
+                                                    </shared-spinner-form>
+                                                    <ng-template #elseAmbito>
+                                                        <select class="form-control" id="ambito_{{i}}"
+                                                            [(ngModel)]="verbale.riferimentiNormativi[i].ambito"
+                                                            [compareWith]="byId" name="ambito_{{i}}"
+                                                            (change)="changeAmbito(i, rif.ambito.id)" required
+                                                            [disabled]="isDisabledAmbito(i)">
+                                                            <option *ngFor="let ambito of ambitoModel[i]" [ngValue]="ambito">
+                                                                {{ambito.acronimo}}</option>
+                                                        </select>
+                                                    </ng-template>
+                                                </div>      
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
+                                                    <label for="norViolata_{{i}}" class="control-label">Norma
+                                                        violata
+                                                    </label>
+                                                    <shared-spinner-form [diameter]="30"
+                                                        *ngIf="!(loadedNorma[i]); else elseNormativaViolata">
+                                                    </shared-spinner-form>
+                                                    <ng-template #elseNormativaViolata>
+                                                        <select class="form-control" id="norViolata_{{i}}"
+                                                            [(ngModel)]="verbale.riferimentiNormativi[i].norma"
+                                                            [compareWith]="byId" name="norViolata_{{i}}"
+                                                            (change)="changeNormativa(i, rif.norma.id)" required
+                                                            [disabled]="isDisabledNorma(i)">
+                                                            <option *ngFor="let norm of normaModel[i]" [ngValue]="norm">
+                                                                {{norm.denominazione}}</option>
+                                                        </select>
+                                                    </ng-template>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
+                                                    <label for="articolo_{{i}}" class="control-label">Articolo</label>
+                                                    <shared-spinner-form [diameter]="30"
+                                                        *ngIf="!(loadedArticolo[i]); else elseArticolo">
+                                                    </shared-spinner-form>
+                                                    <ng-template #elseArticolo>
+                                                        <select class="form-control" id="articolo_{{i}}"
+                                                            [(ngModel)]="verbale.riferimentiNormativi[i].articolo"
+                                                            [compareWith]="byId" name="articolo_{{i}}"
+                                                            (change)="changeArticolo(i, rif.articolo.id)" required
+                                                            [disabled]="isDisabledArticolo(i)">
+                                                            <option *ngFor="let art of articoloModel[i]"
+                                                                [ngValue]="art">{{art.denominazione}}</option>
+                                                        </select>
+                                                    </ng-template>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
+                                                    <label for="comma_{{i}}" class="control-label">Comma</label>
+                                                    <shared-spinner-form [diameter]="30"
+                                                        *ngIf="!(loadedComma[i]); else elseComma"></shared-spinner-form>
+                                                    <ng-template #elseComma>
+                                                        <select class="form-control" id="comma_{{i}}"
+                                                            [(ngModel)]="verbale.riferimentiNormativi[i].comma"
+                                                            [compareWith]="byId" name="comma_{{i}}"
+                                                            (change)="changeComma(i, rif.comma.id)" required
+                                                            [disabled]="isDisabledComma(i)">
+                                                            <option *ngFor="let com of commaModel[i]" [ngValue]="com">
+                                                                {{com.denominazione}}</option>
+                                                        </select>
+                                                    </ng-template>
+                                                </div>
+                                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
+                                                    <label for="lettera_{{i}}" class="control-label">Lettera</label>
+                                                    <shared-spinner-form [diameter]="30"
+                                                        *ngIf="!(loadedLettera[i]); else elseLettera">
+                                                    </shared-spinner-form>
+                                                    <ng-template #elseLettera>
+                                                        <select class="form-control" id="lettera_{{i}}"
+                                                            [(ngModel)]="verbale.riferimentiNormativi[i].lettera"
+                                                            [compareWith]="byId" name="lettera_{{i}}" required
+                                                            [disabled]="isDisabledLettera(i)">
+                                                            <option *ngFor="let lett of letteraModel[i]"
+                                                                [ngValue]="lett">{{lett.denominazione}}</option>
+                                                        </select>
+                                                    </ng-template>
+                                                </div>
+                                                <div
+                                                    class="col-xs-12 col-sm-12 col-md-12 col-lg-2 padding-top-25 text-center">
+                                                    <button type="button" class="btn-icon-conam button-garnet"
+                                                        (click)="eliminaRiferimentoNormativo(i)"
+                                                        [disabled]="isDisabledElimina()">
+                                                        <i
+                                                            class="glyphicon glyphicon-remove btn-glyphicon img-circle text-danger-icon-conam"></i>
+                                                    </button>
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-top-15">
+                                            <shared-alert [message]="messageWarning" [type]="typeWarning"
+                                                *ngIf="showWarning"></shared-alert>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right padding-top-10">
+                                            <button type="button" class="btn-conam button-green"
+                                                (click)="nuovoRiferimentoNormativo()" [disabled]="isDisabledAggiungi()">
+                                                <i
+                                                    class="glyphicon glyphicon-plus btn-glyphicon img-circle text-green-conam"></i>
+                                                Aggiungi riferimenti normativi</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="showSoggetto" class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                            style="padding-top: 20px">
+                                <pregresso-soggetto 
+                                    [idVerbale]="idVerbale"
+                                    (onSoggettoChange)="soggettoChange($event)"
+                                ></pregresso-soggetto>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">                                
+                        <button type="button" class="btn-conam button-green"
+                            (click)="creaFascicolo()"
+                            [disabled]="isDisabledCreaFascicolo(datiVerbale.form.valid)">
+                            <i class="glyphicon glyphicon-pencil btn-glyphicon img-circle text-green-conam"></i>
+                            Conferma dati</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+</div>
+<shared-dialog [titolo]="'Attenzione'" [subMessages]="subMessages" [testo]="messageDialog" [buttonConfirmText]="buttonConfirmText"
+    [buttonAnnullaText]="buttonAnnullaText"></shared-dialog>

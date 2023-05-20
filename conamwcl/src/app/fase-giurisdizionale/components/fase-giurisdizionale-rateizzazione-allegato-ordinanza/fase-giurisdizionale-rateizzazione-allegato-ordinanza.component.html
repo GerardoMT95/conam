@@ -1,0 +1,381 @@
+<div class="container-fluid">
+  <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+  <shared-spinner *ngIf="!loaded"></shared-spinner>
+  <div
+    class="principal-div col-xs-12 col-sm-12 col-md-10 col-lg-10"
+    *ngIf="loaded"
+    style="padding-top: 30px"
+  >
+    <form>
+      <div class="panel-conam panel-primary-conam">
+        <div class="panel-heading-conam">
+          <strong>Inserimento Istanza di Rateizzazione</strong>
+        </div>
+        <div class="panel-body panel-body-background">
+          <div class="form-group row">
+            <shared-alert
+              [message]="messageTop"
+              [type]="typeMessageTop"
+              *ngIf="showMessageTop"
+            >
+            </shared-alert>
+            <div *ngIf="documenti.length === 0">
+              <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 checkbox">
+                  <label class="radio-label"
+                    ><input
+                      type="checkbox"
+                      name="allegatoM"
+                      id="allegatoM"
+                      class="checkbox-input"
+                      [(ngModel)]="allegatoM"
+                      (ngModelChange)="clearAllegatiMultipli($event)"
+                    />Allegati multipli
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <h4 class="border-title">
+                    <strong>Caricamento istanza</strong>
+                  </h4>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                  Tipologia di Caricamento istanza
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                  <select
+                    class="form-control"
+                    id="typeUpload"
+                    [(ngModel)]="typeUpload"
+                    [compareWith]="byId"
+                    name="typeUpload"
+                    (change)="typeUploadChange()"
+                    required
+                  >
+                    <option *ngFor="let type of typeUploads" [ngValue]="type">
+                      {{ type.denominazione }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div *ngIf="typeUpload && typeUpload.id == 1">
+                  <shared-allegato (onNewFile)="onNewFileDevice($event)">
+                  </shared-allegato>
+                </div>
+                <div *ngIf="typeUpload && typeUpload.id == 2">
+                  <shared-allegato-documento-protocollato
+                    (onSelected)="onSelectedDocumentoProtocollato($event)"
+                    [idVerbale]="idVerbale"
+                    [multipleSelection]="false"
+                  >
+                  </shared-allegato-documento-protocollato>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="documenti.length > 0">
+              <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <h4 class="border-title">
+                    <strong>Istanza di Rateizzazione</strong>
+                  </h4>
+                </div>
+                <datatable
+                  [data]="documenti"
+                  [config]="config"
+                  (download)="getAllegato($event)"
+                >
+                </datatable>
+              </div>
+            </div>
+
+            <div *ngIf="allegatoM || fileMaster">
+              <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <h4 class="border-title">
+                    <strong>Allegati all'istanza</strong>
+                  </h4>
+                </div>
+              </div>
+              <div>
+                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                    Tipologia di Caricamento allegati
+                  </div>
+                  <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                    <select
+                      class="form-control"
+                      id="typeUploadTwo"
+                      [(ngModel)]="typeUploadTwo"
+                      [compareWith]="byId"
+                      name="typeUploadTwo"
+                      required
+                      [disabled]="
+                        uploaderM.queue.length > 0 ||
+                        allegatiProtocollati.length > 0
+                      "
+                    >
+                      <option
+                        *ngFor="let type of typeUploadsTwo"
+                        [ngValue]="type"
+                      >
+                        {{ type.denominazione }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div *ngIf="typeUploadTwo && typeUploadTwo.id == 1">
+                  <div
+                    class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                  >
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                      <shared-alert
+                        #sharedAlert
+                        [message]="messageTopM"
+                        [type]="typeMessageTopM"
+                        *ngIf="showMessageTop"
+                      ></shared-alert>
+                    </div>
+
+                    <div
+                      class="col-xs-12 col-sm-3 col-md-3 col-lg-3"
+                      style="padding-top: 30px"
+                    >
+                      <button
+                        *ngIf="
+                          (!confermaM && !eliminaM) || (confermaM && eliminaM)
+                        "
+                        type="button"
+                        class="btn-conam button-green"
+                        (click)="fileInput.click()"
+                      >
+                        <i
+                          class="glyphicon glyphicon-plus btn-glyphicon img-circle text-green-conam"
+                        ></i>
+                        Aggiungi
+                      </button>
+                      <span
+                        style="
+                          visibility: hidden;
+                          position: absolute;
+                          overflow: hidden;
+                          width: 0px;
+                          height: 0px;
+                          border: none;
+                          margin: 0;
+                          padding: 0;
+                        "
+                      >
+                        <input
+                          type="file"
+                          #fileInput
+                          ng2FileSelect
+                          [uploader]="uploaderM"
+                          multiple
+                          (click)="aggiungiM()"
+                        />
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div *ngIf="typeUploadTwo && typeUploadTwo.id == 2">
+                  <shared-allegato-documento-protocollato
+                    (onSelected)="
+                      onSelectedDocumentoProtocollatoAllegato($event)
+                    "
+                    (onSearch)="onSearchDocumentoProtocollatoAllegato($event)"
+                    [idVerbale]="idVerbale"
+                    [allegatiProtocollati]="allegatiProtocollati"
+                    [multipleSelection]="true"
+                    [resetSelection]="resetSelection"
+                    [printNameFiles]="false"
+                  >
+                  </shared-allegato-documento-protocollato>
+                </div>
+                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <div
+                    *ngIf="uploaderM.getNotUploadedItems().length"
+                    class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left"
+                    style="padding-bottom: 30px; padding-top: 30px"
+                  >
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th width="50%">Nome allegati aggiunti</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of uploaderM.queue">
+                          <td>{{ item?.file?.name }}</td>
+                          <td class="text-left">
+                            <span *ngIf="item.isError"
+                              ><i class="glyphicon glyphicon-remove"></i
+                            ></span>
+                          </td>
+                          <td nowrap class="text-right">
+                            <button
+                              type="button"
+                              class="btn-conam button-garnet btn-xs"
+                              (click)="eliminaFile(item, null)"
+                            >
+                              <i
+                                class="glyphicon glyphicon-trash btn-glyphicon img-circle text-garnet-conam"
+                              ></i>
+                              Elimina
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="text-right">
+                      <button
+                        type="button"
+                        class="btn-conam button-garnet btn-glyphicon"
+                        (click)="eliminaFile(null, uploaderM)"
+                        [disabled]="!uploaderM.queue.length"
+                      >
+                        <i
+                          class="glyphicon glyphicon-trash btn-glyphicon img-circle text-garnet-conam"
+                        ></i>
+                        Elimina tutti
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <div
+                    *ngIf="allegatiProtocollati.length > 0"
+                    class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left"
+                    style="padding-bottom: 30px; padding-top: 30px"
+                  >
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th width="50%">Nome allegati aggiunti</th>
+                          <th width="25%">Numero Protocollo</th>
+                          <th width="25%"> </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let allegato of allegatiProtocollati">
+                          <td
+                            *ngIf="
+                              allegato.filename && !allegato.filename.nomeFile
+                            "
+                          >
+                            {{ allegato.filename }}
+                          </td>
+                          <td *ngIf="allegato.numProtocolloMaster">
+                            {{ allegato.numProtocolloMaster }}
+                          </td>
+                          <td *ngIf="allegato.numProtocollo">
+                            {{ allegato.numProtocollo }}
+                          </td>
+
+                          <td nowrap class="text-right">
+                            <button
+                              type="button"
+                              class="btn-conam button-garnet btn-xs"
+                              (click)="eliminaFileProtoccolatiDialog(allegato)"
+                            >
+                              <i
+                                class="glyphicon glyphicon-trash btn-glyphicon img-circle text-garnet-conam"
+                              ></i>
+                              Elimina
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <div class="text-right">
+                      <button
+                        type="button"
+                        class="btn-conam button-garnet btn-glyphicon"
+                        (click)="eliminaFileProtoccolatiDialog()"
+                        [disabled]="allegatiProtocollati.length == 0"
+                      >
+                        <i
+                          class="glyphicon glyphicon-trash btn-glyphicon img-circle text-garnet-conam"
+                        ></i>
+                        Elimina tutti
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right"
+            >
+
+              <button type="button" class="btn-conam button-blue" (click)="back()">
+                <i class="glyphicon glyphicon-arrow-left btn-glyphicon img-circle text-blue-conam"></i>
+                Indietro
+              </button>
+
+              <button
+                *ngIf="!allegatoM && !fileMaster"
+                type="button"
+                class="btn-conam button-green"
+                (click)="salvaAllegato()"
+                [disabled]="
+                  documentoProtocollato == undefined && file == undefined
+                "
+              >
+                <i
+                  class="glyphicon glyphicon-ok btn-glyphicon img-circle text-green-conam"
+                ></i>
+                Conferma
+              </button>
+              <button
+                *ngIf="allegatoM && !fileMaster"
+                type="button"
+                class="btn-conam button-green"
+                (click)="salvaAllegato()"
+                [disabled]="
+                  (!documentoProtocollato == undefined && !file == undefined) ||
+                  (uploaderM.queue.length == 0 &&
+                    allegatiProtocollati.length == 0)
+                "
+              >
+                <i
+                  class="glyphicon glyphicon-ok btn-glyphicon img-circle text-green-conam"
+                ></i>
+                Conferma
+              </button>
+              <button
+                *ngIf="fileMaster"
+                type="button"
+                class="btn-conam button-green"
+                (click)="salvaAllegato()"
+                [disabled]="
+                  uploaderM.queue.length == 0 &&
+                  allegatiProtocollati.length == 0
+                "
+              >
+                <i
+                  class="glyphicon glyphicon-ok btn-glyphicon img-circle text-green-conam"
+                ></i>
+                Conferma
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+</div>
+<shared-dialog
+  [id]="'myModalSDInsert'"
+  [titolo]="'Istanza di rateizzazione'"
+  [subMessages]="subMessages"
+  [testo]="messageDialog"
+  [buttonConfirmText]="buttonConfirmText"
+  [buttonAnnullaText]="buttonAnnullaText"
+>
+</shared-dialog>

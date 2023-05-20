@@ -1,0 +1,166 @@
+<form #formRicerca="ngForm" (ngSubmit)="ricercaScritto()">
+ 
+  <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 text-center">
+    <input
+      type="checkbox"
+      name="scrittoDifensivo"
+      id="scrittoDifensivo"
+      class="checkbox-input"
+      [checked]="tabScrittoDifensivo"
+      (click)="tabActions.changeScrittoDifensivo()"
+    />
+    <label for="scrittoDifensivo" class="checkbox-label">
+      <div class="checkbox-text">
+        <p class="checkbox-text--title">Dati Scritti Difensivi</p>
+        <p class="checkbox-text--description">
+          <span class="un">Clicca per abilitare</span>
+        </p>
+      </div>
+      
+      <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <label for="numeroProtocollo" class="control-label"
+            >Numero protocollo</label
+          >
+          <input
+            type="text"
+            id="numeroProtocollo"
+            class="form-control"
+            name="numeroProtocollo"
+            [(ngModel)]="ricercaScrittoDifensivo.numeroProtocollo"
+            [disabled]="!tabScrittoDifensivo"
+            required
+          />
+        </div>
+      </div>
+    </label>
+  </div>
+
+  <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6 text-center">
+    <input
+      type="checkbox"
+      name="soggettoTrasgressore"
+      id="soggettoTrasgressore"
+      class="checkbox-input"
+      [checked]="tabTrasgressore"
+      (click)="tabActions.changeTrasgressore()"
+    />
+    <label for="soggettoTrasgressore" class="checkbox-label">
+      <div class="checkbox-text">
+        <p class="checkbox-text--title">Dati Soggetto</p>
+        <p class="checkbox-text--description">
+          <span class="un">Clicca per abilitare</span>
+        </p>
+      </div>
+      
+      <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 paddingTop40">
+          <div class="radio">
+            <input
+              id="personaFisica"
+              name="radio"
+              type="radio"
+              [disabled]="!this.tabTrasgressore"
+              (change)="tabActions.checkTrasgressorePersonaFisica()"
+              [checked]="isTrasgressorePersonaFisica"
+              [required]="!isTrasgressorePersonaGiuridica "
+            />
+            <label for="personaFisica" class="radio-label "
+              >Persona Fisica</label
+            >
+          </div>
+        </div>
+      
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <label for="cognome" class="control-label">Cognome</label>
+            <input
+              type="text"
+              id="cognome"
+              class="form-control"
+              name="cognome"
+              [(ngModel)]="soggettoVerbaleTrasgressore.cognome"
+              [disabled]="isDisable('CG', 'T')"
+              [required]="!ricercaScrittoDifensivo.numeroProtocollo" 
+            />
+          </div>
+        </div>
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <label for="nome" class="control-label">Nome</label>
+            <input
+              type="text"
+              id="nome"
+              class="form-control"
+              name="nome"
+              [(ngModel)]="soggettoVerbaleTrasgressore.nome"
+              [disabled]="isDisable('NM', 'T')"
+              [required]="!ricercaScrittoDifensivo.numeroProtocollo" 
+            />
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 paddingTop40">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="radio">
+            <input
+              id="personaGiuridica"
+              name="radio"
+              type="radio"
+              [disabled]="!tabTrasgressore"
+              (change)="tabActions.checkTrasgressorePersonaGiuridica()"
+              [checked]="isTrasgressorePersonaGiuridica"
+              [required]="!isTrasgressorePersonaFisica"
+            />
+            <label for="personaGiuridica" class="radio-label"
+              >Persona giuridica</label
+            >
+          </div>
+        </div>
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <label for="denominazione" class="control-label"
+              >Ragione sociale</label
+            >
+            <input
+              type="text"
+              id="denominazione"
+              class="form-control"
+              name="denominazione"
+              [(ngModel)]="soggettoVerbaleTrasgressore.ragioneSociale"
+              [disabled]="isDisable('DN', 'T')"
+              [required]="!ricercaScrittoDifensivo.numeroProtocollo" 
+            />
+          </div>
+        </div>
+        
+      </div>
+    </label>
+  </div>
+  
+  <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+      <button
+        type="button"
+        class="btn-conam button-garnet"
+        (click)="pulisciFiltri()"
+      >
+        <i
+          class="glyphicon glyphicon-erase btn-glyphicon img-circle text-garnet-conam"
+        ></i>
+        Pulisci filtri
+      </button>
+      <button
+        type="submit"
+        class="btn-conam button-yellow"
+        [disabled]="disableForm(formRicerca.form.valid)"
+      >
+        <i
+          class="glyphicon glyphicon-search btn-glyphicon img-circle text-yellow-conam"
+        ></i>
+        Ricerca Scritto Difensivo
+      </button>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,19 @@
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="soggetto.personaFisica">
+    <shared-soggetto-dati [soggetto]="soggetto" [loaded]="loaded"></shared-soggetto-dati>
+</div>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="!soggetto.personaFisica">
+        <shared-soggetto-dati-aziendali [soggetto]="soggetto" [loaded]="loaded"></shared-soggetto-dati-aziendali>
+    </div>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <shared-soggetto-dati-residenza [soggetto]="soggetto" [loaded]="loaded"></shared-soggetto-dati-residenza>
+</div>
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <shared-soggetto-ruolo [soggetto]="soggetto" [loaded]="loaded"[ruolo]="ruolo" [nota]="nota"></shared-soggetto-ruolo>
+</div>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="soggetto.relataNotifica">
+    <shared-soggetto-notifica-relata [soggetto]="soggetto" [loaded]="loaded"[ruolo]="ruolo" [nota]="nota"></shared-soggetto-notifica-relata>
+</div>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <shared-soggetto-recidivita [soggetto]="soggetto" ></shared-soggetto-recidivita>
+</div>

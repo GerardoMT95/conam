@@ -1,0 +1,172 @@
+<div class="container-fluid">
+    <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+    <div id="scrollTop"></div>
+    <shared-spinner *ngIf="!loaded"></shared-spinner>
+    <div class="principal-div col-xs-12 col-sm-12 col-md-10 col-lg-10" style="padding-top: 30px" *ngIf="loaded">
+        <form #creaOrdinanza="ngForm">
+            <div class="panel-conam panel-primary-conam">
+                <div class="panel-heading-conam">
+                    <strong>Ricerca verbale per inserimento ordinanza</strong>
+                </div>
+                <div class="panel-body panel-body-background">
+                    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <shared-alert [message]="messageTop" [type]="typeMessageTop" *ngIf="showMessageTop">
+                        </shared-alert>
+                        <div class="form-group row">
+                            <shared-verbale-dettaglio-soggetti  *ngIf="!showAnnullamentoParts" [config]="config" [idVerbale]="idVerbale"
+                                (selected)="addToArraySoggettiSelezionati($event)">
+                            </shared-verbale-dettaglio-soggetti>
+                            <shared-ordinanza-dettaglio-soggetti  *ngIf="showAnnullamentoParts" 
+                            [idOrdinanza]="idOrdinanza" 
+                            [idVerbale]="idVerbale"  
+                            [config]="configSoggettiOrdinanza"
+                            (selected)="addToArraySoggettiSelezionatiAnnullamento($event)"
+                            >
+                            </shared-ordinanza-dettaglio-soggetti>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body panel-body-background">
+                    <div class="form-group row">
+                        <shared-allegato-metadati-inserimento *ngIf="loadedCategoriaAllegato"
+                            [tipoAllegatoInput]="tipoAllegatoModel" (onNewFile)="addAllegato($event)"
+                            [enableMetadati]="false" [isCreaOrdinanza]="isCreaOrdinanza">
+                        </shared-allegato-metadati-inserimento>
+                    </div>
+                </div>
+
+                <div *ngIf="!showAnnullamentoParts && soggettiArray.length > 1 && isTipoAllegatoIngiunzione()">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <h4 class="border-title"><strong>Tipologia di ordinanza</strong></h4>
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="checkbox col-xs-12 col-sm-12 col-md-3 col-lg-3 padding-top-15">
+                            <label><input type="checkbox" name="checkboxOrdinanza"
+                                    [(ngModel)]="checkboxOrdinanzaMista"><strong>Ordinanza
+                                    mista
+                                </strong></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-body panel-body-background"
+                    *ngIf="!showAnnullamentoParts && soggettiArray.length > 1 && checkboxOrdinanzaMista && isTipoAllegatoIngiunzione()">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <shared-alert [message]="'Scegliere almeno un valore diverso'" [type]="'WARNING'"
+                            *ngIf="showCheckboxWarning()">
+                        </shared-alert>
+                        <div class="form-group col-xs-12 col-sm-12  col-md-6 col-lg-6"
+                            *ngFor="let s of soggettiArray; let ind = index">
+                            <label for="{{s.identificativoSoggetto}}" class="control-label">{{s.nome}}</label>
+                            <select class="form-control" id="{{s.identificativoSoggetto}}"
+                                [(ngModel)]="s.idTipoOrdinanza" name="{{s.identificativoSoggetto}}" [compareWith]="byId"
+                                required #tipoOrdinanza="ngModel">
+                                <option *ngFor="let tip of tipoOrdinanzaSoggettoModel" [ngValue]="tip">
+                                    {{tip.denominazione}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <h4 class="border-title"><strong>Dati Ordinanza</strong></h4>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="form-group col-xs-12 col-sm-12  col-md-6 col-lg-6">
+                            <label for="numDeterminazione" class="control-label">Numero determinazione</label>
+                            <input type="text" id="numDeterminazione" class="form-control" required
+                                #numeroDeterminazione="ngModel" name="numDeterminazione" maxlength="12"
+                                [(ngModel)]="ordinanza.numDeterminazione">
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-12  col-md-6 col-lg-6"
+                            *ngIf="isTipoAllegatoIngiunzione()">
+                            <label for="importoOrdinanza" class="control-label">Importo Ordinanza</label>
+                            <input type="number" id="importoOrdinanza" class="form-control" name="importoOrdinanza"
+                                #importoOrdinanza="ngModel" [(ngModel)]="ordinanza.importoOrdinanza" [min]="0" required>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="form-group col-xs-12 col-sm-12  col-md-6 col-lg-6">
+                            <label for="dataDeterminazione" class="control-label">Data Determinazione</label>
+                            <div class='input-group date' id='datepicker1'>
+                                <input type='text' id="dataDeterminazione" [(ngModel)]="ordinanza.dataDeterminazione"
+                                    name="dataDeterminazione" #datePicker1="ngModel"
+                                    (blur)="manageDatePicker($event, 1)" class="form-control date-picker" required />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-xs-12 col-sm-12  col-md-6 col-lg-6">
+                            <label for="dataOrdinanza" class="control-label">Data Ordinanza</label>
+                            <div class='input-group date' id='datepicker2'>
+                                <input type='text' id="dataOrdinanza" [(ngModel)]="ordinanza.dataOrdinanza"
+                                    name="dataOrdinanza" #datePicker2="ngModel" (blur)="manageDatePicker($event, 2)"
+                                    required class="form-control date-picker" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="isTipoAllegatoIngiunzione()">
+                        <div class="form-group col-xs-12 col-sm-12  col-md-6 col-lg-6">
+                            <label for="dataScadenza" class="control-label">Data Scadenza Rata Ordinanza</label>
+                            <div class='input-group date' id='datepicker3'>
+                                <input type='text' id="dataDeterminazione" [(ngModel)]="ordinanza.dataScadenza"
+                                    name="dataScadenza" #datePicker3="ngModel" (blur)="manageDatePicker($event, 3)"
+                                    class="form-control date-picker" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                   
+                        <div class="form-group col-xs-12 col-sm-12  col-md-6 col-lg-6">
+                            <label for="dataFineValidita" class="control-label">Data fine validità pagamento</label>
+                            <div class='input-group date' id='datepicker4'>
+                                <input type='text' id="dataFineValidita" [(ngModel)]="ordinanza.dataFineValidita"
+                                    name="dataFineValidita" #datePicker4="ngModel" (blur)="manageDatePicker($event, 4)"
+                                    class="form-control date-picker" required />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>                  
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">                            
+                        <shared-inserimento-notifica [idOrdinanza]="ordinanza.idOrdinanza" (save)="save($event)" (importNotificaInserito)="importNotificaInseritoHandler($event)">
+                        </shared-inserimento-notifica>                            
+                </div>
+
+                <div class="panel-body panel-body-background">
+                    <div class="form-group col-xs-12 col-sm-12  col-md-12 col-lg-12">
+
+                        <div *ngIf="!showAnnullamentoParts" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                            <button type="button" class="btn-conam button-green" (click)="salvaOrdinanza()"
+                                [disabled]="!creaOrdinanza.valid || soggettiArray.length==0  || !isAllegatoCaricato() || showCheckboxWarning() || isImportoNotificaInserito">
+                                <i class="glyphicon glyphicon-floppy-save btn-glyphicon img-circle text-green-conam"></i>
+                                Crea ordinanza</button>
+                        </div>
+                        <div *ngIf="showAnnullamentoParts" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                            <button type="button" class="btn-conam button-green" (click)="salvaOrdinanzaAnnullamento()"
+                                [disabled]="!creaOrdinanza.valid || soggettiArray.length==0  || !isAllegatoCaricato() || showCheckboxWarning() || isImportoNotificaInserito">
+                                <i class="glyphicon glyphicon-floppy-save btn-glyphicon img-circle text-green-conam"></i>
+                                Crea ordinanza annullamento</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </form>
+    </div>
+    <div class="principal-div col-xs-12 col-sm-12 col/-md-1 col-lg-1"></div>
+</div>

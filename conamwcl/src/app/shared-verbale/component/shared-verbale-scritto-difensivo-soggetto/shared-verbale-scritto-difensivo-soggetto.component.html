@@ -1,0 +1,76 @@
+<form #scrittoDifensivoSoggetto="ngForm">
+    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h4 class="border-title">
+                <strong>Dati del soggetto</strong>
+            </h4>
+        </div>
+    </div>
+    <div *ngIf="!isEdit" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div *ngIf="scrittoDifensivo.nome" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <b>Nome:</b> {{ scrittoDifensivo.nome }}<br />
+        </div>
+        <div *ngIf="scrittoDifensivo.cognome" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <b>Cognome:</b> {{ scrittoDifensivo.cognome }}<br />
+        </div>
+        <div *ngIf="scrittoDifensivo.ragioneSociale" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <b>Ragione sociale:</b> {{ scrittoDifensivo.ragioneSociale }}<br />
+        </div>
+    </div>
+    <div *ngIf="isEdit" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                style="border: 2px solid #0153a9; padding: 30px">
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 padding-top-15">
+                    <div class="radio">
+                        <input id="personaFisica" name="radio" type="radio" [checked]="personaFisica"
+                            (click)="cambiaPersona('F')" />
+                        <label for="personaFisica" class="radio-label">Persona fisica</label>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 padding-top-15">
+                    <div class="radio">
+                        <input id="personaGiuridica" name="radio" type="radio" [checked]="!personaFisica"
+                            (click)="cambiaPersona('G')" />
+                        <label for="personaGiuridica" class="radio-label">Persona giuridica</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--form inserimento persona fisica-->
+    <div *ngIf="isEdit" class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div *ngIf="personaFisica">
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                    <label for="nome" class="control-label">Nome</label>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                    <input type="text" id="nome" class="form-control" name="nome" [(ngModel)]="scrittoDifensivo.nome"
+                        required #nome="ngModel" />
+                </div>
+            </div>
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                    <label for="cognome" class="control-label">Cognome</label>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                    <input type="text" id="cognome" class="form-control" name="cognome"
+                        [(ngModel)]="scrittoDifensivo.cognome" required #cognome="ngModel" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--form persona giuridica-->
+    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="isEdit && !personaFisica">
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                <label for="ragioneSociale" class="control-label">Ragione Sociale</label>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+                <input type="text" id="ragioneSociale" class="form-control" name="ragioneSociale"
+                    [(ngModel)]="scrittoDifensivo.ragioneSociale" required #ragioneSociale="ngModel" />
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,15 @@
+JkMount /conam jb6part219lb
+JkMount /conam/* jb6part219lb
+
+3) Creare i relativi workers
+
+worker.jb6part219conamnode01.connect_timeout=30000
+worker.jb6part219conamnode01.prepost_timeout=300000
+worker.jb6part219conamnode01.reply_timeout=3000000
+worker.jb6part219conamnode01.port=31914
+worker.jb6part219conamnode01.lbfactor=1
+worker.jb6part219conamnode01.host=dev-jbfarm23.csi.it
+worker.jb6part219conamnode01.socket_keepalive=true
+worker.jb6part219conamnode01.type=ajp13
+worker.jb6part219conamnode01.socket_timeout=10
+

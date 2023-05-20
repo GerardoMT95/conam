@@ -1,0 +1,75 @@
+<div class="container-fluid">
+    <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+    <div id="scrollTop"></div>
+    <shared-spinner *ngIf="!loaded"></shared-spinner>
+    <div class="principal-div col-xs-12 col-sm-12 col-md-10 col-lg-10" *ngIf="loaded" style="padding-top: 30px">
+        <div class="panel-conam panel-primary-conam">
+            <div class="panel-heading-conam">
+                <strong>Rateizzazione</strong>
+            </div>
+            <div class="panel-body panel-body-background">
+                <shared-alert [message]="messageTop" [type]="typeMessageTop" *ngIf="showMessageTop"></shared-alert>
+                <div class="form-group row">
+                    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left">
+                        <shared-spinner *ngIf="!loadedIdSoggettiOrdinanza"></shared-spinner>
+                        <shared-ordinanza-dettaglio [idSoggettiOrdinanza]="idSoggettiOrdinanza"
+                            *ngIf="loadedIdSoggettiOrdinanza"></shared-ordinanza-dettaglio>
+                        <datatable [data]="listaSoggetti" [config]="configSoggetti" (onInfo)="onInfo($event)">
+                        </datatable>
+                    </div>
+                    <shared-pagamenti-dettaglio-piano [piano]="piano"></shared-pagamenti-dettaglio-piano>
+                    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <datatable [data]="rate" [config]="configRate"> </datatable>
+                        <div *ngIf="piano.isRichiestaBollettiniCreata && piano.isBollettiniEnable && loadedAction"
+                         class="alert alert-warning col-xs-12 col-sm-12 col-md-12 col-lg-12" role="alert">
+                                <strong>Attenzione!</strong> La richiesta di creazione bollettini è stata inviata alla piattaforma dei pagamenti online PiemontePAY.
+                                 Per poter generare il PDF dei bollettini, cliccare sul pulsante "Scarica Bollettini".
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-12  col-md-12 col-lg-12">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                                <button type="button" class="btn-conam button-green"
+                                    (click)="inviaRichiestaBollettini()"
+                                    *ngIf="piano.isBollettiniEnable && !piano.isRichiestaBollettiniCreata && loadedAction">
+                                    <i class="glyphicon glyphicon-send btn-glyphicon img-circle text-green-conam"></i>
+                                    Invia Richiesta Bollettini</button>
+
+                                <button type="button" class="btn-conam button-grey" (click)="scaricaBollettini()"
+                                    *ngIf="piano.isRichiestaBollettiniCreata && piano.isBollettiniEnable && loadedAction ">
+                                    <i
+                                        class="glyphicon glyphicon-floppy-save btn-glyphicon img-circle text-grey-conam"></i>
+                                    Scarica Bollettini</button>
+
+                                <button type="button" class="btn-conam button-blue" (click)="completaLetteraPiano()"
+                                    *ngIf="!piano.isLetteraCreata">
+                                    <i
+                                        class="glyphicon glyphicon-share-alt btn-glyphicon img-circle text-blue-conam"></i>
+                                    Compila Lettera Piano</button>
+
+                                <button type="button" class="btn-conam button-blue" (click)="goToInserisciNotifica()"
+                                    *ngIf="!piano.isNotificaCreata && piano.isNotificaEnable && loadedAction">
+                                    <i
+                                        class="glyphicon glyphicon-share-alt btn-glyphicon img-circle text-blue-conam"></i>
+                                    Inserisci Notifica</button>
+
+                                <button type="button" class="btn-conam button-blue" (click)="goToVisualizzaNotifica()"
+                                    *ngIf="piano.isNotificaCreata && piano.isNotificaEnable && loadedAction">
+                                    <i
+                                        class="glyphicon glyphicon-share-alt btn-glyphicon img-circle text-blue-conam"></i>
+                                    Visualizza Notifica</button>
+
+                                <button type="button" class="btn-conam button-green" (click)="stampaPDF()"
+                                    *ngIf="piano.isLetteraCreata && loadedAction">
+                                    <i class="glyphicon glyphicon-print btn-glyphicon img-circle text-green-conam"></i>
+                                    Stampa lettera</button>
+
+                                <shared-spinner-form *ngIf="!loadedAction" [diameter]="30" [position]="'right'">
+                                </shared-spinner-form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+</div>

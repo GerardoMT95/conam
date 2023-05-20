@@ -1,0 +1,38 @@
+<div class="container-fluid">
+    <div class="principal-div col-xs-12 col-sm-12 col-md-12 col-lg-1"></div>
+    <div class="principal-div col-xs-12 col-sm-12 col-md-12 col-lg-10" style="padding-top: 30px">
+        <form>
+            <div class="panel-conam panel-primary-conam">
+                <div class="panel-heading-conam">
+                    <strong>Inserimento Comunicazioni Cancelleria</strong>
+                </div>
+                <div class="panel-body panel-body-background">
+                    <shared-alert [message]="messageTop" [type]="typeMessageTop" *ngIf="showMessageTop"></shared-alert>
+                    <div class="form-group row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <shared-ordinanza-dettaglio [idOrdinanza]="idOrdinanza"></shared-ordinanza-dettaglio>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <shared-ordinanza-dettaglio-soggetti [idOrdinanza]="idOrdinanza" [config]="configSoggetti">
+                            </shared-ordinanza-dettaglio-soggetti>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <shared-ordinanza-dettaglio-documenti [idOrdinanza]="idOrdinanza" [config]="configAllegati">
+                            </shared-ordinanza-dettaglio-documenti>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                            <button type="button" class="btn-conam button-blue"
+                                (click)="goToFaseGiurisdizionaleAllegatoCancelleria()">
+                                <i class="glyphicon glyphicon-share-alt btn-glyphicon img-circle text-blue-conam"></i>
+                                Aggiungi Comunicazioni Cancelleria</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="principal-div col-xs-12 col-sm-12 col/-md-12 col-lg-1"></div>
+</div>

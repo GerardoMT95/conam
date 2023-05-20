@@ -1,0 +1,233 @@
+<div class="container-fluid">
+  <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+  <div id="scrollTop"></div>
+  <shared-spinner *ngIf="!loaded"></shared-spinner>
+  <div
+    class="principal-div col-xs-12 col-sm-12 col-md-10 col-lg-10"
+    *ngIf="loaded"
+    style="padding-top: 30px"
+  >
+    <div class="panel-conam panel-primary-conam">
+      <div class="panel-heading-conam">
+        <strong
+          >Riepilogo
+          <b style="font-size: 17px" *ngIf="riepilogoVerbale?.verbale.pregresso"
+            >Pregresso</b
+          ></strong
+        >
+      </div>
+      <div class="panel-body panel-body-background">
+        <shared-alert
+          [message]="messageTop"
+          [type]="typeMessageTop"
+          *ngIf="showMessageTop"
+        ></shared-alert>
+        <shared-verbale-riepilogo
+          (delete)="refreshService()"
+        ></shared-verbale-riepilogo>
+        <div class="row">
+          <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div
+              class="padding-top-23"
+              *ngFor="let azione of azioneVerbale.azioneList; index as i"
+            >
+              <div
+                *ngIf="
+                  !azione.warningMessage &&
+                  azione.denominazione &&
+                  messaggioIstruttore &&
+                  azione &&
+                  visible
+                "
+                class="alert alert-warning"
+                role="alert"
+              >
+                <strong>Attenzione!</strong> Se NON si vuole assegnare il
+                fascicolo ad un altro funzionario istruttore, cliccare
+                direttamente sul pulsante di acquisizione.
+              </div>
+              <div
+                *ngIf="
+                  azione.denominazione &&
+                  azione.warningMessage &&
+                  azione &&
+                  visible
+                "
+                class="{{ 'alert alert-' + azione.warningMessage?.type }}"
+                role="alert"
+                [innerHTML]="azione.warningMessage?.message"
+              ></div>
+              <div class="row">
+                <form
+                  (ngSubmit)="salvaAzioneVerbale(azione, i)"
+                  *ngIf="azione && visible"
+                >
+                  <div
+                    class="col-xs-12 col-sm-12 col-md-4 col-lg-4"
+                    *ngIf="azione.listaIstruttoriEnable"
+                  >
+                    <label for="funzionarioIstr" class="control-label"
+                      >Funzionario Istruttore a cui assegnare il
+                      fascicolo</label
+                    >
+                    <shared-spinner-form
+                      [diameter]="30"
+                      *ngIf="!loadedistruttore; else elseFunzionarioIstr"
+                    ></shared-spinner-form>
+                    <ng-template #elseFunzionarioIstr>
+                      <select
+                        class="form-control"
+                        id="funzionarioIstr"
+                        [(ngModel)]="salvaAzioneRequest[i].idFunzionario"
+                        name="funzionarioIstr"
+                        required
+                      >
+                        <option
+                          *ngFor="let funz of funzionarioIstrModel"
+                          [value]="funz.id"
+                        >
+                          {{ funz.denominazione }}
+                        </option>
+                      </select>
+                    </ng-template>
+                  </div>
+                  <div
+                    *ngIf="azione.denominazione"
+                    class="col-xs-12 col-sm-12 col-md-4 col-lg-4"
+                  >
+                    <button
+                      type="submit"
+                      class="btn-conam button-green"
+                      [disabled]="
+                        azione.listaIstruttoriEnable &&
+                        !salvaAzioneRequest[i].idFunzionario
+                      "
+                    >
+                      <i
+                        class="
+                          glyphicon glyphicon-transfer
+                          btn-glyphicon
+                          img-circle
+                          text-green-conam
+                        "
+                      ></i>
+                      {{ azione.denominazione }}
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="row padding-top-23">
+              <form
+                #modificaStatoForm="ngForm"
+                *ngIf="showStatoFascicoloSelect"
+              >
+                <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                  <label class="control-label">Seleziona stato fascicolo</label>
+                  <select
+                    class="form-control"
+                    id="modificaStatoFascicolo"
+                    aria-placeholder="Seleziona stato fascicolo"
+                    name="modificaStatoFascicolo"
+                    [(ngModel)]="statoFascicoloSelezionato"
+                    required
+                  >
+                    <option *ngFor="let stato of listaStati" [ngValue]="stato">
+                      {{ stato.denominazione }}
+                    </option>
+                  </select>
+                </div>
+
+                <div
+                  class="padding-top-23 col-xs-12 col-sm-12 col-md-4 col-lg-4"
+                >
+                  <button
+                    type="button"
+                    class="tn-conam button-green"
+                    (click)="confermaStatofascicolo()"
+                    [disabled]="!modificaStatoForm.form.valid"
+                  >
+                    <i
+                      class="
+                        glyphicon glyphicon-send
+                        btn-glyphicon
+                        img-circle
+                        text-green-conam
+                      "
+                    ></i>
+                    Conferma
+                  </button>
+                </div>
+              </form>
+            </div>
+            <div class="padding-top-23">
+              <div class="col-12 padding-top-23 text-right">
+                <button
+                  type="button"
+                  class="btn-conam button-blue"
+                  (click)="goToVerbaleAllegato()"
+                  *ngIf="azioneVerbale.aggiungiAllegatoEnable"
+                >
+                  <i
+                    class="
+                      glyphicon glyphicon-share-alt
+                      btn-glyphicon
+                      img-circle
+                      text-blue-conam
+                    "
+                  ></i>
+                  Aggiungi Allegato
+                </button>
+                <button
+                  type="button"
+                  class="btn-conam button-blue"
+                  (click)="editStatofascicolo()"
+                  *ngIf="
+                    riepilogoVerbale.verbale.stato.id != 12 ||
+                    riepilogoVerbale.verbale.stato.id != 13 ||
+                    riepilogoVerbale.verbale.stato.id != 14 ||
+                    riepilogoVerbale.verbale.stato.id != 15 ||
+                    riepilogoVerbale.verbale.stato.id != 18 ||
+                    riepilogoVerbale.verbale.stato.id != 19
+                  "
+                >
+                  <i
+                    *ngIf="!showStatoFascicoloSelect"
+                    class="
+                      glyphicon glyphicon-plus
+                      btn-glyphicon
+                      img-circle
+                      text-blue-conam
+                    "
+                  ></i>
+                  <i
+                    *ngIf="showStatoFascicoloSelect"
+                    class="
+                      glyphicon glyphicon-minus
+                      btn-glyphicon
+                      img-circle
+                      text-blue-conam
+                    "
+                  ></i>
+                  <span *ngIf="!showStatoFascicoloSelect"
+                    >Attribuzione Competenza</span
+                  >
+                  <span *ngIf="showStatoFascicoloSelect">Riepilogo</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+</div>
+<shared-dialog
+  [id]="'myModalRPSAVE'"
+  [titolo]="'Riepilogo Verbale'"
+  [testo]="messageDialog"
+  [buttonConfirmText]="'Conferma'"
+  [buttonAnnullaText]="'Annulla'"
+>
+</shared-dialog>

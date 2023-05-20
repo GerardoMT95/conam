@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.1.final using JasperReports Library version 6.2.1  -->
+<!-- 2019-08-06T08:51:31 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Template-Bollettino-rateizzazione" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3a198f7c-26e6-4466-8e16-f6ebefcfa2ac">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
+	<subDataset name="listabollettino" uuid="3c1341e8-28f8-4f2d-8c70-50834327e92a">
+		<parameter name="bollettinoPostale" class="java.awt.image.BufferedImage"/>
+		<parameter name="bollettinoBancario2xMezzo" class="java.awt.image.BufferedImage"/>
+		<parameter name="bollettinoIntestazione" class="java.awt.image.BufferedImage"/>
+		<queryString>
+			<![CDATA[]]>
+		</queryString>
+		<field name="dataScadenzaRata1" class="java.time.LocalDate">
+			<fieldDescription><![CDATA[dataScadenzaRata1]]></fieldDescription>
+		</field>
+		<field name="dataScadenzaRata2" class="java.time.LocalDate">
+			<fieldDescription><![CDATA[dataScadenzaRata2]]></fieldDescription>
+		</field>
+		<field name="codiceAvvisoRata2" class="java.lang.String">
+			<fieldDescription><![CDATA[codiceAvvisoRata2]]></fieldDescription>
+		</field>
+		<field name="codiceAvvisoRata1" class="java.lang.String">
+			<fieldDescription><![CDATA[codiceAvvisoRata1]]></fieldDescription>
+		</field>
+		<field name="enteCreditore" class="java.lang.String">
+			<fieldDescription><![CDATA[enteCreditore]]></fieldDescription>
+		</field>
+		<field name="numeroContoPostale" class="java.lang.String">
+			<fieldDescription><![CDATA[numeroContoPostale]]></fieldDescription>
+		</field>
+		<field name="cbill" class="java.lang.String">
+			<fieldDescription><![CDATA[cbill]]></fieldDescription>
+		</field>
+		<field name="autorizzazione" class="java.lang.String">
+			<fieldDescription><![CDATA[autorizzazione]]></fieldDescription>
+		</field>
+		<field name="denominazioneSoggetto" class="java.lang.String">
+			<fieldDescription><![CDATA[denominazioneSoggetto]]></fieldDescription>
+		</field>
+		<field name="importoRata2" class="java.math.BigDecimal">
+			<fieldDescription><![CDATA[importoRata2]]></fieldDescription>
+		</field>
+		<field name="cfEnteCreditore" class="java.lang.String">
+			<fieldDescription><![CDATA[cfEnteCreditore]]></fieldDescription>
+		</field>
+		<field name="importoRata1" class="java.math.BigDecimal">
+			<fieldDescription><![CDATA[importoRata1]]></fieldDescription>
+		</field>
+		<field name="oggettoPagamento" class="java.lang.String">
+			<fieldDescription><![CDATA[oggettoPagamento]]></fieldDescription>
+		</field>
+		<field name="intestatarioContoCorrentePostale" class="java.lang.String">
+			<fieldDescription><![CDATA[intestatarioContoCorrentePostale]]></fieldDescription>
+		</field>
+		<field name="numRata1" class="java.math.BigDecimal">
+			<fieldDescription><![CDATA[numRata1]]></fieldDescription>
+		</field>
+		<field name="numRata2" class="java.math.BigDecimal">
+			<fieldDescription><![CDATA[numRata2]]></fieldDescription>
+		</field>
+		<field name="qrcode2" class="java.awt.image.BufferedImage">
+			<fieldDescription><![CDATA[qrcode2]]></fieldDescription>
+		</field>
+		<field name="qrcode1" class="java.awt.image.BufferedImage">
+			<fieldDescription><![CDATA[qrcode1]]></fieldDescription>
+		</field>
+		<field name="dataMatrix2" class="java.awt.image.BufferedImage">
+			<fieldDescription><![CDATA[dataMatrix2]]></fieldDescription>
+		</field>
+		<field name="dataMatrix1" class="java.awt.image.BufferedImage">
+			<fieldDescription><![CDATA[dataMatrix1]]></fieldDescription>
+		</field>
+		<variable name="esisteSecondaRata" class="java.lang.Boolean">
+			<variableExpression><![CDATA[$F{numRata2}==null?false:true]]></variableExpression>
+		</variable>
+	</subDataset>
+	<parameter name="listaBollettiniJasper" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="bollettinoPostale" class="java.awt.image.BufferedImage"/>
+	<parameter name="bollettinoBancario2xMezzo" class="java.awt.image.BufferedImage">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="bollettinoIntestazione" class="java.awt.image.BufferedImage"/>
+	<queryString>
+		<![CDATA[select 1 from dual]]>
+	</queryString>
+	<detail>
+		<band height="770">
+			<componentElement>
+				<reportElement stretchType="RelativeToBandHeight" x="-20" y="-20" width="595" height="770" uuid="601659dc-4f5f-4167-8cd4-417785b6f685"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="listabollettino" uuid="21204a5b-c0ab-4540-84ea-7eab2ab6ebd9">
+						<datasetParameter name="bollettinoPostale">
+							<datasetParameterExpression><![CDATA[$P{bollettinoPostale}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="bollettinoBancario2xMezzo">
+							<datasetParameterExpression><![CDATA[$P{bollettinoBancario2xMezzo}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="bollettinoIntestazione">
+							<datasetParameterExpression><![CDATA[$P{bollettinoIntestazione}]]></datasetParameterExpression>
+						</datasetParameter>
+						<dataSourceExpression><![CDATA[$P{listaBollettiniJasper}]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="770" width="595">
+						<frame>
+							<reportElement stretchType="RelativeToTallestObject" x="0" y="550" width="595" height="160" uuid="5a855393-de51-469e-af9e-9a02323f6ee7">
+								<printWhenExpression><![CDATA[$V{esisteSecondaRata}]]></printWhenExpression>
+							</reportElement>
+							<image>
+								<reportElement x="0" y="0" width="595" height="160" uuid="8d5ffdd0-d4f6-420a-bcaa-648c28d30b07"/>
+								<imageExpression><![CDATA[$P{bollettinoPostale}]]></imageExpression>
+							</image>
+							<textField>
+								<reportElement x="492" y="37" width="90" height="20" uuid="c5fa05e5-2f71-4614-b4b0-0aa10db72518">
+									<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[new java.text.DecimalFormat("#,##0.00").format($F{importoRata2})]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="260" y="78" width="220" height="20" uuid="b5ebbd59-0ac9-48d4-89c9-efbcc7418795">
+									<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{denominazioneSoggetto}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="220" y="62" width="170" height="20" uuid="25f2e61c-c1f2-4a82-936e-e4401159a4ef"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{intestatarioContoCorrentePostale}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="260" y="98" width="220" height="25" uuid="773338fd-b71f-49a7-b0f7-abc47a6d0cf4"/>
+								<textElement textAlignment="Left" verticalAlignment="Top">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{oggettoPagamento}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="180" y="130" width="150" height="20" uuid="297c4d1e-ec87-4c3c-9082-a3a5cb5a928d"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{codiceAvvisoRata2}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="374" y="130" width="90" height="20" uuid="d4d4bbc0-7665-473e-8a4a-ad0184a7db40"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{cfEnteCreditore}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="448" y="11" width="30" height="20" uuid="71c9b9df-7bd6-4be2-9989-8ea34bb3d54f">
+									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{numRata2}]]></textFieldExpression>
+							</textField>
+							<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
+								<reportElement positionType="Float" x="491" y="77" width="70" height="70" uuid="c71b9192-94c4-4c1c-816d-013e68689634">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								</reportElement>
+								<imageExpression><![CDATA[$F{dataMatrix2}]]></imageExpression>
+							</image>
+							<textField>
+								<reportElement x="250" y="36" width="170" height="20" uuid="028d7846-a5cb-406e-9362-d472f10aaa35"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{numeroContoPostale}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="527" y="11" width="67" height="20" uuid="0c34309d-bbe3-4776-8495-4c65547200ff"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font size="9" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{dataScadenzaRata2}.format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"))]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="30" y="134" width="130" height="20" forecolor="#BAB6B6" uuid="e7a5afa4-6828-4066-956b-2bd8a90cf3ce"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{autorizzazione}]]></textFieldExpression>
+							</textField>
+						</frame>
+						<frame>
+							<reportElement x="0" y="390" width="595" height="160" uuid="4a46f979-6255-4baa-8ca0-31661e971e98"/>
+							<image evaluationTime="Report">
+								<reportElement x="0" y="0" width="595" height="160" uuid="b7c8b303-4b21-41e8-8bb2-c2cc0b77dfa6"/>
+								<imageExpression><![CDATA[$P{bollettinoPostale}]]></imageExpression>
+							</image>
+							<textField>
+								<reportElement x="448" y="11" width="30" height="20" uuid="bb0764e4-e33a-405f-8f09-89543d9ef37a">
+									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{numRata1}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="492" y="36" width="90" height="20" uuid="69fa783a-4b82-4b7c-a8a8-8a25479135c7"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[new java.text.DecimalFormat("#,##0.00").format($F{importoRata1})]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="260" y="78" width="220" height="20" uuid="3c6be273-e999-43e0-861d-ba57be8c5ccb">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{denominazioneSoggetto}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="220" y="62" width="170" height="20" uuid="a076c7d1-3fec-4474-ab20-4ee75ec34b25">
+									<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{intestatarioContoCorrentePostale}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="260" y="98" width="220" height="25" uuid="5ad0712a-f265-48b8-a945-751e89ea9cc3"/>
+								<textElement textAlignment="Left" verticalAlignment="Top">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{oggettoPagamento}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="180" y="130" width="150" height="20" uuid="e3f27499-7470-401e-80d1-02357e22e0cf"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{codiceAvvisoRata1}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="374" y="130" width="90" height="20" uuid="b3d10436-cf37-43b6-b293-b9799624f28f">
+									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{cfEnteCreditore}]]></textFieldExpression>
+							</textField>
+							<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
+								<reportElement positionType="Float" x="491" y="77" width="70" height="70" uuid="6ede8d22-15b0-45a9-978a-6c652c11e8d3">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								</reportElement>
+								<imageExpression><![CDATA[$F{dataMatrix1}]]></imageExpression>
+							</image>
+							<textField>
+								<reportElement x="250" y="36" width="170" height="20" uuid="2ddfd4f5-a72b-4f3d-b166-6b89b618538e"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{numeroContoPostale}]]></textFieldExpression>
+							</textField>
+							<textField isStretchWithOverflow="true">
+								<reportElement x="527" y="11" width="67" height="20" uuid="749a93f5-0b45-4bd3-b153-346a9cb9ac43">
+									<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font size="9" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{dataScadenzaRata1}.format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"))]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="30" y="135" width="130" height="20" forecolor="#BAB6B6" uuid="19c491fb-6ca7-49b2-b1d2-fde45de83e48"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font size="8" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{autorizzazione}]]></textFieldExpression>
+							</textField>
+						</frame>
+						<frame>
+							<reportElement x="0" y="148" width="297" height="242" uuid="6545f08f-1416-4a61-adf6-b74a64c26534"/>
+							<image>
+								<reportElement x="0" y="2" width="297" height="240" uuid="0b7cdf7c-0fc5-4edc-b428-6b2a0a0360c9">
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+								</reportElement>
+								<imageExpression><![CDATA[$P{bollettinoBancario2xMezzo}]]></imageExpression>
+							</image>
+							<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
+								<reportElement x="30" y="32" width="70" height="70" uuid="b4f01fdb-7f03-4954-99d4-0f10dd907fc6"/>
+								<imageExpression><![CDATA[$F{qrcode1}]]></imageExpression>
+							</image>
+							<textField>
+								<reportElement x="158" y="1" width="30" height="20" uuid="19bcf0a8-07c5-4cd0-a164-7d5372d9ce42"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{numRata1}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="140" y="34" width="90" height="20" uuid="78ac0b23-d8db-45df-9451-89065775c2c4"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[new java.text.DecimalFormat("#,##0.00").format($F{importoRata1})]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="117" y="62" width="163" height="20" uuid="708a2811-bf6f-49b1-be46-a18b685fef9e"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{denominazioneSoggetto}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="116" y="92" width="120" height="20" uuid="63b8f9d9-3aa2-4bc0-bc6a-12c9dcc78958">
+									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{enteCreditore}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="30" y="152" width="70" height="30" uuid="644f2aa7-4913-45b8-9335-db01b872c3cd">
+									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{cbill}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="103" y="152" width="130" height="30" uuid="3c3c785f-f3ab-4d29-91b5-ad2330223c42">
+									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{cfEnteCreditore}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="30" y="182" width="150" height="30" uuid="d24de02b-b158-4e49-b36f-6be062b16493"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{codiceAvvisoRata1}]]></textFieldExpression>
+							</textField>
+							<textField isStretchWithOverflow="true">
+								<reportElement x="237" y="6" width="57" height="20" uuid="ed213a6e-f8dc-4508-9a12-8e2ec05ae235">
+									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font size="9" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{dataScadenzaRata1}.format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"))]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="30" y="122" width="250" height="25" uuid="be23aa96-d7e1-42ea-8462-951e5cba2666"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{oggettoPagamento}]]></textFieldExpression>
+							</textField>
+						</frame>
+						<frame>
+							<reportElement stretchType="RelativeToTallestObject" x="297" y="148" width="297" height="242" uuid="e856c791-0b41-42e9-963c-6866153d56f7">
+								<printWhenExpression><![CDATA[$V{esisteSecondaRata}]]></printWhenExpression>
+							</reportElement>
+							<image isLazy="true">
+								<reportElement x="-1" y="2" width="297" height="240" uuid="dbf42f02-7b77-495c-aef6-824ed08fbcee">
+									<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+								</reportElement>
+								<imageExpression><![CDATA[$P{bollettinoBancario2xMezzo}]]></imageExpression>
+							</image>
+							<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
+								<reportElement x="33" y="32" width="70" height="70" uuid="7ec288c9-992b-4362-bbc2-8ba414419a61"/>
+								<imageExpression><![CDATA[$F{qrcode2}]]></imageExpression>
+							</image>
+							<textField>
+								<reportElement x="158" y="1" width="30" height="20" uuid="c2017104-5fbd-4e48-80ea-0fdba1385db4">
+									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{numRata2}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="140" y="34" width="90" height="20" uuid="cf64b34f-ca32-4fdd-990a-0435b78e7490">
+									<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[new java.text.DecimalFormat("#,##0.00").format($F{importoRata2})]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="117" y="62" width="163" height="20" uuid="1830a784-10c4-4fc6-8ecb-3cb338a28b2d">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{denominazioneSoggetto}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="116" y="92" width="120" height="20" uuid="29e29747-9327-4271-8535-13c99465686d">
+									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{enteCreditore}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="103" y="152" width="130" height="30" uuid="c88f9972-1067-4a04-87a2-66ec6a2c3f7f"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{cfEnteCreditore}]]></textFieldExpression>
+							</textField>
+							<textField isStretchWithOverflow="true">
+								<reportElement x="237" y="6" width="57" height="20" uuid="d359ba87-897c-4db0-b60c-33df031a76d2">
+									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font size="9" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{dataScadenzaRata2}.format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"))]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="30" y="122" width="250" height="25" uuid="5eb14ab2-2605-4efc-8086-9ba8b38a63e7"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{oggettoPagamento}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="30" y="182" width="150" height="30" uuid="deb5a89a-6559-4f9e-a40a-760b23d7878b"/>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{codiceAvvisoRata2}]]></textFieldExpression>
+							</textField>
+							<textField>
+								<reportElement x="30" y="152" width="70" height="30" uuid="a9e3f686-e5db-414f-8a9f-1fd22be262cf">
+									<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+								</reportElement>
+								<textElement textAlignment="Left" verticalAlignment="Middle">
+									<font isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{cbill}]]></textFieldExpression>
+							</textField>
+						</frame>
+						<frame>
+							<reportElement x="0" y="20" width="595" height="110" uuid="f806595a-cd07-4794-bb12-e0a97bf5702b"/>
+							<image>
+								<reportElement x="0" y="0" width="595" height="110" uuid="0787e8bd-f214-46af-ba39-0499854ec50f">
+									<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+									<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+								</reportElement>
+								<imageExpression><![CDATA[$P{bollettinoIntestazione}]]></imageExpression>
+							</image>
+							<textField>
+								<reportElement x="33" y="47" width="380" height="45" uuid="26e859f3-12df-47dd-9416-0553d6176007"/>
+								<textElement>
+									<font fontName="SansSerif" size="13" isBold="true"/>
+								</textElement>
+								<textFieldExpression><![CDATA["Rata " +($F{numRata1}+ ($F{numRata2}!=null ? " e "+ $F{numRata2} :"")) +" - " + ($F{oggettoPagamento}!=null?$F{oggettoPagamento}:"")]]></textFieldExpression>
+							</textField>
+						</frame>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

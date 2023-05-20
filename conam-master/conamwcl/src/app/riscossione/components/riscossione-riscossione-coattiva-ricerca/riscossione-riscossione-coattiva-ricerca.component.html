@@ -1,0 +1,50 @@
+<div class="container-fluid">
+    <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+    <shared-spinner *ngIf="!loaded"></shared-spinner>
+    <div id="scrollTop"></div>
+    <div class="principal-div col-xs-12 col-sm-12 col-md-10 col-lg-10" style="padding-top: 30px" *ngIf="loaded">
+        <div class="panel-primary-conam panel-conam ">
+            <div class="panel-heading-conam">
+                <strong>Riscossione coattiva</strong>
+            </div>
+            <shared-alert [message]="messageTop" [type]="typeMessageTop" *ngIf="showMessageTop"></shared-alert>
+            <form>
+                <div class="panel-body panel-body-background">
+                    <div class="form-group row">
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <h4 class="border-title"><strong>Ricerca per:</strong></h4>
+                            </div>
+                            <shared-riscossione-ricerca [enableCampiRiscossione]="true" [enableRicercaSollecito]="false"
+                                [ricercaSoggettiRiscossioneCoattivaRequest]="request" (messaggio)="messaggio($event)"
+                                (ricercaRiscossione)="ricerca($event)">
+                            </shared-riscossione-ricerca>
+
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="showTable">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <h4 class="border-title"><strong>Ordinanze trovate</strong></h4>
+                                </div>
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div style="overflow-x:scroll;" *ngIf="scrollBarAvviata">
+                                    <datatable [data]="ordinanze" [config]="config" *ngIf="showTable"
+                                         (dettaglio)="aggiungiInListaRiscossione($event)">
+                                     </datatable>
+                                </div>
+                                <div *ngIf="!scrollBarAvviata">
+                                    <datatable [data]="ordinanze" [config]="config" *ngIf="showTable"
+                                         (dettaglio)="aggiungiInListaRiscossione($event)">
+                                     </datatable>
+                                </div> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+<shared-dialog [titolo]="'Attenzione'" [subMessages]="subMessages" [buttonConfirmText]="buttonConfirmText"
+    [buttonAnnullaText]="buttonAnnullaText"></shared-dialog>

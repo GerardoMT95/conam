@@ -1,0 +1,76 @@
+<div class="container-fluid">
+    <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+    <shared-spinner *ngIf="!loaded"></shared-spinner>
+    <div id="scrollTop"></div>
+    <div class="principal-div col-xs-12 col-sm-12 col-md-10 col-lg-10" *ngIf="loaded" style="padding-top: 30px">
+        <div class="panel-primary-conam panel-conam ">
+            <shared-alert [message]="messageTop" [type]="typeMessageTop" *ngIf="showMessageTop"></shared-alert>
+            <form #intestazione="ngForm">
+                <div class="panel-body panel-body-background" style="background-color: #ffffff">
+                    <div *ngIf="!itsLetteraAnnullamento && !itsLetteraArchiviazione">
+                    <ng-container *ngIf="!isPrinted || isStampa">
+                        <template-03-lettera-accompagnamento [data]="datiTemplateModel"
+                            (formValid)="setFormValidTemplate($event)">
+                        </template-03-lettera-accompagnamento>
+                    </ng-container>
+                </div>
+                <div *ngIf="itsLetteraAnnullamento">
+                    <ng-container *ngIf="!isPrinted || isStampa">
+                        <template-09-lettera-accompagnamento-annullamento [data]="datiTemplateModel"
+                            (formValid)="setFormValidTemplate($event)">
+                        </template-09-lettera-accompagnamento-annullamento>
+                    </ng-container>
+                </div>
+                <div *ngIf="itsLetteraArchiviazione && !itsLetteraAnnullamento">
+                    <ng-container *ngIf="!isPrinted || isStampa">
+                        <template-10-lettera-accompagnamento-archiviazione [data]="datiTemplateModel"
+                            (formValid)="setFormValidTemplate($event)">
+                        </template-10-lettera-accompagnamento-archiviazione>
+                    </ng-container>
+                </div>
+                    <!--ng-template #printPDF>
+                        <object [data]="sanitizer.bypassSecurityTrustResourceUrl(url)" type="application/pdf"
+                            style="height: 800px; width: 100%">
+                            <iframe src="https://docs.google.com/viewer?url=your_url_to_pdf&embedded=true"
+                                frameborder="0"></iframe>
+                        </object>
+                    </ng-template-->
+                    <div *ngIf="isStampa && isAnteprima && isPrinted && !isStampaProtocollata" class="alert alert-warning col-xs-12 col-sm-12 col-md-12 col-lg-12" role="alert">
+                        <strong>Attenzione!</strong> Attendere l'abilitazione dei tasti. Per poter scaricare il PDF cliccare su 'Scarica PDF' oppure cliccare su 'Indietro'.
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                        <button type="button" class="btn-conam button-light-blue" (click)="indietro()"
+                        *ngIf="!isAnteprima" >
+                        <i
+                            class="glyphicon glyphicon-arrow-left btn-glyphicon img-circle text-light-blue-conam"></i>
+                        Indietro</button>
+                    
+                    <button type="button" class="btn-conam button-light-blue" (click)="indietro()"
+                        *ngIf="isStampa"  [disabled]="!isStampaProtocollata">
+                        <i
+                            class="glyphicon glyphicon-arrow-left btn-glyphicon img-circle text-light-blue-conam"></i>
+                        Indietro</button>
+ 
+                    <button  type="button" class="btn-conam button-grey" (click)="scarica()"
+                        *ngIf="isStampa" [disabled]="!isStampaProtocollata">
+                        <i class="glyphicon glyphicon-floppy-save btn-glyphicon img-circle text-grey-conam"></i>
+                        Scarica PDF</button>
+
+                        <button type="button" class="btn-conam button-green" (click)="visualizzaAnteprima()"
+                            *ngIf="!isAnteprima" [disabled]="!visualizzaAnteprimaValidTemplate">
+                            <i class="glyphicon glyphicon-eye-open btn-glyphicon img-circle text-green-conam"></i>
+                            Visualizza Anteprima</button>
+                        <button type="button" class="btn-conam button-green" (click)="proseguiModifica()"
+                            *ngIf="isAnteprima && !isPrinted && !isStampa">
+                            <i class="glyphicon glyphicon-pencil btn-glyphicon img-circle text-green-conam"></i>
+                            Modifica</button>
+                        <button type="button" class="btn-conam button-grey" (click)="stampaPDF()"
+                            *ngIf="isAnteprima && !isPrinted && !isStampa">
+                            <i class="glyphicon glyphicon-print btn-glyphicon img-circle text-grey-conam"></i>
+                            Crea PDF</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,175 @@
+<div class="panel-body panel-body-background" *ngIf="loaded">
+    <div class="form-group row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+            <h4 class="border-title"><strong>Dati ordinanza</strong></h4>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-top: 30px">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group col-xs-12 col-sm-12  col-md-6 col-lg-6">
+                        <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                            <label for="numeroProtocollo" class="control-label">Numero protocollo lettera di
+                                accompagnamento</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                            {{ordinanza.numeroProtocollo}}
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                            <label for="dataOrdinanza" class="control-label">Data ordinanza</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                            {{ordinanza.dataOrdinanza}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body panel-body-background">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                    <div class="form-group col-xs-12 col-sm-12  col-md-6 col-lg-6">
+                        <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                            <label for="dataProtocollazione" class="control-label">Data
+                                protocollazione</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                            {{ordinanza.dataProtocollo}}
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                            <label for="numDeterminazione" class="control-label">Numero
+                                determinazione</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                            {{ordinanza.numDeterminazione}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body panel-body-background">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group col-xs-12 col-sm-12  col-md-6 col-lg-6">
+                        <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                            <label for="dataDeterminazione" class="control-label">Data
+                                determinazione</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                            {{ordinanza.dataDeterminazione}}
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                            <label for="importoOrdinanza" class="control-label">Importo
+                                ordinanza</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                            {{ordinanza.importoOrdinanza | currency:'EUR':'symbol'}}
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+            <div class="panel-body panel-body-background">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group col-xs-12 col-sm-12  col-md-6 col-lg-6">
+                        <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                            <label for="tipoOrdinanza" class="control-label">Tipo Ordinanza:</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                            {{ordinanza?.tipo?.denominazione}}
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                            <label for="statoOrdinanza" class="control-label">Stato
+                                ordinanza</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                            {{ordinanza?.stato?.denominazione}}
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+            <div class="panel-body panel-body-background">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="visualizzaImportoNotifica">
+                    <div class="form-group col-xs-12 col-sm-12  col-md-6 col-lg-6">
+                        <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                            <label for="statoOrdinanza" class="control-label">Importo spese notifica</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                            {{notifica?.importoSpeseNotifica | currency:'EUR':'symbol'}}
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-12 col-sm-12  col-md-6 col-lg-6"  *ngIf="ordinanza?.dettaglioOrdinanzaAnnullata">
+                        <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                            <label for="statoOrdinanza" class="control-label">Ordinanza annullata</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                            {{ordinanza?.dettaglioOrdinanzaAnnullata}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- Sezione dati pagamento -->
+        <div class="panel-body panel-body-background">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="showDatiPagamento">
+            
+                <h4 class="border-title">
+                <strong>Dati pagamento</strong>
+                </h4>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="padding-top: 30px">
+                    <div class="form-group col-xs-12 col-sm-12  col-md-6 col-lg-6">
+                    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                        <label for="numeroProtocollo" class="control-label">Importo totale da pagare</label>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                        {{ordinanza.importoTotaleDaPagare | currency:'EUR':'symbol'}}
+                    </div>
+                    </div>
+                    <div class="form-group col-xs-12 col-sm-12  col-md-6 col-lg-6">
+                        <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                            <label for="numeroProtocollo" class="control-label">Importo pagato</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                        {{ordinanza.importoPagato | currency:'EUR':'symbol'}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                    <div class="form-group col-xs-12 col-sm-12  col-md-6 col-lg-6">
+                        <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                            <label for="numeroProtocollo" class="control-label">Importo residuo</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                        {{ordinanza.importoResiduo | currency:'EUR':'symbol'}}
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style=" padding: 20px 40px;"  >
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="border-top: 1px solid; padding-top: 10px;" >
+                        <div class="form-group col-xs-12 col-sm-12  col-md-6 col-lg-6">
+                            <label for="numeroProtocollo" class="control-label">Data pagamento acconto</label>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-12  col-md-6 col-lg-6">
+                            <label for="numeroProtocollo" class="control-label">Importo acconto</label>
+                       </div>
+                    </div>
+                    <div  *ngFor="let acconto of ordinanza.listaAcconti" class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                        <div class="form-group col-xs-12 col-sm-12  col-md-6 col-lg-6">
+                            {{acconto.dataPagamento}}
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-12  col-md-6 col-lg-6">
+                            {{acconto.importo | currency:'EUR':'symbol'}}
+                       </div>
+                    </div>
+                   
+                </div>
+
+                
+            </div>
+        </div>
+          <!-- fine Sezione dati pagamento -->
+    </div>
+</div>

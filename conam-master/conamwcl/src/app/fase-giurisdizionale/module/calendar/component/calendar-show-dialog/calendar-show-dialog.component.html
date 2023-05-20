@@ -1,0 +1,29 @@
+<!-- Modal -->
+<div class="modal fade" id="showModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="closeX()">&times;</button>
+                <h4 class="modal-title">Altri eventi in programma </h4>
+            </div>
+            <div class="modal-body">
+                <div *ngFor="let e of  event;">
+                    <a href="javascript:void(0);" class="link-event" (click)="openDetailEvent(e,$event)"
+                        [style.background-color]="e!=null ? e.color:'none'">
+                        <span class="link-event-hour">
+                            {{e.dataInizio.getHours() | hour }}:{{ e.dataInizio.getMinutes() | hour}} -
+                            {{e.dataFine.getHours() | hour}}:{{e.dataFine.getMinutes()
+                            | hour }}
+                        </span>
+                        {{e.titolo}}</a>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+            </div>
+
+        </div>
+
+    </div>
+</div>

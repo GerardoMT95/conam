@@ -1,0 +1,105 @@
+<div class="panel-body panel-body-background" *ngIf="piano != null">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <h4 class="border-title"><strong>Dati piano rateizzazione</strong></h4>
+    </div>
+  </div>
+  <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left">
+      <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          <label for="numeroProtocolloRateizzazione" class="control-label"
+            >Numero protocollo</label
+          >
+        </div>
+        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          {{ piano.numProtocollo }}
+        </div>
+      </div>
+      <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          <label for="dataCreazione" class="control-label"
+            >Data creazione</label
+          >
+        </div>
+        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          {{ piano.dataCreazione }}
+        </div>
+      </div>
+      <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          <label for="statoPiano" class="control-label">Stato del piano</label>
+        </div>
+        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          {{ piano.stato.denominazione }}
+        </div>
+      </div>
+      <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          <label for="numeroRate" class="control-label">Numero Rate</label>
+        </div>
+        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          {{ piano.numeroRate }}
+        </div>
+      </div>
+      <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          <label for="importoTitoloSanzione" class="control-label"
+            >Importo a titolo di sanzione</label
+          >
+        </div>
+        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          {{ piano.importoSanzione | currency: "EUR":"symbol" }}
+        </div>
+      </div>
+
+      <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          <label for="importoSpeseProcessuali" class="control-label"
+            >Importo per spese processuali</label
+          >
+        </div>
+        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          {{ piano.importoSpeseProcessuali | currency: "EUR":"symbol" }}
+        </div>
+      </div>
+
+      <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          <label for="importoSpeseNotifica" class="control-label">
+            Importo per spese di notifica</label
+          >
+        </div>
+        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          {{ piano.importoSpeseNotifica | currency: "EUR":"symbol" }}
+        </div>
+      </div>
+      <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          <label for="importoMaggiorazione" class="control-label">
+            Importo a titolo di maggiorazione</label
+          >
+        </div>
+        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          {{ piano.importoMaggiorazione | currency: "EUR":"symbol" }}
+        </div>
+      </div>
+      <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          <label for="statoPiano" class="control-label">Importo Totale</label>
+        </div>
+        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          {{ importoTotale | currency: "EUR":"symbol" }}
+        </div>
+      </div>
+      <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          <label class="control-label">Scadenza prima rata</label>
+        </div>
+        <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+          {{ dataScadenzaPrimaRata }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

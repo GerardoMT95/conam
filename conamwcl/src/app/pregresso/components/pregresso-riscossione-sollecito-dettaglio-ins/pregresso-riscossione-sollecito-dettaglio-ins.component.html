@@ -1,0 +1,51 @@
+<div class="container-fluid"> 
+    <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+    <shared-spinner *ngIf="!loaded"></shared-spinner>
+    <div id="scrollTop"></div>
+    <div class="principal-div col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="loaded" style="padding-top: 30px">
+        <div class="panel-primary-conam panel-conam">
+            <div class="panel-heading-conam">
+                <strong>Creazione Sollecito di Pagamento</strong>
+            </div>
+            <shared-alert [message]="messageTop" [type]="typeMessageTop" *ngIf="showMessageTop"></shared-alert>
+            <form #creaSollecitoForm="ngForm">
+                <div class="panel-body panel-body-background">
+                    <div class="form-group row">
+                        <pregresso-seleziona-soggetti 
+                            [numDeterminazione]="numDeterminazione"
+                            isSollecito="true"
+                            (onSelect)="onSelect($event)">
+                        ></pregresso-seleziona-soggetti>
+                        <div *ngIf="idOrdinanzaVerbaleSoggetto && idOrdinanzaVerbaleSoggetto.length>0" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <shared-ordinanza-dettaglio [idSoggettiOrdinanza]="idOrdinanzaVerbaleSoggetto">
+                            </shared-ordinanza-dettaglio>
+                        </div>
+                        <shared-ordinanza-sentenza
+                            *ngIf="idOrdinanzaVerbaleSoggetto!=null && idOrdinanzaVerbaleSoggetto.length>0"
+                            [idOrdinanzaVerbaleSoggetto]="idOrdinanzaVerbaleSoggetto[0]">
+                        </shared-ordinanza-sentenza>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"  *ngIf="idOrdinanzaVerbaleSoggetto!=null && idOrdinanzaVerbaleSoggetto.length>0">
+                                <shared-riscossione-sollecito-dettaglio pregresso="true" 
+                                [isCreaSollecito]="isCreaSollecito"
+                                (onChangeData)="sharedRiscossioneSollecitoDettaglioEmitter($event)"  [sollecito]="sollecito"
+                                    [flgModifica]="isModifica">
+                                </shared-riscossione-sollecito-dettaglio>
+                        </div>
+                        <div *ngIf="!isCreaSollecito" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right padding-top-25">
+                          
+                            <button *ngIf="isModifica" type="button" class="btn-conam button-green" (click)="salvaSollecito()"
+                                >
+                                <i class="glyphicon glyphicon-floppy-save btn-glyphicon img-circle text-green-conam"></i>
+                                Salva sollecito</button>
+
+                          
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+        </div>
+    </div>
+</div>
+<shared-dialog [titolo]="'Attenzione'" [subMessages]="subMessages" [buttonConfirmText]="buttonConfirmText"
+    [buttonAnnullaText]="buttonAnnullaText"></shared-dialog>

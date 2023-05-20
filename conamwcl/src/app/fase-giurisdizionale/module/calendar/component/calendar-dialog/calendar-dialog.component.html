@@ -1,0 +1,391 @@
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog" style="width: 90%">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <form [formGroup]="insertEditEventForm" (ngSubmit)="saveS()">
+        <div class="modal-header">
+          <button type="button" class="close" (click)="closeX()">
+            &times;
+          </button>
+          <h4 class="modal-title">{{ titolo }}</h4>
+        </div>
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="modal-body">
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <label> Data e ora udienza </label>
+                <div class="input-group date" id="datetimepicker">
+                  <input
+                    type="text"
+                    id="data"
+                    formControlName="dataInizio"
+                    [(ngModel)]="dateStart"
+                    #datePicker
+                    (blur)="setDate(datePicker.value, 'start')"
+                    class="form-control date-picker"
+                  />
+                  <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                  </span>
+                </div>
+                <label class="padding-top-15"> Data fine udienza </label>
+                <div class="input-group date" id="datetimepicker1">
+                  <input
+                    type="text"
+                    id="data"
+                    formControlName="dataFine"
+                    [(ngModel)]="dateEnd"
+                    #datePicker1
+                    (blur)="setDate(datePicker1.value, 'end')"
+                    class="form-control date-picker"
+                  />
+                  <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                  </span>
+                </div>
+              </div>
+              <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <label for="tribunale" class="control-label">
+                  Autorità Giudiziaria
+                </label>
+                <input
+                  type="text"
+                  id="tribunale"
+                  formControlName="tribunale"
+                  class="form-control"
+                  [(ngModel)]="event.tribunale"
+                />
+              </div>
+            </div>
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <h4 class="border-title"><strong>Giudice</strong></h4>
+                <label for="nomeGiudice" class="control-label"> Nome </label>
+                <input
+                  type="text"
+                  id="nomeGiudice"
+                  formControlName="nomeGiudice"
+                  class="form-control"
+                  [(ngModel)]="event.nomeGiudice"
+                />
+                <label
+                  for="cognomeGiudice"
+                  class="control-label padding-top-15"
+                >
+                  Cognome
+                </label>
+                <input
+                  type="text"
+                  id="cognomeGiudice"
+                  formControlName="cognomeGiudice"
+                  class="form-control"
+                  [(ngModel)]="event.cognomeGiudice"
+                />
+              </div>
+              <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <h4 class="border-title">
+                  <strong>Funzionario sanzionatore</strong>
+                </h4>
+                <label for="nomeFunzionarioSanzionatore" class="control-label">
+                  Nome
+                </label>
+                <input
+                  type="text"
+                  id="nomeFunzionarioSanzionatore"
+                  formControlName="nomeFunzionarioSanzionatore"
+                  class="form-control"
+                  [(ngModel)]="event.nomeFunzionarioSanzionatore"
+                />
+                <label
+                  for="cognomeFunzionarioSanzionatore"
+                  class="control-label padding-top-15"
+                >
+                  Cognome
+                </label>
+                <input
+                  type="text"
+                  id="cognomeFunzionarioSanzionatore"
+                  formControlName="cognomeFunzionarioSanzionatore"
+                  class="form-control"
+                  [(ngModel)]="event.cognomeFunzionarioSanzionatore"
+                />
+              </div>
+            </div>
+
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <h4 class="border-title"><strong>Luogo udienza</strong></h4>
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <label for="regione" class="control-label"> Regione </label>
+                <shared-spinner-form
+                  [diameter]="30"
+                  *ngIf="!loaderRegioni; else elseRegione"
+                >
+                </shared-spinner-form>
+                <ng-template #elseRegione>
+                  <select
+                    class="form-control"
+                    id="regione"
+                    [(ngModel)]="event.regione"
+                    formControlName="regione"
+                    name="regione"
+                    [compareWith]="byId"
+                    (change)="loadProvince(event.regione.id)"
+                  >
+                    <option *ngFor="let reg of regioneModel" [ngValue]="reg">
+                      {{ reg.denominazione }}
+                    </option>
+                  </select>
+                </ng-template>
+
+                <label for="comune" class="control-label padding-top-15">
+                  Comune
+                </label>
+                <shared-spinner-form
+                  [diameter]="30"
+                  *ngIf="!loaderComuni; else elseComune"
+                >
+                </shared-spinner-form>
+                <ng-template #elseComune>
+                  <select
+                    class="form-control"
+                    id="comune"
+                    [(ngModel)]="event.comune"
+                    formControlName="comune"
+                    [compareWith]="byId"
+                    name="comune"
+                  >
+                    <option *ngFor="let com of comuniModel" [ngValue]="com">
+                      {{ com.denominazione }}
+                    </option>
+                  </select>
+                </ng-template>
+                <label for="via" class="control-label padding-top-15">
+                  Via
+                </label>
+                <input
+                  type="text"
+                  id="via"
+                  formControlName="via"
+                  class="form-control"
+                  [(ngModel)]="event.via"
+                />
+              </div>
+              <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                <label for="provincia" class="control-label"> Provincia </label>
+                <shared-spinner-form
+                  [diameter]="30"
+                  *ngIf="!loaderProvince; else elseProvince"
+                >
+                </shared-spinner-form>
+                <ng-template #elseProvince>
+                  <select
+                    class="form-control"
+                    id="provincia"
+                    [(ngModel)]="event.provincia"
+                    formControlName="provincia"
+                    name="provincia"
+                    [compareWith]="byId"
+                    (change)="loadComuni(event.provincia.id)"
+                  >
+                    <option *ngFor="let prov of provinceModel" [ngValue]="prov">
+                      {{ prov.denominazione }}
+                    </option>
+                  </select>
+                </ng-template>
+                <label for="cap" class="control-label padding-top-15">
+                  Cap
+                </label>
+                <input
+                  type="text"
+                  id="cap"
+                  formControlName="cap"
+                  maxlength="5"
+                  class="form-control"
+                  [(ngModel)]="event.cap"
+                />
+                <label for="civico" class="control-label padding-top-15">
+                  Civico
+                </label>
+                <input
+                  type="text"
+                  id="civico"
+                  formControlName="civico"
+                  class="form-control"
+                  [(ngModel)]="event.civico"
+                />
+              </div>
+            </div>
+
+            <!-- promemoria  -->
+
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <h4 class="border-title"><strong>Promemoria</strong></h4>
+                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                  <div
+                    class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-top-15"
+                  >
+                    <div
+                      class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                    >
+                      <div class="checkbox padding-top-15">
+                        <label
+                          ><input
+                            formControlName="sendPromemoriaUdienza"
+                            type="checkbox"
+                            name="sendPromemoriaUdienza"
+                            id="sendPromemoriaUdienza"
+                            [(ngModel)]="event.sendPromemoriaUdienza"
+                            (ngModelChange)="managePromemoriaUdienza($event)"
+                          /><strong>Promemoria udienza </strong></label
+                        >
+                      </div>
+                    </div>
+                    <div
+                      class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                    >
+                      <div class="checkbox padding-top-15">
+                        <label
+                          ><input
+                            formControlName="sendPromemoriaDocumentazione"
+                            type="checkbox"
+                            name="sendPromemoriaDocumentazione"
+                            id="sendPromemoriaDocumentazione"
+                            [(ngModel)]="event.sendPromemoriaDocumentazione"
+                            (ngModelChange)="
+                              managePromemoriaDocumentazione($event)
+                            "
+                          /><strong
+                            >Promemoria deposito documentazione
+                          </strong></label
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                  <label
+                    for="emailGiudice"
+                    class="control-label padding-top-15"
+                  >
+                    Email
+                  </label>
+                  <input
+                    type="text"
+                    id="emailGiudice"
+                    formControlName="emailGiudice"
+                    class="form-control"
+                    [(ngModel)]="event.emailGiudice"
+                  />
+                </div>
+
+                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                  <label for="udienzaAdvanceDay" class="control-label">
+                    Giorni di preavviso udienza
+                  </label>
+                  <input
+                    type="number"
+                    id="udienzaAdvanceDay"
+                    formControlName="udienzaAdvanceDay"
+                    class="form-control"
+                    [(ngModel)]="event.udienzaAdvanceDay"
+                  />
+                </div>
+
+                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                  <label for="documentazioneAdvanceDay" class="control-label">
+                    Giorni di preavviso deposito documentazione
+                  </label>
+                  <input
+                    type="number"
+                    id="documentazioneAdvanceDay"
+                    formControlName="documentazioneAdvanceDay"
+                    class="form-control"
+                    [(ngModel)]="event.documentazioneAdvanceDay"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- fine promemoria -->
+
+            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <h4 class="border-title"><strong>Note</strong></h4>
+              </div>
+              <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <textarea
+                  rows="5"
+                  cols="120"
+                  id="note"
+                  formControlName="note"
+                  [(ngModel)]="event.note"
+                  style="width: 100%"
+                >
+                </textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div
+              class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6 text-left"
+            >
+              <div class="form-group col-xs-12 col-sm-2 col-md-2 col-lg-2">
+                <label> Colore </label>
+              </div>
+              <div class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <select
+                  formControlName="color"
+                  class="form-control"
+                  [(ngModel)]="event.color"
+                >
+                  <option *ngFor="let c of color" [ngValue]="c.valore">
+                    {{ c.nome }}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div
+              class="form-group col-xs-12 col-sm-6 col-md-6 col-lg-6 padding-top-5"
+            >
+              <button
+                type="button"
+                [ngClass]="
+                  flagButtonAnnulla
+                    ? 'btn-conam button-light-blue'
+                    : 'btn-conam button-garnet'
+                "
+                (click)="closeS()"
+              >
+                <i
+                  [ngClass]="
+                    flagButtonAnnulla
+                      ? 'glyphicon glyphicon-arrow-left btn-glyphicon img-circle text-light-blue-conam'
+                      : 'glyphicon glyphicon-remove btn-glyphicon img-circle text-garnet-conam'
+                  "
+                ></i>
+                {{ buttonAnnullaText }}
+              </button>
+              <button
+                type="submit"
+                class="btn-conam button-green"
+                [disabled]="!insertEditEventForm.valid"
+              >
+                <i
+                  class="glyphicon glyphicon-floppy-saved btn-glyphicon img-circle text-green-conam"
+                ></i>
+                {{ buttonConfirmText }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

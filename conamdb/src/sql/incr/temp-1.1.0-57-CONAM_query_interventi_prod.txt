@@ -1,0 +1,93 @@
+﻿--Aggiornamento flag ambito PARCHI
+UPDATE cnm_d_ambito SET desc_ambito='Aree naturali', acronimo='PAR', eliminato=NULL, id_user_insert=2, data_ora_insert='2019-08-08 15:30:55.378', id_user_update=NULL, data_ora_update=NULL WHERE id_ambito=1;
+
+--Eliminazione lettere di rifierimenti normativi fittizzi
+DELETE from cnm_d_lettera where id_lettera=1;
+DELETE FROM cnm_d_lettera WHERE id_lettera=2;
+DELETE FROM cnm_d_lettera WHERE id_lettera=3;
+DELETE FROM cnm_d_lettera WHERE id_lettera=4;
+DELETE FROM cnm_d_lettera WHERE id_lettera=5;
+DELETE FROM cnm_d_lettera WHERE id_lettera=6;
+
+--Eliminazione commi di rifierimenti normativi fittizzi
+DELETE from cnm_d_comma where id_comma=1;
+DELETE FROM cnm_d_comma WHERE id_comma=2;
+DELETE FROM cnm_d_comma WHERE id_comma=3;
+DELETE FROM cnm_d_comma WHERE id_comma=4;
+DELETE FROM cnm_d_comma WHERE id_comma=5;
+DELETE FROM cnm_d_comma WHERE id_comma=6;
+
+--Eliminazione articoli di rifierimenti normativi fittizzi
+DELETE from cnm_d_articolo where id_articolo=1;
+DELETE FROM cnm_d_articolo WHERE id_articolo=2;
+DELETE FROM cnm_d_articolo WHERE id_articolo=3;
+DELETE FROM cnm_d_articolo WHERE id_articolo=4;
+DELETE FROM cnm_d_articolo WHERE id_articolo=5;
+DELETE FROM cnm_d_articolo WHERE id_articolo=6;
+
+--Eliminazione legame tra ente rifierimenti normativi fittizzi per il caricamento delle combo in determinate pagine applicativo
+DELETE FROM cnm_r_ente_norma WHERE id_ente_norma=1;
+DELETE FROM cnm_r_ente_norma WHERE id_ente_norma=2;
+DELETE FROM cnm_r_ente_norma WHERE id_ente_norma=3;
+DELETE FROM cnm_r_ente_norma WHERE id_ente_norma=4;
+DELETE FROM cnm_r_ente_norma WHERE id_ente_norma=5;
+DELETE FROM cnm_r_ente_norma WHERE id_ente_norma=6;
+
+--Eliminazione riferimenti normativi fittizzi
+delete from cnm_d_norma where id_norma=1;
+DELETE FROM cnm_d_norma WHERE id_norma=2;
+DELETE FROM cnm_d_norma WHERE id_norma=3;
+DELETE from cnm_d_norma where id_norma=4;
+DELETE from cnm_d_norma where id_norma=5;
+DELETE from cnm_d_norma where id_norma=6;
+DELETE from cnm_d_norma where id_norma=1;
+
+--Eliminazione ambiti fittizzi
+DELETE FROM cnm_d_ambito WHERE id_ambito=2;
+DELETE FROM cnm_d_ambito WHERE id_ambito=3;
+
+--Eliminazione enti esterni alla Regione Piemonte
+DELETE FROM cnm_d_ente WHERE id_ente=2;
+DELETE FROM cnm_d_ente WHERE id_ente=3;
+
+--Inserimento dati della tabella di configurazione dei parametri
+INSERT INTO cnm_c_parametro (id_parametro, desc_parametro, valore_string, valore_number, valore_date, valore_boolean, inizio_validita, fine_validita) VALUES(1, 'Numero conto Postale', '000026103143', NULL, NULL, NULL, '2019-01-18', NULL);
+INSERT INTO cnm_c_parametro (id_parametro, desc_parametro, valore_string, valore_number, valore_date, valore_boolean, inizio_validita, fine_validita) VALUES(2, 'Dirigente', 'Firma omessa ai sensi del D.Lgs. n.° 39/1993, art. 2, comma 1 a nome del Dirigente del Settore Dott. Fabrizio Zanella', NULL, NULL, NULL, '2019-01-18', NULL);
+INSERT INTO cnm_c_parametro (id_parametro, desc_parametro, valore_string, valore_number, valore_date, valore_boolean, inizio_validita, fine_validita) VALUES(3, 'Oggetto pagamento rateizzazione', 'Rateizzazione di sanzioni amministrative', NULL, NULL, NULL, '2019-01-18', NULL);
+INSERT INTO cnm_c_parametro (id_parametro, desc_parametro, valore_string, valore_number, valore_date, valore_boolean, inizio_validita, fine_validita) VALUES(4, 'Codice Fiscale Ente Creditore', '80087670016', NULL, NULL, NULL, '2019-01-18', NULL);
+INSERT INTO cnm_c_parametro (id_parametro, desc_parametro, valore_string, valore_number, valore_date, valore_boolean, inizio_validita, fine_validita) VALUES(5, 'Ente Creditore', 'Regione Piemonte', NULL, NULL, NULL, '2019-01-29', NULL);
+INSERT INTO cnm_c_parametro (id_parametro, desc_parametro, valore_string, valore_number, valore_date, valore_boolean, inizio_validita, fine_validita) VALUES(6, 'Cbill', 'ADRSY', NULL, NULL, NULL, '2019-01-29', NULL);
+INSERT INTO cnm_c_parametro (id_parametro, desc_parametro, valore_string, valore_number, valore_date, valore_boolean, inizio_validita, fine_validita) VALUES(7, 'Autorizzazione', 'AUT. DB/SISB/GEN P1-47437 del 20.06.2019', NULL, NULL, NULL, '2019-01-29', NULL);
+INSERT INTO cnm_c_parametro (id_parametro, desc_parametro, valore_string, valore_number, valore_date, valore_boolean, inizio_validita, fine_validita) VALUES(8, 'Codice versamento Piemonte pay', 'QS00', NULL, NULL, NULL, '2019-01-18', NULL);
+INSERT INTO cnm_c_parametro (id_parametro, desc_parametro, valore_string, valore_number, valore_date, valore_boolean, inizio_validita, fine_validita) VALUES(9, 'Classificazione ', '120312', NULL, NULL, NULL, '2019-02-08', NULL);
+INSERT INTO cnm_c_parametro (id_parametro, desc_parametro, valore_string, valore_number, valore_date, valore_boolean, inizio_validita, fine_validita) VALUES(10, 'Intestatario versamento postale', 'Tesoreria Regione Piemonte', NULL, NULL, NULL, '2019-02-08', NULL);
+INSERT INTO cnm_c_parametro (id_parametro, desc_parametro, valore_string, valore_number, valore_date, valore_boolean, inizio_validita, fine_validita) VALUES(11, 'Settore Ente', 'Direzione Risorse Finanziarie e Patrimonio Settore Politiche Fiscali e Contenzioso Ammistrativo', NULL, NULL, NULL, '2019-02-08', NULL);
+INSERT INTO cnm_c_parametro (id_parametro, desc_parametro, valore_string, valore_number, valore_date, valore_boolean, inizio_validita, fine_validita) VALUES(12, 'Info Ente', 'Corso Regina Margherita 153 bis Torino settore.tributi@regione.piemonte.it ', NULL, NULL, NULL, '2019-02-08', NULL);
+INSERT INTO cnm_c_parametro (id_parametro, desc_parametro, valore_string, valore_number, valore_date, valore_boolean, inizio_validita, fine_validita) VALUES(13, 'Oggetto pagamento sollecito', 'Sollecito di pagamento ordinanza di ingiunzione', NULL, NULL, NULL, '2019-02-27', NULL);
+INSERT INTO cnm_c_parametro (id_parametro, desc_parametro, valore_string, valore_number, valore_date, valore_boolean, inizio_validita, fine_validita) VALUES(14, 'Oggetto pagamento ordinanza', 'Ordinanza di ingiunzione di pagamento', NULL, NULL, NULL, '2019-02-27', NULL);
+INSERT INTO cnm_c_parametro (id_parametro, desc_parametro, valore_string, valore_number, valore_date, valore_boolean, inizio_validita, fine_validita) VALUES(15, 'Autore fisico ACTA', 'FABRIZIO ZANELLA-Z123456 ', NULL, NULL, NULL, '2019-08-07', NULL);
+
+--Inserimento stati dei record
+INSERT INTO cnm_d_stato_record (id_stato_record, desc_stato_record) VALUES(1, 'In attesa elaborazione');
+INSERT INTO cnm_d_stato_record (id_stato_record, desc_stato_record) VALUES(2, 'Elaborato');
+
+--Censimento utente Giovanna Bertinetti BRTGNN73E68L219G con ruolo di funzionario istruttore
+INSERT INTO cnm_t_user (id_user, codice_fiscale, cognome, nome, id_ruolo, id_gruppo) VALUES(2, 'BRTGNN73E68L219G', 'Bertinetti', 'Giovanna', 1, 1);
+INSERT INTO cnm_r_user_ente (id_user_ente, id_utilizzo, id_user, id_ente) VALUES(1, 1, 2, 1); 
+INSERT INTO cnm_r_user_ente (id_user_ente, id_utilizzo, id_user, id_ente) VALUES(2, 2, 2, 1);
+
+--Censimento utente addetto al Monitoraggio PRTMTR80A01L219F   con ruolo di funzionario amministrativo
+INSERT INTO cnm_t_user (id_user, codice_fiscale, cognome, nome, id_ruolo) VALUES(3, 'PRTMTR80A01L219F  ', 'Utente', 'Monitoraggio', 2);
+INSERT INTO cnm_r_user_ente (id_user_ente, id_utilizzo, id_user, id_ente) VALUES(3, 1, 3, 1); 
+INSERT INTO cnm_r_user_ente (id_user_ente, id_utilizzo, id_user, id_ente) VALUES(4, 2, 3, 1);
+
+--Ambiti già censiti sul DB
+Aree naturali	PAR
+Rendimento energetico	REN
+Rifiuti urbani	RIF
+Valutazione dell'impatto ambientale	VIA
+Sbarramenti fluviali	BAC
+
+-- Riferimenti normativi già censiti sul DB
+Acronimo VIA: DLGS. 152/2006, articolo 29, no comma, no lettera
+Acronimo BAC: L.R. 25/2003, articolo 6, no comma, no lettera 		

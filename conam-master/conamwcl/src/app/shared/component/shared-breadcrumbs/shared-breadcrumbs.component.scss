@@ -1,0 +1,30 @@
+@import '../../../color.scss';
+
+ol{
+  padding: 0px;
+}
+
+.breadcrumbs { 
+  list-style: none; 
+  overflow: hidden; 
+}
+.breadcrumbs li{
+  text-align: center;
+  float: left;
+}
+
+.breadcrumbs li a {
+  color: #005bae;  
+  margin-left: 5px;
+  margin-right: 5px;
+  font-weight: bold;
+}
+
+.text-color{
+  color: #005bae;  
+  font-weight: bold;  
+}
+
+a{
+  text-decoration:none;
+}

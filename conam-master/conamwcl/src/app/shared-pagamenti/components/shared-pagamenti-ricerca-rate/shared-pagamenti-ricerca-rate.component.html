@@ -1,0 +1,70 @@
+<form #formRicerca="ngForm" (ngSubmit)="emitRicerca()">
+   
+    
+    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center" *ngIf="enableRicercaPiano">
+        <input type="checkbox" name="rateizzazione" id="rateizzazione" class="checkbox-input" [checked]="tabRateizzazione" (click)="tabActions.changeRateizzazione()"
+        />
+        <label for="rateizzazione" class="checkbox-label" id="checkbox-label" [ngStyle]="{height: enableCampiCreaPiano? '400px' : '450px'}">
+            <div class="checkbox-text">
+                <p class="checkbox-text--title">Piano Rateizzazione</p>
+                <p class="checkbox-text--description"><span class="un">Clicca per abilitare</span></p>
+                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+                    <label for="numeroProtocolloPiano" class="control-label">Numero protocollo Piano</label>
+                    <input type="text" id="numeroProtocolloPiano" class="form-control" [disabled]="!tabRateizzazione || isDisable('SPD')" [(ngModel)]="ricercaPianoRequest.numeroProtocolloPiano"
+                        name="numeroProtocolloPiano" required>
+                </div>
+
+                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+                    <label for="statoRateizzazione" class="control-label">Stato Piano</label>
+                    <shared-spinner-form [diameter]="30" *ngIf="!loadedStatoRateizzazione;  else elseStatoRateizzazione"></shared-spinner-form>
+                    <ng-template #elseStatoRateizzazione>
+                        <select class="form-control" id="statoRateizzazione" [disabled]="!tabRateizzazione || isDisable('SNP')" [(ngModel)]="statoPianoSelezionato" name="statoRateizzazione"
+                            [compareWith]="compareFn">
+                            <option *ngFor="let stat of statoRateizzazioneModel" [ngValue]="stat">{{stat.denominazione}}
+                            </option>
+                        </select>
+                    </ng-template>
+                </div>
+
+                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center" >
+                    <label class="control-label">Intervallo data Creazione ricercato</label>
+                </div>
+                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                    <label class="control-label col-xs-2 col-sm-2 col-md-2 col-lg-2 text-left" style="padding-left:15px">Da</label>
+                    <div class='input-group date ' id='datetimepicker5'>
+                        <input type='text' id="dataCreazioneDa"
+                            [(ngModel)]="dateStartSNP" name="dataCreazioneDa"
+                            #datePicker5 (blur)="setDateSNP(datePicker5.value, 'start')"
+                            class="form-control date-picker" [disabled]="!tabRateizzazione || isDisable('DASNP')" required/>
+                        <span class="input-group-addon" (click)="interceptor($event)">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <label class="control-label col-xs-2 col-sm-2 col-md-2 col-lg-2 text-left" style="padding-left:15px">A</label>
+                    <div class='input-group date' id='datetimepicker6'>
+                        <input type='text' id="dataCreazioneA"
+                            [(ngModel)]="dateEndSNP" name="dataCreazioneA"
+                            #datePicker6 (blur)="setDateSNP(datePicker6.value, 'end')"
+                            class="form-control date-picker" [disabled]="!tabRateizzazione || isDisable('DASNP')" required />
+                        <span class="input-group-addon" (click)="interceptor($event)" >
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </label>
+    </div>
+    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+            <button type="button" class="btn-conam button-garnet" (click)="pulisciFiltri()">
+                <i class="glyphicon glyphicon-erase btn-glyphicon img-circle text-garnet-conam"></i>
+                Pulisci filtri</button>
+            <button type="submit" class="btn-conam button-yellow" [disabled]="!(formRicerca.form.valid)">
+                <i class="glyphicon glyphicon-search btn-glyphicon img-circle text-yellow-conam"></i>
+                Ricerca</button>
+        </div>
+    </div>
+
+</form>

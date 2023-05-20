@@ -1,0 +1,19 @@
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <shared-ordinanza-dettaglio [idOrdinanza]="idOrdinanza"></shared-ordinanza-dettaglio>
+</div>
+
+<div *ngIf="showAnnullamentoParts" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <shared-ordinanza-dettaglio-documenti [idOrdinanza]="idOrdinanza" [config]="configAllegati" [isFirstDownloadBollettini]="isFirstDownloadBollettini">
+    </shared-ordinanza-dettaglio-documenti>
+</div>
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <shared-ordinanza-dettaglio-soggetti [idOrdinanza]="idOrdinanza" [idVerbale]="idVerbale"  [config]="configSoggetti">
+    </shared-ordinanza-dettaglio-soggetti>
+</div>
+
+<div *ngIf="!showAnnullamentoParts" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <shared-ordinanza-dettaglio-documenti [idOrdinanza]="idOrdinanza" [config]="configAllegati" [isFirstDownloadBollettini]="isFirstDownloadBollettini">
+    </shared-ordinanza-dettaglio-documenti>
+</div>
+

@@ -1,0 +1,278 @@
+<shared-spinner *ngIf="!(loaded && loadedAllegato)"></shared-spinner>
+<div
+  [style.display]="loadedAllegato ? '' : 'none'"
+  *ngIf="loaded"
+  class="panel-group"
+  role="tablist"
+  aria-multiselectable="true"
+>
+  <div class="panel-conam panel-grey-conam">
+    <div class="panel-heading-conam" role="tab" id="headingOne">
+      <h4 class="panel-title">
+        <a
+          data-toggle="collapse"
+          href="#datiVerbale"
+          aria-expanded="true"
+          aria-controls="datiVerbale"
+        >
+          Dati verbale
+        </a>
+      </h4>
+    </div>
+    <div
+      id="datiVerbale"
+      class="panel-collapse collapse in"
+      role="tabpanel"
+      aria-labelledby="headingOne"
+    >
+      <div class="panel-body">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+              <label for="numeroProtocollo" class="control-label"
+                >Numero protocollo</label
+              >
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+              {{ riepilogoVerbale.verbale.numeroProtocollo }}
+            </div>
+          </div>
+          <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+              <label for="numeroVerbale" class="control-label"
+                >Numero verbale</label
+              >
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+              {{ riepilogoVerbale.verbale.numero }}
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="col-xs-12 col-sm-12 col-md-5 col-lg-54">
+              <label for="codEnteAcc" class="control-label"
+                >Ente accertatore</label
+              >
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+              {{ riepilogoVerbale.verbale.enteAccertatore.denominazione }}
+            </div>
+          </div>
+          <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+              <label for="dataOraViolazione" class="control-label"
+                >Data e ora processo verbale</label
+              >
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+              {{ riepilogoVerbale.verbale.dataOraViolazione }}
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+              <label for="localitaAccertamento" class="control-label"
+                >Località accertamento</label
+              >
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+              {{ riepilogoVerbale.verbale.indirizzo }}
+            </div>
+          </div>
+          <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+              <label for="dataInfrazione" class="control-label"
+                >Data e ora accertamento</label
+              >
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+              {{ riepilogoVerbale.verbale.dataOraAccertamento }}
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+              <label for="impMisRidotta" class="control-label"
+                >Importo in misura ridotta</label
+              >
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+              {{ riepilogoVerbale.verbale.importo | currency: "EUR":"symbol" }}
+            </div>
+          </div>
+
+          <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+              <label for="impMisRidotta" class="control-label"
+                >Stato del fascicolo</label
+              >
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+              {{ riepilogoVerbale.verbale.stato.denominazione }}
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div *ngIf="riepilogoVerbale.verbale.importoResiduo" class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+              <label for="impMisRidotta" class="control-label"
+                >Importo residuo</label
+              >
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+              {{
+                riepilogoVerbale.verbale.importoResiduo
+                  | currency: "EUR":"symbol"
+              }}
+            </div>
+          </div>
+          <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+              <label for="impMisRidotta" class="control-label"
+                >Istruttore Creatore</label
+              >
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+              {{ riepilogoVerbale.verbale?.istruttoreCreatore?.denominazione }}
+            </div>
+          </div>
+          <div
+            class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6"
+            *ngIf="riepilogoVerbale.verbale.istruttoreAssegnato != null"
+          >
+            <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+              <label for="impMisRidotta" class="control-label"
+                >Istruttore Assegnato</label
+              >
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+              {{ riepilogoVerbale.verbale?.istruttoreAssegnato?.denominazione }}
+            </div>
+          </div>
+          <div
+            class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6"
+            *ngIf="riepilogoVerbale.verbale.statoManuale != null"
+          >
+            <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+              <label for="impMisRidotta" class="control-label"
+                >Competenza Fascicolo</label
+              >
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+              {{ riepilogoVerbale.verbale?.statoManuale?.denominazione }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-conam panel-grey-conam">
+    <div class="panel-heading-conam" role="tab" id="headingTwo">
+      <h4 class="panel-title">
+        <a
+          class="collapsed"
+          data-toggle="collapse"
+          data-parent="#accordion"
+          href="#riferimentiMotivati"
+          aria-expanded="false"
+          aria-controls="riferimentiMotivati"
+        >
+          Riferimenti Normativi
+        </a>
+      </h4>
+    </div>
+    <div
+      id="riferimentiMotivati"
+      class="panel-collapse collapse"
+      role="tabpanel"
+      aria-labelledby="headingTwo"
+    >
+      <div class="panel-body">
+        <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+          <label for="comune" class="control-label">Ente: </label
+          >{{ riepilogoVerbale.verbale.enteRiferimentiNormativi.denominazione }}
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <datatable [data]="dataRifNormativi" [config]="configRifNorm">
+          </datatable>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-conam panel-grey-conam">
+    <div class="panel-heading-conam" role="tab" id="headingThree">
+      <h4 class="panel-title">
+        <a
+          class="collapsed"
+          data-toggle="collapse"
+          data-parent="#accordion"
+          href="#soggettiVerbale"
+          aria-expanded="false"
+          aria-controls="soggettiVerbale"
+        >
+          Soggetti collegati al verbale
+        </a>
+      </h4>
+    </div>
+    <div
+      id="soggettiVerbale"
+      class="panel-collapse collapse"
+      role="tabpanel"
+      aria-labelledby="headingThree"
+    >
+      <div class="panel-body">
+        <datatable
+          [data]="dataSoggVerbale"
+          [config]="configSoggVerbale"
+          (onInfo)="onInfo($event)"
+        >
+        </datatable>
+      </div>
+    </div>
+  </div>
+  <div class="panel-conam panel-grey-conam">
+    <div class="panel-heading-conam" role="tab" id="headingThree">
+      <h4 class="panel-title">
+        <a
+          class="collapsed"
+          data-toggle="collapse"
+          data-parent="#accordion"
+          href="#riepilogoVerbale"
+          aria-expanded="false"
+          aria-controls="riepilogoVerbale"
+        >
+          Riepilogo allegati
+        </a>
+      </h4>
+    </div>
+    <div
+      id="riepilogoVerbale"
+      class="panel-collapse collapse"
+      role="tabpanel"
+      aria-labelledby="headingThree"
+    >
+      <div class="panel-body">
+        <shared-verbale-allegato-tabella
+          [riepilogoAllegato]="riepilogoVerbale.allegati"
+          [configDocumentiVerbale]="configVerb"
+          [configDocumentiIstruttoria]="configIstr"
+          [configDocumentiFaseGiurisdizionale]="configGiurisd"
+          [configDocumentiRateizzazione]="configRateizzazione"
+          (onDelete)="confermaEliminazione($event)"
+          (onLoaded)="onLoadedAllegato($event)"
+        >
+        </shared-verbale-allegato-tabella>
+      </div>
+    </div>
+  </div>
+</div>
+<shared-dialog
+  [titolo]="'Attenzione'"
+  [subMessages]="subMessages"
+  [testo]="messageDialog"
+  [buttonConfirmText]="buttonConfirmText"
+  [buttonAnnullaText]="buttonAnnullaText"
+></shared-dialog>

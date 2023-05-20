@@ -1,0 +1,41 @@
+<div class="container-fluid">
+    <div class="principal-div col-xs-12 col-sm-12 col-md-0 col-lg-1"></div>
+    <div id="scrollTop"></div>
+    <shared-spinner *ngIf="!(loaded && loadedConfig && loadedAllegato)"></shared-spinner>
+    
+    <div class="principal-div col-xs-12 col-sm-12 col-md-12 col-lg-10" [style.display]="loadedAllegato ? '' : 'none'" *ngIf="loaded && loadedConfig" style="padding-top: 30px">
+        <form>
+            <div class="panel-conam panel-primary-conam">
+                <div class="panel-heading-conam">
+                    <strong>Allegato da ACTA</strong>
+                </div>
+                <div class="panel-body panel-body-background">
+                    <div class="form-group row">
+                        <shared-alert [message]="messageTop" [type]="typeMessageTop" *ngIf="showMessageTop"></shared-alert>
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <shared-verbale-allegato-tabella *ngIf="loadedConfig" [riepilogoAllegato]="allegatoModel" [configDocumentiVerbale]="configVerb"
+                                [configDocumentiIstruttoria]="configIstr" [configDocumentiFaseGiurisdizionale]="configGiurisd" [configDocumentiRateizzazione]="configRateizzazione"
+                                (onDelete)="confermaEliminazione($event)"
+                                (onLoaded)="onLoadedAllegato($event)">
+                            </shared-verbale-allegato-tabella>
+                            <shared-allegato-form-ricerca-protocollo (onSearch)="ricercaProtocollo($event)">
+                                
+                            </shared-allegato-form-ricerca-protocollo>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                            <button type="button" class="btn-conam button-blue" (click)="goToVerbaleDati()" *ngIf="buttonModificaFlag">
+                                <i class="glyphicon glyphicon-share-alt btn-glyphicon img-circle text-blue-conam"></i>
+                                Modifica Dati Verbale Pregresso</button>
+                            <button type="button" class="btn-conam button-blue" (click)="goToVerbaleRiepilogo()">
+                                <i class="glyphicon glyphicon-share-alt btn-glyphicon img-circle text-blue-conam"></i>
+                                Riepilogo</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="principal-div col-xs-12 col-sm-12 col-md-0 col-lg-1"></div>
+</div>
+<shared-dialog [titolo]="'Attenzione'" [subMessages]="subMessagess" [id]="'myModalDelete'" [buttonConfirmText]="buttonConfirmTexts"
+    [buttonAnnullaText]="buttonAnnullaTexts"></shared-dialog>

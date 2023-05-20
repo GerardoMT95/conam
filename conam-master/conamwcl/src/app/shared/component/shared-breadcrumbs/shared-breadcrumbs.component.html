@@ -1,0 +1,11 @@
+<ol class="breadcrumbs">
+    <li>
+        <a routerLink="" class="breadcrumbs">Home</a>
+    </li>
+    <li *ngFor="let breadcrumb of breadcrumbs">
+        <div class="text-color"> >
+            <a [routerLink]="breadcrumb.url">{{ breadcrumb.label }}</a>
+        </div>
+    </li>
+    <div class="arrow-blue  allineamento-bottom">&nbsp;</div>
+</ol>

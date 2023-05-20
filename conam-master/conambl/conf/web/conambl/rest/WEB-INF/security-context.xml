@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   * SPDX-License-Identifier: EUPL-1.2
+   * Copyright Regione Piemonte - 2020
+-->
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans" xmlns="http://www.springframework.org/schema/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+	        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+<!-- Configurazione di Spring Security -->
+	
+
+	<beans:bean id="expressionHandler" class="org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler" />
+
+<!-- Filter chain di Spring security: in questo caso ogni url (pattern="/**") ha la stessa configurazione -->
+<!-- https://docs.spring.io/spring-security/site/docs/3.0.x/reference/security-filter-chain.html -->
+	<beans:bean id="springSecurityFilterChain" class="org.springframework.security.web.FilterChainProxy">
+		<beans:constructor-arg>
+			<beans:list>
+				<filter-chain pattern="/**" filters="
+           securityContextPersistenceFilterWithASCTrue,
+           formLoginFilter,
+           exceptionTranslationFilter,
+           filterSecurityInterceptor" />
+			</beans:list>
+		</beans:constructor-arg>
+	</beans:bean>
+	
+	<!-- 	Sul path di epay non uso la security -->
+	<http pattern="/soap/epay/**" security="none" />
+	
+	
+	<http auto-config="true" use-expressions="true">
+			<!-- disabilitati perchè il routing è gestito lato angular
+			<access-denied-handler error-page="/accessdenied" />
+			<intercept-url pattern="/**" access="hasRole('UTENTE')" />-->	
+		    <custom-filter position="PRE_AUTH_FILTER" ref="siteminderFilter" />
+		    <logout logout-url="/j_security_logout" logout-success-url="" delete-cookies="JSESSIONID" invalidate-session="true" />
+			<session-management invalid-session-url="/login/timeout">
+					<concurrency-control max-sessions="1" error-if-maximum-exceeded="false" expired-url="/sessioneScaduta" />
+			</session-management>
+	</http>
+	
+	<!-- Abilita annotazioni @PreAuthorize, @PreFilter, @PostAuthorize and @PostFilter -->
+	<global-method-security pre-post-annotations="enabled"/>
+	
+<!-- Authentication manager (sempre Shibboleth) -->
+	<authentication-manager alias="authenticationManager">
+		<authentication-provider ref="preauthAuthProvider" />
+	</authentication-manager>
+
+<!-- Configurazione dei bean di shibboleth -->
+	<beans:bean id="siteminderFilter" class="it.csi.conam.conambl.security.ShibbolethAuthenticationFilter">
+		<beans:property name="shibbIdentity" value="Shib-Iride-IdentitaDigitale" />
+		<beans:property name="shibbTestMode" value="@shibbTestMode@" />
+		<beans:property name="authenticationManager" ref="authenticationManager" />
+	</beans:bean>
+
+	<beans:bean id="preauthAuthProvider" class="org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider">
+		<beans:property name="preAuthenticatedUserDetailsService">
+			<beans:bean id="userDetailsServiceWrapper" class="it.csi.conam.conambl.security.ShibbolethUserDetailsServiceWrapper">
+				<beans:property name="userDetailsService" ref="userDetailsService" />
+			</beans:bean>
+		</beans:property>
+	</beans:bean>
+	
+<!-- 	Bean che conterrà la logica per autenticare l'utente -->
+	<beans:bean id='userDetailsService' class="it.csi.conam.conambl.security.UserDetailsService" />
+
+</beans:beans>

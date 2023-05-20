@@ -1,0 +1,148 @@
+<form #formRicerca="ngForm" (ngSubmit)="emitRicerca()">
+    <div class="form-group col-xs-12 col-sm-12"
+        [ngClass]="enableRicercaPiano?'col-md-4 col-lg-4 text-left':'col-md-6 col-lg-6 text-center'">
+        <input type="checkbox" name="ordinanza" id="ordinanza" class="checkbox-input" [checked]="tabOrdinanza"
+            (click)="tabActions.changeOrdinanza($event)" />
+        <label for="ordinanza" class="checkbox-label" id="checkbox-label"
+            [ngStyle]="{height: enableCampiRiscossione? '400px' : '300px'}">
+            <div class="checkbox-text">
+                <p class="checkbox-text--title">Dati Ordinanza</p>
+                <p class="checkbox-text--description"><span class="un">Clicca per abilitare</span></p>
+
+                <ng-container *ngIf="!enableCampiRiscossione; else elseRiscossioneOrd">
+
+                    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <label for="numeroDeterminazione" class="control-label">Numero determinazione Ordinanza</label>
+                        <input type="text" id="numeroDeterminazione" class="form-control" [disabled]="!tabOrdinanza"
+                            [(ngModel)]="ricercaSollecitoRequest.numeroDeterminazione" name="numeroDeterminazione"
+                            required>
+                    </div>
+
+                </ng-container>
+
+                <ng-template #elseRiscossioneOrd>
+
+                    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <label class="control-label">Numero determinazione Ordinanza</label>
+                        <input type="text" id="numeroDeterminazione" class="form-control" [disabled]="!tabOrdinanza || 
+                        (((dataNotificaDa != null && dataNotificaDa.length!=0) || (dataNotificaA != null && dataNotificaA.length!=0)))"
+                            [(ngModel)]="numDetOrdinanza"
+                            name="numeroDeterminazione" required>
+                    </div>
+
+                    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <label class="control-label">Intervallo data di Notifica ricercato</label>
+                        
+                        <div class="row">
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-left" style="padding-left:25px"><label class="control-label">Da</label></div>
+                                <div class="input-group date col-xs-10 col-sm-10 col-md-10 col-lg-10" id='datetimepicker'>
+                                    <input type='text' id="dataNotifica"
+                                        [(ngModel)]="dataNotificaDa" name="dataNotifica"
+                                        #datePicker="ngModel" (blur)="manageDatePicker($event, 1)"
+                                        class="form-control date-picker" [disabled]="!tabOrdinanza || ((numDetOrdinanza != null && numDetOrdinanza.length!=0))" required/>
+                                    <span class="input-group-addon" (click)="interceptor($event)">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="row">
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-left" style="padding-left:25px"> <label class="control-label">A</label></div>
+                                <div class="input-group date col-xs-10 col-sm-10 col-md-10 col-lg-10" id='datetimepicker1'>
+                                    <input type='text' id="dataNotificaA"
+                                        [(ngModel)]="dataNotificaA" name="dataNotificaA"
+                                        #datePicker1="ngModel" (blur)="manageDatePicker($event, 2)"
+                                        class="form-control date-picker" [disabled]="!tabOrdinanza || ((numDetOrdinanza != null && numDetOrdinanza.length!=0))" required />
+                                    <span class="input-group-addon" (click)="interceptor($event)" >
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                        </div>
+                    </div>
+
+                </ng-template>
+
+            </div>
+        </label>
+    </div>
+    <div class="form-group col-xs-12 col-sm-12  text-left"
+        [ngClass]="enableRicercaPiano?'col-md-4 col-lg-4 text-left':'col-md-6 col-lg-6 text-center'">
+        <input type="checkbox" name="sentenza" id="sentenza" class="checkbox-input" [checked]="tabSentenza"
+            (click)="tabActions.changeSentenza()" />
+        <label for="sentenza" class="checkbox-label" id="checkbox-label"
+            [ngStyle]="{height: enableCampiRiscossione? '400px' : '300px'}">
+            <div class="checkbox-text">
+                <p class="checkbox-text--title">Dati Disposizione del Giudice</p>
+                <p class="checkbox-text--description"><span class="un">Clicca per abilitare</span></p>
+                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <label for="numeroProtocolloSentenza" class="control-label">Numero protocollo Disposizione</label>
+                    <input type="text" id="numeroProtocolloSentenza" class="form-control" [disabled]="!tabSentenza || isDisable('PD')"
+                        [(ngModel)]="numeroProtocolloSentenza"
+                        name="numeroProtocolloSentenza" required>
+                </div>
+                <div *ngIf="enableCampiRiscossione">
+                    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <label class="control-label">Esito Disposizione</label>
+                        <shared-spinner-form [diameter]="30" *ngIf="!loadedSentenza;  else elseSentenza">
+                        </shared-spinner-form>
+                        <ng-template #elseSentenza>
+                            <select class="form-control" id="statoSent"
+                                [(ngModel)]="statoSentenza" name="statoSent"
+                                [compareWith]="byId" [disabled]="!tabSentenza || isDisable('ED')">
+                                <option *ngFor="let sent of sentenzaModel" [ngValue]="sent">{{sent.denominazione}}
+                                </option>
+                            </select>
+                        </ng-template>
+                    </div>
+
+                    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <label class="control-label">Intervallo data Disposizione ricercato</label>
+                        
+                        <div class="row">
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-left" style="padding-left:25px"><label class="control-label">Da</label></div>
+                                <div class="input-group date col-xs-10 col-sm-10 col-md-10 col-lg-10" id='datetimepicker3'>
+                                    <input type='text' id="dataSentenzaDa"
+                                        [(ngModel)]="dataSentenzaDa" name="dataSentenzaDa"
+                                        #datePicker3="ngModel" (blur)="manageDatePicker($event, 3)"
+                                        class="form-control date-picker" [disabled]="!tabSentenza || isDisable('DAS')" required/>
+                                    <span class="input-group-addon" (click)="interceptor($event)">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="row">
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-left" style="padding-left:25px"> <label class="control-label">A</label></div>
+                                <div class="input-group date col-xs-10 col-sm-10 col-md-10 col-lg-10" id='datetimepicker4'>
+                                    <input type='text' id="dataSentenzaA"
+                                        [(ngModel)]="dataSentenzaA" name="dataSentenzaA"
+                                        #datePicker4="ngModel" (blur)="manageDatePicker($event, 4)"
+                                        class="form-control date-picker" [disabled]="!tabSentenza || isDisable('DAS')" required />
+                                    <span class="input-group-addon" (click)="interceptor($event)" >
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </label>
+    </div>
+  
+    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+            <button type="button" class="btn-conam button-garnet" (click)="pulisciFiltri()">
+                <i class="glyphicon glyphicon-erase btn-glyphicon img-circle text-garnet-conam"></i>
+                Pulisci filtri</button>
+            <button type="submit" class="btn-conam button-yellow"
+                [disabled]="!(formRicerca.form.valid && condizionePerRiscossione())">
+                <i class="glyphicon glyphicon-search btn-glyphicon img-circle text-yellow-conam"></i>
+                Ricerca</button>
+        </div>
+    </div>
+
+</form>

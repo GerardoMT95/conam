@@ -1,0 +1,140 @@
+<div class="container-fluid">
+    <div class="principal-div col-xs-12 col-sm-12 col-md-0 col-lg-1"></div>
+    <div id="scrollTop"></div>
+    <shared-spinner *ngIf="!(loaded && loadedConfig)"></shared-spinner>
+    <div class="principal-div col-xs-12 col-sm-12 col-md-12 col-lg-10" 
+    *ngIf="loaded && loadedConfig" style="padding-top: 30px">
+        <form>
+            <div class="panel-conam panel-primary-conam">
+                <div class="panel-heading-conam">
+                    <strong>Allegato da ACTA</strong>
+                </div>
+                <div class="panel-body panel-body-background">
+                    <shared-alert [message]="messageTop" [type]="typeMessageTop" *ngIf="showMessageTop"></shared-alert>
+
+                    <shared-allegato-form-ricerca-protocollo [numeroProtocollo]="searchFormRicercaProtocol" (onSearch)="ricercaProtocollo($event)">
+                                
+                    </shared-allegato-form-ricerca-protocollo>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="overflow-x: scroll;">
+                        <datatable
+                            *ngIf="dataRicercaProtocollo"
+                            [data]="dataRicercaProtocollo"
+                            [config]="configRicercaProtocollo"
+                            (selected)="onSelected($event)"
+                            (download)="getAllegato($event)"
+                        >
+                        </datatable>
+                    </div>
+                    <div class="form-group row">
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <h4 class="border-title"><strong>Assegna categorie documento</strong></h4>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-12  col-md-12 col-lg-12" *ngIf="dataRicercaProtocolloSelected">
+                            <shared-alert [message]="messageBottom" [type]="typeMessageBottom" *ngIf="showMessageBottom"></shared-alert>
+                            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                <label for="numberDocument" class="control-label"> Numero documenti contenuti</label>
+                            </div>
+                            <div *ngIf="!modeSuper" class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                                <input type="number" id="numberDocument" class="form-control"
+                                    name="numberDocument" 
+                                    [(ngModel)]="numberDocument.value" 
+                                    [readonly]="numberDocument.readonly"
+                                    (input)="onNumberChange($event.target.value)" 
+                                    [min]="1"
+                                    >
+                            </div>
+                            <div *ngIf="modeSuper" class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                                <input type="number" id="numberDocumentSuper" class="form-control"
+                                    name="numberDocumentSuper" 
+                                    [(ngModel)]="numberDocumentSuper.value" 
+                                    [readonly]="numberDocumentSuper.readonly"
+                                    [min]="1"
+                                    >
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="dataRicercaProtocolloSelected">
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngFor="let item of [].constructor(numberDocument.value); let i = index">
+                                <div *ngIf="!modeSuper || i==currentSuper">
+                                    {{ dataRicercaProtocolloSelected.filename.nomeFile }}
+        
+                                    <shared-allegato-metadati-inserimento 
+                                    [current]="i"  
+                                    [senzaAllegatiForce]="true" 
+                                    [pregresso]="isPregresso"
+                                    [riepilogoVerbale]="riepilogoVerbale"
+                                    [tipoAllegatoInput]="tipoAllegatoModel"  
+                                    (onChangeCategoriaDocumento)="onChangeCategoriaDocumento($event)"
+                                    (onValid)="onValidAllegatoMetadati($event)">
+                                    </shared-allegato-metadati-inserimento>
+                                    <pregresso-ordinanza-ins-crea-ordinanza *ngIf="showCompMeta==11 || showCompMeta==12 " 
+                                    [idTipoAllegatoSelezionato]="showCompMeta" 
+                                    (onChangeData)="onChangeData($event)">
+
+                                    </pregresso-ordinanza-ins-crea-ordinanza>
+                                    <pregresso-pagamenti-piano-ins-mod *ngIf="showCompMeta==17" 
+                                    [idOrdinanza]="idOrdinanza" 
+                                    [numDeterminazione]="numDeterminazione"
+                                    (onChangeData)="onChangeData($event)">
+
+                                    </pregresso-pagamenti-piano-ins-mod>
+                                    <pregresso-riscossione-sollecito-dettaglio-ins *ngIf="showCompMeta==20" 
+                                    [idOrdinanza]="idOrdinanza" 
+                                    [numDeterminazione]="numDeterminazione"
+                                    (onChangeData)="onChangeData($event)">
+
+                                    </pregresso-riscossione-sollecito-dettaglio-ins>
+
+                                    <pregresso-disposizione-giudice-ins *ngIf="showCompMeta==14" 
+                                    [idOrdinanza]="idOrdinanza" 
+                                    [tipoAllegatoInput]="tipoAllegatoModel"
+                                    [numDeterminazione]="numDeterminazione"
+                                    (onChangeData)="onChangeData($event)">
+
+                                    </pregresso-disposizione-giudice-ins>
+
+                                    <pregresso-ricevuta-pagamento-ordinanza-ins *ngIf="showCompMeta==22" 
+                                    [idOrdinanza]="idOrdinanza" 
+                                    [tipoAllegatoInput]="tipoAllegatoModel"
+                                    [numDeterminazione]="numDeterminazione"
+                                    (onChangeData)="onChangeData($event)">
+
+                                    </pregresso-ricevuta-pagamento-ordinanza-ins>
+
+                                    <shared-verbale-dettaglio-soggetti *ngIf="showCompMeta==27" pregresso="true" [config]="configSoggetti" [idVerbale]="idVerbale"
+                                        (selected)="onSelectSoggetti($event)">
+                                    </shared-verbale-dettaglio-soggetti>
+
+                                    <shared-verbale-dettaglio-soggetti *ngIf="showCompMeta==10" 
+                                        pregresso="true" 
+                                        [config]="configSoggetti" 
+                                        [idVerbale]="idVerbale"
+                                        (selected)="onSelectSoggetti($event)">
+                                    </shared-verbale-dettaglio-soggetti>
+
+                                    <pregresso-seleziona-soggetti *ngIf="showCompMeta==19"
+                                        [numDeterminazione]="numDeterminazione"
+                                        (onSelect)="onSelectSoggetti($event)" 
+                                    >
+                                    </pregresso-seleziona-soggetti>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                            <button type="button" class="btn-conam button-blue" (click)="back()">
+                                <i class="glyphicon glyphicon-arrow-left btn-glyphicon img-circle text-blue-conam"></i>
+                                Indietro</button>
+                            <button type="button" class="btn-conam button-green" (click)="save()" [disabled]="saveDisabled">
+                                <i class="glyphicon glyphicon-floppy-saved btn-glyphicon img-circle text-blue-conam"></i>
+                                Salva</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="principal-div col-xs-12 col-sm-12 col-md-0 col-lg-1"></div>
+</div>
+<shared-dialog [titolo]="'Allegato da ACTA'" [subMessages]="subMessagess" [subLinks]="subLinks" [buttonConfirmText]="buttonConfirmTexts"
+    [buttonAnnullaText]="buttonAnnullaTexts"  [id]="'modalAllegatoACTA_1'"
+    (clickLinkEvent)="openAllegatoFisico($event)"
+    ></shared-dialog>

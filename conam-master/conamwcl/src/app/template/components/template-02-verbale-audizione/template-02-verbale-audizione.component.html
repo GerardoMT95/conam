@@ -1,0 +1,117 @@
+<div class="form-group row">
+    <shared-template-intestazione [datiTemplate]="data" [datiCompilati]="datiCompilati" (formValid)="setFormIntestazioneValid($event)">
+    </shared-template-intestazione>
+    <form #formTemplate="ngForm">
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                OGGETTO:
+                <span class="form-control-view" *ngIf="isAnteprima || isStampa">{{datiCompilati.oggetto}}</span>
+                <input type="text" id="ogg" class="form-control" name="ogg" *ngIf="!isAnteprima && !isStampa" [(ngModel)]="datiCompilati.oggetto" required>
+            </div>
+        </div>
+
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-inline">
+                    Addì
+                    <span class="form-control-view" *ngIf="isAnteprima || isStampa">{{datiCompilati.giorno}}</span>
+                    <div class='input-group date datepicker-size' id='datetimepicker1' *ngIf="!isAnteprima && !isStampa">
+                        <input type='text' id="giorno" [(ngModel)]="datiCompilati.giorno" name="giorno" #datePicker1="ngModel" (blur)="manageDatePicker($event, 1)"
+                            class="form-control date-picker" required>
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                    del Mese
+                    <span class="form-control-view" *ngIf="isAnteprima || isStampa">{{datiCompilati.mese}}</span>
+                    <div class='input-group date datepicker-size' id='datetimepicker2' *ngIf="!isAnteprima && !isStampa">
+                        <input type='text' id="mese" [(ngModel)]="datiCompilati.mese" name="mese" #datePicker2="ngModel" (blur)="manageDatePicker($event, 2)"
+                            class="form-control date-picker" required>
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                    dell'Anno
+                    <span class="form-control-view" *ngIf="isAnteprima || isStampa">{{datiCompilati.anno}}</span>
+                    <div class='input-group date datepicker-size' id='datetimepicker3' *ngIf="!isAnteprima && !isStampa">
+                        <input type='text' id="anno" [(ngModel)]="datiCompilati.anno" name="anno" #datePicker3="ngModel" (blur)="manageDatePicker($event, 3)"
+                            class="form-control date-picker" required>
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                    con inizio alle ore
+                    <span class="form-control-view" *ngIf="isAnteprima || isStampa">{{datiCompilati.oraInizio}}</span>
+                    <div class='input-group date datepicker-size' id='datetimepicker4' *ngIf="!isAnteprima && !isStampa">
+                        <input type='text' id="oraInizio" [(ngModel)]="datiCompilati.oraInizio" name="oraInizio" #datePicker4="ngModel" (blur)="manageDatePicker($event, 4)"
+                            class="form-control date-picker" required>
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                    in
+                    <span class="form-control-view" *ngIf="isAnteprima || isStampa">{{datiCompilati.indirizzo}}</span>
+                    <input type="text" id="indirizzo" *ngIf="!isAnteprima && !isStampa" class="form-control" style="display: inline-block; width: 15%" name="indirizzo"
+                        [(ngModel)]="datiCompilati.indirizzo" placeholder="Indirizzo" required> presso il
+                    settore delle politiche fiscali e contenzioso amministrativo, dinnanzi ai sottoscritti funzionari all'uopo
+                    designati dall'ufficio
+                    <span> {{comparizione}}</span>
+                    <span *ngFor="let d of denominazioneList">{{d}}</span>
+                    <span *ngIf="denominazioneList.length==1; else soggettiMultipli2">assistito</span>
+                    <ng-template #soggettiMultipli2>assistiti</ng-template>
+                    da
+                    <span class="form-control-view" *ngIf="isAnteprima || isStampa">{{datiCompilati.nomeAvvocato}}</span>
+                    <input type="text" id="nomeAvvocato" *ngIf="!isAnteprima && !isStampa" class="form-control" style="display: inline-block; width: 15%"
+                        name="nomeAvvocato" [(ngModel)]="datiCompilati.nomeAvvocato" placeholder="Nome Cognome Avvocato" required>                    quale
+                    audito a richiesta in merito ai processi verbali n° 
+                    <span class="form-control-view" *ngIf="isAnteprima || isStampa">{{datiCompilati.processiVerbali}}</span>
+                    <input type="text" id="processiVerbali" *ngIf="!isAnteprima && !isStampa" class="form-control" style="display: inline-block; width: 15%"
+                        name="processiVerbali" [(ngModel)]="datiCompilati.processiVerbali" placeholder="Inserire numero e data verbale"
+                        required>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:10%">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">DICHIARA</div>
+                <div class="form-control-view" *ngIf="isAnteprima || isStampa">{{datiCompilati.dichiara}}</div>
+                <textarea style="resize: none" id="testoLib" class="form-control" name="testoLib" rows="10" [(ngModel)]="datiCompilati.dichiara"
+                    required placeholder="Inserire la dichiarazione " *ngIf="!isAnteprima && !isStampa"></textarea>
+
+            </div>
+        </div>
+
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right padding-top-25">
+                Il Funzionario presente all'audizione
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                Dott. {{funzionario}}
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right padding-top-25">
+                <span *ngIf="denominazioneList.length==1; else soggettiMultipli3"> Il Dichiarante</span>
+                <ng-template #soggettiMultipli3>I Dichiaranti</ng-template>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                <span *ngFor="let d of denominazioneList">{{d}}</span>
+
+            </div>
+        </div>
+
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-top-25">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 small-font">
+                Corso Regina Margherita, 153 bis
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 small-font">
+                10122 Torino
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 small-font">
+                Tel: 011 4321288
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 small-font">
+                Fax: 011 4325386
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 small-font">
+                Email: settore.tributi@regione.piemonte.it
+            </div>
+        </div>
+    </form>
+</div>

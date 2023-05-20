@@ -1,0 +1,8 @@
+<shared-spinner *ngIf="!loaded; else elseBlock"></shared-spinner>
+<ng-template #elseBlock>
+    <div class="home">
+        <h2>CONAM Contenzioso Amministrativo</h2>
+        <!-- TODO Controllare -->
+        <div *ngIf="profilo.homeMessage && profilo.homeMessage.message" class="homeMessage">{{profilo.homeMessage.message}}</div>
+    </div>
+</ng-template>

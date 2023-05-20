@@ -1,0 +1,39 @@
+<div class="panel-body panel-body-background" *ngIf="loaded">
+    <div *ngIf="sentenza.importoTitoloSanzione!=0">
+        <div class="form-group row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <h4 class="border-title"><strong>Dati disposizione del giudice</strong></h4>
+
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        <label for="numeroProtocollo" class="control-label">Importo a titolo
+                                            di sanzione</label>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        {{sentenza.importoTitoloSanzione | currency:'EUR':'symbol'}}
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        <label for="dataOrdinanza" class="control-label">Importo per spese
+                                            processuali
+                                        </label>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        {{sentenza.importoSpeseProcessuali | currency:'EUR':'symbol'}}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

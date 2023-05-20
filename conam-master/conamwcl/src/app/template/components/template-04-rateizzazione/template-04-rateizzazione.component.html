@@ -1,0 +1,158 @@
+<div class="form-group row">
+    <shared-template-intestazione [datiTemplate]="data" [datiCompilati]="datiCompilati"
+        (formValid)="setFormIntestazioneValid($event)">
+    </shared-template-intestazione>
+    <form #formTemplate="ngForm">
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+            <shared-template-soggetti [listaSoggetti]="data.listaSoggetti"
+                *ngIf="data!=null && data.listaSoggetti!=null">
+            </shared-template-soggetti>
+        </div>
+
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-top-15">
+                <div class="form-control-view" *ngIf="isAnteprima || isStampa">{{datiCompilati.studioAvvocato}}</div>
+                <input type="text" id="avvNome" class="form-control" style="display: inline-block; width: 20%"
+                    name="avvNome" [(ngModel)]="datiCompilati.studioAvvocato" placeholder="Studio Avvocato"
+                    *ngIf="!isAnteprima && !isStampa">
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-top-15">
+                <div class="form-control-view" *ngIf="isAnteprima || isStampa">{{datiCompilati.indirizzoAvvocato}}</div>
+                <input type="text" id="avvIndirizzo" class="form-control" style="display: inline-block; width: 20%"
+                    name="avvIndirizzo" [(ngModel)]="datiCompilati.indirizzoAvvocato" placeholder="Indirizzo Avvocato"
+                    *ngIf="!isAnteprima && !isStampa">
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-top-15">
+                <div class="form-control-view" *ngIf="isAnteprima || isStampa">{{datiCompilati.comuneAvvocato}}</div>
+                <input type="text" id="avvComune" class="form-control" style="display: inline-block; width: 20%"
+                    name="avvComune" [(ngModel)]="datiCompilati.comuneAvvocato" placeholder="Comune Avvocato"
+                    *ngIf="!isAnteprima && !isStampa">
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-top-15">
+                <div class="form-control-view" *ngIf="isAnteprima || isStampa">{{datiCompilati.mailAvvocato}}</div>
+                <input type="text" id="avvEmail" class="form-control" style="display: inline-block; width: 20%"
+                    name="avvEmail" [(ngModel)]="datiCompilati.mailAvvocato" placeholder="Email Avvocato"
+                    *ngIf="!isAnteprima && !isStampa">
+            </div>
+        </div>
+
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                OGGETTO:
+                <div class="form-control-view" style="display: inline-block" *ngIf="isAnteprima || isStampa">
+                    {{datiCompilati.oggetto}}
+                </div>
+                <input type="text" id="ogg" class="form-control" name="ogg" [(ngModel)]="datiCompilati.oggetto" required
+                    *ngIf="!isAnteprima && !isStampa">
+            </div>
+        </div>
+
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="form-control-view" *ngIf="isAnteprima || isStampa">{{datiCompilati.descrizione}}</div>
+                <textarea style="resize: none" id="testoLib" class="form-control" name="testoLib" rows="10"
+                    [(ngModel)]="datiCompilati.descrizione" required placeholder="Descrizione"
+                    *ngIf="!isAnteprima && !isStampa"></textarea>
+            </div>
+        </div>
+
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                Importo totale dovuto: {{data.importoTotale | currency:'EUR':'symbol'}}
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                Numero di rate mensili: {{data.numeroRate}}
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-top-15">
+                <ul>
+                    <li>Prima Rata: {{data.importoPrimaRata | currency:'EUR':'symbol' }}</li>
+                    <li>Rate successive: {{data.importoAltreRate | currency:'EUR':'symbol'}} </li>
+                    <li>Ultima Rata: {{data.importoUltimaRata | currency:'EUR':'symbol' }}</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                Il pagamento può essere effettuato mediante i seguenti canali:
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <ul>
+                    <li>
+                        Sul sito della Regione Piemonte <u>https://pay.sistemapiemonte.it/epayweb/</u> inserendo il
+                        codice
+                        IUV
+                        riportato sui bollettini;
+                    </li>
+                    <li>
+                        Presso le agenzie della sua banca o mediante i servizi dell’home banking (cercare loghi CBILL o
+                        pagoPA);
+                    </li>
+                    <li>
+                        Presso gli uffici postali;
+                    </li>
+                    <li>
+                        Presso gli sportelli ATM della sua banca (se abilitati);
+                    </li>
+                    <li>
+                        Presso i punti vendita di SISAL, Lottomatica, Banca 5 e altri soggetti che aderiscono al sistema
+                        pagoPA.
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div *ngIf="scadenzaDefinita" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                Il pagamento della prima rata dovrà essere effettuato entro il {{data.scadenzaPrimaRata}}. Le rate
+                successive dovranno essere pagate rispettando la scadenza del mese
+                successivo al primo pagamento.
+            </div>
+            <div *ngIf="!scadenzaDefinita" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                Il pagamento dovrà essere effettuato entro 15 giorni dal ricevimento della presente comunicazione. Le
+                rate
+                successive dovranno essere pagate rispettando la scadenza del mese successivo al primo pagamento (quindi
+                se
+                pagasse la prima rata il 15/06/2019, quella successiva dovrebbe essere corrisposta entro il 15/07/2019 e
+                così via).
+            </div>
+        </div>
+
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                Si rammenta che in caso di mancato rispetto dei pagamenti secondo le modalità sopra descritte (anche di
+                una
+                sola rata), il Settore scrivente dovrà ricorrere alle necessarie procedure di recupero dell'intero
+                credito
+                rimanente in un'unica soluzione, mediante iscrizione a ruolo.
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-top-15">
+                Distinti saluti.
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right padding-top-25">
+                Il Dirigente del Settore
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                {{data.dirigente}}
+            </div>
+        </div>
+
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 small-font">
+                Corso Regina Margherita, 153 bis
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 small-font">
+                10122 Torino
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 small-font">
+                Tel: 011 4321288
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 small-font">
+                Fax: 011 4325386
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 small-font">
+                Email: settore.tributi@regione.piemonte.it
+            </div>
+        </div>
+    </form>
+</div>

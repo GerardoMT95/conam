@@ -1,0 +1,237 @@
+<div class="form-group row">
+  <form #formTemplate="ngForm">
+    <img
+      alt="Logo Regione Piemonte"
+      src="assets/logo_RegPie.jpg"
+      class="center"
+    />
+
+    <div
+      class="col-xs-6 col-sm-6 col-md-6 col-lg-6 padding-top-15 col-md-offset-3 col-lg-offset-3"
+      style="text-align: center"
+    >
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <span class="form-control-view" >{{
+          datiCompilati.datiLetteraAnnullamento.direzioneLettera
+        }}</span>
+        
+      </div>
+
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <span class="form-control-view">{{
+          datiCompilati.datiLetteraAnnullamento.settoreLettera
+        }}</span>
+        
+      </div>
+
+      <div
+        class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+        *ngIf="viewMailTributiField"
+      >
+        <span class="form-control-view">
+          {{ datiCompilati.datiLetteraAnnullamento.mailLettera }}</span
+        >
+       
+      </div>
+    </div>
+
+    <div
+      class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-top-25"
+    >
+      <div class="col-xs-6 col-sm-6 col-md-9 col-lg-9">
+        <div>Prot. n. {{ data.numeroProtocollo }}</div>
+        <div>CL. {{ data.classificazione }}</div>
+        <div>F.N. {{ data.fn }}</div>
+      </div>
+
+      <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 text-right">
+        Torino,
+        <span class="form-control-view">{{
+          datiCompilati.datiLetteraAnnullamento.dataLettera
+        }}</span>
+       
+      </div>
+      <div class="col-xs-6 col-sm-6 col-md-3 col-lg-3 text-right padding-top-25">
+      <shared-template-soggetti [listaSoggetti]="data.listaSoggetti"
+                *ngIf="data!=null && data.listaSoggetti!=null">
+            </shared-template-soggetti>
+      </div>
+      <div
+        class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-md-offset-9 col-lg-offset-9 text-right padding-top-25"
+      >
+        <div class="col-12 text-right">
+          <span class="form-control-view" *ngIf="datiCompilati.indirizzoOrganoAccertatoreRiga1 || 
+          datiCompilati.indirizzoOrganoAccertatoreRiga2 || 
+          datiCompilati.indirizzoOrganoAccertatoreRiga3 || 
+          datiCompilati.testoLibero">e.p.c</span>
+        </div>
+        <div class="col-12 text-right">
+          <span class="form-control-view" *ngIf="isAnteprima || isStampa">
+            {{
+              datiCompilati.indirizzoOrganoAccertatoreRiga1
+            }}</span
+          >
+          <input
+            type="text"
+            id="indirizzoOrganoAccertatoreRiga1"
+            class="form-control"
+            name="indirizzoOrganoAccertatoreRiga1"
+            *ngIf="!isAnteprima && !isStampa"
+            [(ngModel)]="
+              datiCompilati.indirizzoOrganoAccertatoreRiga1
+            "
+            placeholder="Sedime denominazione, n° civic"
+          />
+        </div>
+        <div class="col-12 text-right">
+          <span class="form-control-view" *ngIf="isAnteprima || isStampa">{{
+            datiCompilati.indirizzoOrganoAccertatoreRiga2
+          }}</span>
+          <input
+            type="text"
+            id="indirizzoOrganoAccertatoreRiga2"
+            class="form-control"
+            name="indirizzoOrganoAccertatoreRiga2"
+            *ngIf="!isAnteprima && !isStampa"
+            [(ngModel)]="
+              datiCompilati.indirizzoOrganoAccertatoreRiga2
+            "
+          />
+        </div>
+        <div class="col-12 text-right">
+          <span class="form-control-view" *ngIf="isAnteprima || isStampa">{{
+            datiCompilati.indirizzoOrganoAccertatoreRiga3
+          }}</span>
+          <input
+            type="text"
+            id="indirizzoOrganoAccertatoreRiga3"
+            class="form-control"
+            name="indirizzoOrganoAccertatoreRiga3"
+            *ngIf="!isAnteprima && !isStampa"
+            [(ngModel)]="
+              datiCompilati.indirizzoOrganoAccertatoreRiga3
+            "
+            placeholder="CAP Comune, (PROV)"
+          />
+        </div>
+        <div class="col-12 text-right">
+          <span class="form-control-view" *ngIf="isAnteprima || isStampa">{{
+            datiCompilati.testoLibero
+          }}</span>
+          <input
+            type="text"
+            id="testoLibero"
+            class="form-control"
+            name="testoLibero"
+            *ngIf="!isAnteprima && !isStampa"
+            [(ngModel)]="datiCompilati.testoLibero"
+            placeholder="Testo libero"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        OGGETTO:
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-top-25">
+          <span class="form-control-view" *ngIf="isAnteprima || isStampa">{{
+            datiCompilati.oggettoLettera
+          }}</span>
+          <textarea
+            *ngIf="!isAnteprima && !isStampa"
+            rows="2"
+            cols="120"
+            id="oggettoLetteraRigaUno"
+            name="oggettoLetteraRigaUno"
+            [(ngModel)]="datiCompilati.oggettoLettera"
+            style="width: 100%; color: black"
+            required
+          >
+          </textarea>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <span class="form-control-view" *ngIf="isAnteprima || isStampa">{{
+            datiCompilati.corpoLettera
+          }}</span>
+          <input
+            type="text"
+            id="oggettoLetteraRigaDue"
+            class="form-control"
+            name="oggettoLetteraRigaDue"
+            *ngIf="!isAnteprima && !isStampa"
+            [(ngModel)]="datiCompilati.corpoLettera"
+            required
+          />
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <span class="form-control-view" *ngIf="isAnteprima || isStampa">{{
+            datiCompilati.datiLetteraAnnullamento.salutiLettera
+          }}</span>
+          <input
+            type="text"
+            id="oggettoLetteraRigaTre"
+            class="form-control"
+            name="oggettoLetteraRigaTre"
+            *ngIf="!isAnteprima && !isStampa"
+            [(ngModel)]="datiCompilati.datiLetteraAnnullamento.salutiLettera"
+            required
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div
+        class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right padding-top-25"
+      >
+        Il Dirigente del Settore
+      </div>
+      <div
+        class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-md-offset-9 col-lg-offset-9 text-right"
+      >
+        <span class="form-control-view">{{
+          datiCompilati.datiLetteraAnnullamento.dirigenteLettera
+        }}</span>
+       
+      </div>
+
+      <div
+        class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-lg-offset-9 text-right"
+      >
+        <span class="form-control-view">
+          {{ datiCompilati.datiLetteraAnnullamento.bloccoFirmaOmessa }}</span
+        >
+       
+      </div>
+    </div>
+
+    <div
+      class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4 padding-top-25"
+    >
+      <div class="form-group col-12 small-font">
+        <span class="form-control-view" >
+          /{{ datiCompilati.datiLetteraAnnullamento.inizialiLettera }}
+          </span>
+      
+      </div>
+      <div class="col-12 small-font padding-top-2">
+        <span class="form-control-view" >{{
+          datiCompilati.datiLetteraAnnullamento.sedeEnteRiga1
+        }}</span>
+        
+      </div>
+      <div class="col-12 small-font padding-top-2">
+        <span class="form-control-view">{{
+          datiCompilati.datiLetteraAnnullamento.sedeEnteRiga2
+        }}</span>
+       
+      </div>
+      <div class="col-12 small-font padding-top-2">
+        <span class="form-control-view" >{{
+          datiCompilati.datiLetteraAnnullamento.sedeEnteRiga3
+        }}</span>
+      </div>
+
+    </div>
+  </form>
+</div>

@@ -1,0 +1,155 @@
+<div class="form-group row">
+    <shared-template-intestazione [datiTemplate]="data" [datiCompilati]="datiCompilati"
+        (formValid)="setFormIntestazioneValid($event)">
+    </shared-template-intestazione>
+    <form #formTemplate="ngForm">
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+            <shared-template-soggetti [listaSoggetti]="data.listaSoggetti"
+                *ngIf="data!=null && data.listaSoggetti!=null">
+            </shared-template-soggetti>
+        </div>
+        <div
+        class="col-xs-12 col-sm-12 col-md-3 col-lg-3 col-md-offset-9 col-lg-offset-9 text-right padding-top-25"
+      >
+        <div class="col-12 text-right">
+          <span class="form-control-view" *ngIf="datiCompilati.indirizzoOrganoAccertatoreRiga1 || 
+          datiCompilati.indirizzoOrganoAccertatoreRiga2 || 
+          datiCompilati.indirizzoOrganoAccertatoreRiga3 || 
+          datiCompilati.testoLibero">e.p.c</span>
+        </div>
+        <div class="col-12 text-right">
+          <span class="form-control-view" *ngIf="isAnteprima || isStampa">
+            {{
+              datiCompilati.indirizzoOrganoAccertatoreRiga1
+            }}</span
+          >
+          <input
+            type="text"
+            id="indirizzoOrganoAccertatoreRiga1"
+            class="form-control"
+            name="indirizzoOrganoAccertatoreRiga1"
+            *ngIf="!isAnteprima && !isStampa"
+            [(ngModel)]="
+              datiCompilati.indirizzoOrganoAccertatoreRiga1
+            "
+            placeholder="Organo accertatore"
+          />
+        </div>
+        <div class="col-12 text-right">
+          <span class="form-control-view" *ngIf="isAnteprima || isStampa">{{
+            datiCompilati.indirizzoOrganoAccertatoreRiga2
+          }}</span>
+          <input
+            type="text"
+            id="indirizzoOrganoAccertatoreRiga2"
+            class="form-control"
+            name="indirizzoOrganoAccertatoreRiga2"
+            *ngIf="!isAnteprima && !isStampa"
+            [(ngModel)]="
+              datiCompilati.indirizzoOrganoAccertatoreRiga2
+            "
+            placeholder="Sedime denominazione, n° civic"
+          />
+        </div>
+        <div class="col-12 text-right">
+          <span class="form-control-view" *ngIf="isAnteprima || isStampa">{{
+            datiCompilati.indirizzoOrganoAccertatoreRiga3
+          }}</span>
+          <input
+            type="text"
+            id="indirizzoOrganoAccertatoreRiga3"
+            class="form-control"
+            name="indirizzoOrganoAccertatoreRiga3"
+            *ngIf="!isAnteprima && !isStampa"
+            [(ngModel)]="
+              datiCompilati.indirizzoOrganoAccertatoreRiga3
+            "
+            placeholder="CAP Comune, (PROV)"
+          />
+        </div>
+        <div class="col-12 text-right">
+          <span class="form-control-view" *ngIf="isAnteprima || isStampa">{{
+            datiCompilati.testoLibero
+          }}</span>
+          <input
+            type="text"
+            id="testoLibero"
+            class="form-control"
+            name="testoLibero"
+            *ngIf="!isAnteprima && !isStampa"
+            [(ngModel)]="datiCompilati.testoLibero"
+            placeholder="Testo libero"
+          />
+        </div>
+      </div>
+
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                OGGETTO:
+                <div class="padding-top-25">
+                  <span class="form-control-view" *ngIf="isAnteprima || isStampa">{{
+                    datiCompilati.oggetto
+                  }}</span>
+                  <textarea
+                    *ngIf="!isAnteprima && !isStampa"
+                    rows="2"
+                    cols="120"
+                    id="oggettoLetteraRigaUno"
+                    name="oggettoLetteraRigaUno"
+                    [(ngModel)]="datiCompilati.oggetto"
+                    style="width: 100%; color: black"
+                    placeholder="Oggetto lettera"
+                    required
+                  >
+                  </textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                Ai sensi dell'art.
+                <span class="form-control-view" *ngIf="isAnteprima || isStampa">{{datiCompilati.riferimentoNormativo}}</span>
+                <input type="text" id="legge" *ngIf="!isAnteprima && !isStampa" class="form-control"
+                    style="display: inline-block; width: 30%" name="legge"
+                    [(ngModel)]="datiCompilati.riferimentoNormativo" placeholder="Riferimento Normativo" required>
+                si trasmette in allegato copia conforme del provvedimento relativo all'oggetto.
+            </div>
+        </div>
+
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-top-15">
+                Distinti saluti.
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right padding-top-25">
+                Il Dirigente del Settore
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                {{data.dirigente}}
+            </div>
+        </div>
+
+        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-top-25">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 small-font">
+                / {{data.funzionario}}
+            </div>                        
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 small-font padding-top-10">
+                Corso Regina Margherita, 153 bis
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 small-font">
+                10122 Torino
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 small-font">
+                Tel: 011 4321288
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 small-font">
+                Fax: 011 4325386
+            </div>
+            <!--
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 small-font">
+                Email: {{data.mailSettoreTributi}}
+            </div>
+            -->
+        </div>
+    </form>
+</div>

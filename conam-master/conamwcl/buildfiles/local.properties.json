@@ -1,0 +1,10 @@
+{
+    "beServer": "http://localhost:4200/conam",
+    "devBackendServer": "http://localhost:8080",
+    "shibbolethSSOLogoutURL": "https://tst-portale.ruparpiemonte.it/rpp_liv1_IRUP/Shibboleth.sso/Logout",
+    "otherParam": "development_param_value",
+    "publicPath": "http://localhost:4200/conam",
+    "timeout": 180,
+    "infoLink": "http://dev-www.sistemapiemonte.it",
+    "logLevel": "info"
+}

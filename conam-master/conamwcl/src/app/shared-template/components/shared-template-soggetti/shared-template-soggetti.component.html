@@ -1,0 +1,20 @@
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    {{signor}}
+</div>
+<div *ngFor="let sogg of listaSoggetti">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-top-15" *ngIf="sogg.personaFisica">
+        {{sogg?.nome}} {{sogg?.cognome}},
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-top-15" *ngIf="!sogg.personaFisica">
+        {{sogg?.ragioneSociale}},
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+        *ngIf="sogg.indirizzoResidenza!=null">
+      <span>   {{sogg?.indirizzoResidenza}}</span><span *ngIf="sogg.civicoResidenza!=null">, n° {{sogg?.civicoResidenza}}</span>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+        *ngIf="sogg.comuneResidenza!=null && sogg.provinciaResidenza!=null">
+        {{sogg?.cap}} {{sogg?.comuneResidenza?.denominazione}} ({{sogg?.provinciaResidenza?.sigla}})
+    </div>
+    
+</div>

@@ -1,0 +1,58 @@
+<form *ngIf="loadedstativerbale" #statoForm="ngForm" (ngSubmit)="salvaStatoVerbale()"
+    >
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h4 class="border-title"><strong>Aggiornamento stato fascicolo pregresso</strong></h4>
+        </div>
+        <shared-alert [message]="messageTop" [type]="typeMessageTop" *ngIf="showMessageTop"></shared-alert>
+        <div *ngIf="!showMessageTop && !(statoCurrent && statoCurrent.warningMessage)" 
+            class="col-xs-12 col-sm-12 col-md-12 col-lg-12 alert alert-warning" role="alert">
+            <span [innerHTML]="alertWarning"></span>
+        </div>
+        <div *ngIf="statoCurrent &&  statoCurrent.warningMessage" 
+        class="{{'col-xs-12 col-sm-12 col-md-12 col-lg-12 alert alert-' + statoCurrent.warningMessage?.type}}" role="alert"
+        [innerHTML]="statoCurrent.warningMessage?.message">
+        
+        </div>
+
+        <div *ngIf="!showMessageTop  && statiVerbaliModel.length>0" class="col-xs-12 col-sm-12 col-md-12 col-lg-6"
+            >
+            <label for="statoIstr" class="control-label">Stato</label>
+            <shared-spinner-form [diameter]="30"
+                *ngIf="!loadedstativerbale;  else elseStatoIstr"></shared-spinner-form>
+            <ng-template #elseStatoIstr>
+                <select class="form-control"
+                    (change)="changeStato()"
+                    [(ngModel)]="salvaStatoVerbaleRequest.idAzione" name="statoIstr" required>
+                    <option *ngFor="let stato of statiVerbaliModel" [value]="stato.id">
+                        {{stato.denominazione}}
+                    </option>
+                </select>
+            </ng-template>
+        </div>
+        <div *ngIf="!showMessageTop && showIstruttore && statiVerbaliModel.length>0" class="col-xs-12 col-sm-12 col-md-12 col-lg-6"
+            >
+            <label for="funzionarioIstr" class="control-label">Funzionario Istruttore a cui assegnare il fascicolo</label>
+            <shared-spinner-form [diameter]="30"
+                *ngIf="!loadedistruttore;  else elseFunzionarioIstr"></shared-spinner-form>
+            <ng-template #elseFunzionarioIstr>
+                <select class="form-control"
+                    [(ngModel)]="salvaStatoVerbaleRequest.idFunzionario" name="funzionarioIstr" [required]="riepilogoVerbale.verbale.stato.id!=1">
+                    <option *ngFor="let funz of funzionarioIstrModel" [value]="funz.id">
+                        {{funz.denominazione}}</option>
+                </select>
+            </ng-template>
+        </div>
+        <div *ngIf="!showMessageTop && statiVerbaliModel.length>0" class="col-xs-12 col-sm-12 col-md-12 col-lg-12  padding-top-23"
+            >
+            <button type="submit" class="btn-conam button-green"
+                [disabled]="!statoForm.form.valid">
+                <i
+                    class="glyphicon glyphicon-transfer btn-glyphicon img-circle text-green-conam"></i>
+                Aggiorna stato</button>
+        </div>
+    </div>
+</form>
+<shared-dialog [id]="'myModalPSC'" [titolo]="'Aggiornamento Stato Fascicolo Pregresso'" [subMessages]="subMessagess" [buttonConfirmText]="buttonConfirmTexts"
+    [buttonAnnullaText]="buttonAnnullaTexts"
+    ></shared-dialog>

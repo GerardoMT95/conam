@@ -1,0 +1,242 @@
+
+/* da css inviato nella jira CONAM160, adattato per farlo funzionare, non e' stato riscritto da zero */
+.page__footer {
+    width: 100%;
+    background-color: #38454d;
+    padding-top: 16px !important;
+    padding-bottom: 16px !important;
+    color: #fff;
+    font-family: "Titillium Web", Arial, Verdana, sans-serif;
+    .container{
+        max-width: none !important;
+        width: auto !important;
+        background: rgba(0, 0, 0, 0) url(/assets/logofootercsi.png) no-repeat 15px 0;
+        padding-top: 66px;
+        background-size: 120px;
+        .region_footer{
+            margin-right: -15px;
+            margin-left: -15px;
+        }
+    }
+}
+
+.page__footer a {
+    text-decoration: none;
+}
+.page__footer > .container {
+    width: auto;
+    padding-top: 40px;
+    background-size: 120px;
+    border: 0 !important;
+}
+@media (max-width: 1439.98px) {
+   .page__footer > .container {
+        padding-top: 30px;
+        background-size: 100px;
+    }
+}
+.page__footer .region-footer:before {
+    display: none;
+}
+.page__footer .region-footer #block-piedipagina {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+.page__footer .region-footer #block-piedipagina .nav:not(.contextual-links) {
+    padding-top: 16px !important;
+    margin-top: 0 !important;
+    margin-left: 0 !important;
+    list-style: none;
+}
+.page__footer .region-footer #block-piedipagina .nav:not(.contextual-links) .nav-item a {
+    font-size: 14px;
+    line-height: 18px;
+}
+.page__footer .region-footer #block-piedipagina .nav:not(.contextual-links) .nav-item:after {
+    height: 18px;
+    top: 4px;
+}
+@media (max-width: 1439.98px) {
+    .page__footer .region-footer #block-piedipagina .nav:not(.contextual-links) {
+        padding-top: 10px !important;
+    }
+    .page__footer .region-footer #block-piedipagina .nav:not(.contextual-links) .nav-item a {
+        font-size: 12px;
+        line-height: 0;
+    }
+    .page__footer .region-footer #block-piedipagina .nav:not(.contextual-links) .nav-item:after {
+        height: 15px;
+        top: 6px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .page__footer .region-footer #block-piedipagina {
+        flex: auto;
+    }
+    .page__footer .region-footer #block-piedipagina .nav:not(.contextual-links) .nav-item,.page__footer .region-footer #block-piedipagina .nav:not(.contextual-links) .nav-item a{
+        display: block;
+    }
+}
+
+  
+.page__footer {
+    padding-top: 16px !important;
+    padding-bottom: 16px !important;
+}
+
+.page__footer .region-footer #block-piedipagina .nav:not(.contextual-links) .nav-item:first-child a{
+    padding-left: 0 !important;
+}
+
+.page__footer .region-footer #block-piedipagina .nav:not(.contextual-links) .nav-item a{
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+    padding-bottom: 0 !important;
+    padding-top: 0 !important;
+}
+
+.page__footer a:link,
+.page__footer a:active,
+.page__footer a:visited {
+    color: #fff;
+}
+.page__footer a:hover,
+.page__footer a:focus {
+    text-decoration: underline !important;
+}
+.page__footer a[target="_blank"]:after {
+    color: #fff;
+}
+
+@media (min-width: 992px) {
+    .page__footer .region-footer {
+        position: relative;
+        overflow: hidden;
+    }
+    .page__footer .region-footer:before {
+        content: " ";
+        position: absolute;
+        top: 2.5rem;
+        border-top: 2px solid #606a70;
+        left: 15px;
+        width: 100%;
+    }
+    .page__footer .region-footer:after {
+        content: " ";
+        position: absolute;
+        top: 2.5rem;
+        border-top: 2px solid #38454d;
+        right: 0;
+        width: 15px;
+    }
+}
+.page__footer .region-footer #block-piedipagina {
+    position: relative;
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+.page__footer .region-footer #block-piedipagina .nav:not(.contextual-links) {
+    position: relative !important;
+    display: block;
+    font-size: 1rem;
+}
+@media (min-width: 992px) {
+    .page__footer .region-footer #block-piedipagina .nav:not(.contextual-links) {
+        display: flex;
+    }
+}
+.page__footer .region-footer #block-piedipagina .nav:not(.contextual-links) .nav-item {
+    position: relative !important;
+}
+.page__footer .region-footer #block-piedipagina .nav:not(.contextual-links) .nav-item a {
+    line-height: 1.2rem;
+}
+.page__footer .region-footer #block-piedipagina .nav:not(.contextual-links) .nav-item:last-child:after {
+    display: none;
+}
+@media (min-width: 992px) {
+    .page__footer .region-footer #block-piedipagina .nav:not(.contextual-links) .nav-item:after {
+        content: " ";
+        background-color: #fff;
+        width: 1px;
+        height: 100%;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+}
+.page__footer .region-footer #block-piedipagina .nav:not(.contextual-links) .nav-item a {
+    font-weight: 400 !important;
+}
+
+.page__footer .region-footer #block-piedipagina .nav:not(.contextual-links) .nav-item {
+    position: relative !important;
+}
+.page__footer > .container {
+    width: auto;
+    padding-top: 40px;
+    background-size: 120px;
+    border: 0 !important;
+}
+@media (max-width: 1439.98px) {
+    .page__footer > .container {
+        padding-top: 30px;
+        background-size: 100px;
+    }
+}
+.page__footer .region-footer:before {
+    display: none;
+}
+.page__footer .region-footer #block-piedipagina {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+.page__footer .region-footer #block-piedipagina .nav:not(.contextual-links) {
+    padding-top: 16px !important;
+    margin-top: 0 !important;
+    margin-left: 0 !important;
+    list-style: none;
+}
+.page__footer .region-footer #block-piedipagina .nav:not(.contextual-links) .nav-item a {
+    font-size: 14px;
+    line-height: 18px;
+}
+@media (max-width: 1439.98px) {
+    .page__footer .region-footer #block-piedipagina .nav:not(.contextual-links) {
+        padding-top: 10px !important;
+    }
+    .page__footer .region-footer #block-piedipagina .nav:not(.contextual-links) .nav-item a {
+        font-size: 12px;
+        line-height: 0;
+    }
+    .page__footer .region-footer #block-piedipagina .nav:not(.contextual-links) .nav-item:after {
+        height: 15px;
+        top: 6px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .page__footer .region-footer #block-piedipagina {
+        flex: auto;
+    }
+}
+@media (max-width: 991.98px) {
+    .page__footer .region-footer #block-piedipagina .nav:not(.contextual-links) .nav-item a{
+        line-height: 32px;
+        padding-left: 0 !important;
+    }
+    .page__footer .region-footer #block-piedipagina .nav:not(.contextual-links) .nav-item:after{
+        display: none;
+    }
+}
+
+.page__footer .region-footer {
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+

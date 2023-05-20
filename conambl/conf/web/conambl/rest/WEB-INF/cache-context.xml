@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   * SPDX-License-Identifier: EUPL-1.2
+   * Copyright Regione Piemonte - 2020
+-->
+<beans 
+	  xmlns="http://www.springframework.org/schema/beans" 
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+   	   xsi:schemaLocation="http://www.springframework.org/schema/beans 
+   	   http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/cache 
+       http://www.springframework.org/schema/cache/spring-cache.xsd
+       http://www.springframework.org/schema/context 
+	   http://www.springframework.org/schema/context/spring-context-2.5.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+    	<property name="cacheManager" ref="ehcache"/>
+    </bean>
+    <bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+    	<property name="configLocation" value="/WEB-INF/ehcache.xml"/>
+    	<property name="shared" value="true"/>
+    </bean>
+    
+    <bean id="cacheKeyGenerator" class="it.csi.conam.conambl.common.cache.CacheKeyGenerator"/>
+    
+	 <!-- cache definitions -->
+	 <cache:advice id="cacheAdvice" cache-manager="cacheManager" key-generator="cacheKeyGenerator">
+	    <cache:caching cache="luoghi">
+	         <cache:cacheable method="getRegioni"/>
+	         <cache:cacheable method="getNazioni"/>
+	    </cache:caching>
+	     <cache:caching cache="verbale">
+	         <!--  <cache:cacheable method="getConfigAllegati"/>-->
+	         <cache:cacheable method="salvaAzioneVerbale"/>
+	         <cache:cacheable method="getStatiRicercaVerbale"/>
+	         <cache:cacheable method="getRuoliSoggetto"/>
+	    </cache:caching>
+	 </cache:advice>
+	<aop:config>
+	    <aop:advisor advice-ref="cacheAdvice" pointcut="execution(* it.csi.conam.conambl.business.service.impl..*(..))"/>
+	</aop:config>
+    
+    
+
+
+
+</beans>

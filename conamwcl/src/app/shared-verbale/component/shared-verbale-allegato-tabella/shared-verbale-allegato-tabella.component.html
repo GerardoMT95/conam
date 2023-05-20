@@ -1,0 +1,66 @@
+<div *ngIf="!mostraTabellaVerbaleAudizione">
+    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <h4 class="border-title"><strong>Documenti di verbale</strong></h4>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="overflow-x: scroll;">
+        <datatable
+            [data]="dataDocumentiVerbale"
+            [config]="configDocumentiVerbale"
+            (onDelete)="emitEliminazione($event)"
+            (download)="getAllegato($event)">
+        </datatable>
+    </div>
+    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <h4 class="border-title"><strong>Documenti istruttoria</strong></h4>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="overflow-x: scroll;">
+        <datatable
+            [data]="dataDocumentiIstruttoria"
+            [config]="configDocumentiIstruttoria"
+            (onDelete)="emitEliminazione($event)"
+            (download)="getAllegato($event)">
+        </datatable>
+    </div>
+    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <h4 class="border-title"><strong>Documenti fase giurisdizionale</strong></h4>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="overflow-x: scroll;">
+        <datatable
+            [data]="dataDocumentiFaseGiurisdizionale"
+            [config]="configDocumentiFaseGiurisdizionale"
+            (onDelete)="emitEliminazione($event)"
+            (download)="getAllegato($event)">
+        </datatable>
+    </div>
+    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <h4 class="border-title"><strong>Documenti piano rateizzazione</strong></h4>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="overflow-x: scroll;">
+        <datatable
+            [data]="dataDocumentiRateizzazione"
+            [config]="configDocumentiRateizzazione"
+            (onDelete)="emitEliminazione($event)"
+            (download)="getAllegato($event)">
+        </datatable>
+    </div>
+</div>
+<div *ngIf="mostraTabellaVerbaleAudizione">
+    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h4 class="border-title"><strong>Scarica il documento</strong></h4>
+    </div>
+    <datatable
+        [data]="dataDocumentiVerbale"
+        [config]="configDocumentiVerbale"
+        (onDelete)="emitEliminazione($event)"
+        (download)="getAllegato($event)">
+    </datatable>
+</div>
+<shared-dialog 
+    [titolo]="'Allegato'"
+    [subLinks]="subLinks"
+    [id]="'myModalSL'"  
+    [buttonConfirmText]="buttonConfirmTexts"
+    [buttonAnnullaText]="buttonAnnullaTexts" 
+    (clickLinkEvent)="openAllegatoFisico($event)"
+    ></shared-dialog>
+

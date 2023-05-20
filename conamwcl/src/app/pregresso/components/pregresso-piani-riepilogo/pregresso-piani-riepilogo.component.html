@@ -1,0 +1,92 @@
+<div class="container-fluid">
+    <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+    <shared-spinner *ngIf="!loaded"></shared-spinner>
+    <div id="scrollTop"></div>
+    <div class="principal-div col-xs-12 col-sm-12 col-md-10 col-lg-10" style="padding-top: 30px" *ngIf="loaded">
+        <form>
+            <div class="panel-conam panel-primary-conam">
+                <div class="panel-heading-conam">
+                    <strong>Riepilogo piani ordinanza pregressa</strong>
+                </div>
+                <div class="panel-body panel-body-background">
+                    <div class="form-group row">
+                        <shared-alert [message]="messageTop" [type]="typeMessageTop" *ngIf="showMessageTop">
+                        </shared-alert>
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <shared-spinner *ngIf="!loaded"></shared-spinner>
+                
+                            <datatable [data]="piani" [config]="config" *ngIf="showTable"
+                                (dettaglio)="onDettaglio($event)">
+                            </datatable>
+
+                            <div id="scrollBottom" *ngIf="showTable"></div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12  text-right padding-top-23"
+                        >
+                            <button type="button" class="btn-conam button-blue" (click)="goBack()">
+                            <i class="glyphicon glyphicon-arrow-left btn-glyphicon img-circle text-blue-conam"></i>
+                            Indietro</button>
+                        </div>
+                        <div *ngIf="loadedPiano">
+                            <div class="panel-heading-conam">
+                                <strong>Riepilogo Piano</strong>
+                            </div>
+                            <div class="panel-body panel-body-background">
+                                <shared-alert [message]="messageTop" [type]="typeMessageTop" *ngIf="showMessageTop"></shared-alert>
+                                <div class="form-group row">
+                                    <div id="scrollTop"></div>
+                                    <pregresso-pagamenti-piano-ins-mod-dett 
+                                        [idPiano]="idPiano"
+                                        [piano]="pianoSel"
+                                        (onChangeData)="onChangeData($event)">
+            
+                                    </pregresso-pagamenti-piano-ins-mod-dett>
+                                </div>
+                                <form *ngIf="loadedStatiPiano" #statoForm="ngForm" (ngSubmit)="salvaStatoPiano()"
+                                    >
+                                    <div class="row">
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                            <h4 class="border-title"><strong>Aggiornamento stato piano pregresso</strong></h4>
+                                        </div>
+                                        <shared-alert [message]="messageTop" [type]="typeMessageTop" *ngIf="showMessageTop"></shared-alert>
+                                        <div *ngIf="!showMessageTop" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 alert alert-warning" role="alert">
+                                            <span [innerHTML]="alertWarning"></span>
+                                        </div>
+                                
+                                        <div *ngIf="!showMessageTop" class="col-xs-12 col-sm-12 col-md-12 col-lg-6"
+                                            >
+                                            <label for="statoIstr" class="control-label">Stato</label>
+                                            <shared-spinner-form [diameter]="30"
+                                                *ngIf="!loadedStatiPiano;  else elseStatoIstr"></shared-spinner-form>
+                                            <ng-template #elseStatoIstr>
+                                                <select class="form-control"
+                                                    [(ngModel)]="nuovoStatoPiano.id" name="statoIstr" required>
+                                                    <option *ngFor="let stato of statiPianoModel" [value]="stato.id">
+                                                        {{stato.denominazione}}</option>
+                                                </select>
+                                            </ng-template>
+                                        </div>
+                                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-top-23"
+                                            >
+                                            <button *ngIf="!showMessageTop"  type="submit" class="btn-conam button-green"
+                                                [disabled]="!statoForm.form.valid">
+                                                <i
+                                                    class="glyphicon glyphicon-transfer btn-glyphicon img-circle text-green-conam"></i>
+                                                Aggiorna stato</button>
+                            
+                                        </div>
+                                    </div>
+                                </form>
+                                <shared-dialog [id]="'myModalPP'" [titolo]="'Aggiornamento Stato Piano Pregresso'" [subMessages]="subMessagess" [buttonConfirmText]="buttonConfirmTexts"
+                                    [buttonAnnullaText]="buttonAnnullaTexts"
+                                    ></shared-dialog>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+   
+</div>

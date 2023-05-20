@@ -1,0 +1,39 @@
+<div class="panel-body panel-body-background" *ngIf="loaded">
+    <div class="form-group row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h4 class="border-title"><strong>Dati aziendali</strong></h4>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group col-xs-12 col-sm-12  col-md-6 col-lg-6">
+                        <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                            <label for="ragioneSociale" class="control-label">Ragione sociale</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                            {{soggetto.ragioneSociale}}
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                        <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                            <label for="codiceFiscale" class="control-label">Codice fiscale</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                            {{soggetto.codiceFiscale}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body panel-body-background" *ngIf="!soggetto.nazioneNascitaEstera">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="form-group col-xs-12 col-sm-12  col-md-6 col-lg-6">
+                        <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                            <label for="partitaIva" class="control-label">Partita Iva</label>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                            {{soggetto.partitaIva}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

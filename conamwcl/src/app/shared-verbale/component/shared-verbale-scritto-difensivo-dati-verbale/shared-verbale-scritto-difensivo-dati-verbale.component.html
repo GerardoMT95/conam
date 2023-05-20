@@ -1,0 +1,162 @@
+<form #scrittoDifensivoDatiVerbale="ngForm">
+
+  <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <h4 class="border-title"><strong>Dati verbale</strong></h4>
+    </div>
+  </div>
+  <div *ngIf="!isEdit" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <b>Numero verbale:</b> {{scrittoDifensivo.numVerbaleAccertamento}}
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <b>Ente:</b> {{ scrittoDifensivo.enteRiferimentiNormativi.denominazione }}<br />
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <b>Ambito:</b> {{ scrittoDifensivo.ambito.acronimo }}<br />
+    </div>
+    <div *ngIf="scrittoDifensivo.riferimentoNormativo && scrittoDifensivo.riferimentoNormativo.norma && 
+    scrittoDifensivo.riferimentoNormativo.norma.denominazione" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <b>Norma Violata:</b> {{ scrittoDifensivo.riferimentoNormativo.norma.denominazione }}<br />
+    </div>
+    <div *ngIf="scrittoDifensivo.riferimentoNormativo && scrittoDifensivo.riferimentoNormativo.articolo && 
+    scrittoDifensivo.riferimentoNormativo.articolo.denominazione" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <b>Articolo:</b> {{ scrittoDifensivo.riferimentoNormativo.articolo.denominazione }}<br />
+    </div>
+    <div *ngIf="scrittoDifensivo.riferimentoNormativo && scrittoDifensivo.riferimentoNormativo.comma && 
+    scrittoDifensivo.riferimentoNormativo.comma.denominazione" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <b>Comma:</b> {{ scrittoDifensivo.riferimentoNormativo.comma.denominazione }}<br />
+    </div>
+    <div *ngIf="scrittoDifensivo.riferimentoNormativo && scrittoDifensivo.riferimentoNormativo.lettera && 
+    scrittoDifensivo.riferimentoNormativo.lettera.denominazione" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <b>Lettera:</b> {{ scrittoDifensivo.riferimentoNormativo.lettera.denominazione }}<br />
+    </div>
+  </div>
+  <div *ngIf="isEdit" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <!--Numero verbale-->
+      <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+          <label for="numeroVerbale" class="control-label">Numero verbale</label>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-9 col-lg-9">
+          <input type="text" id="numVerbaleAccertamento" class="form-control" name="numVerbaleAccertamento"
+            [(ngModel)]="scrittoDifensivo.numVerbaleAccertamento" #numVerbaleAccertamento="ngModel" />
+          <div *ngIf="
+          numVerbaleAccertamento.invalid &&
+            (numVerbaleAccertamento.dirty || numVerbaleAccertamento.touched)
+          " class="alert alert-danger">
+            <div *ngIf="numVerbaleAccertamento.errors.required">
+              Il numero verbale è richiesto
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="isEdit" class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="
+      padding-left: 20px;
+      padding-right: 20px;
+      padding-top: 20px;
+    ">
+      <div class="form-group row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div class="col-xs-12 col-sm-12 col-md-4 col-lg-2">
+            <label for="ente" class="control-label">Ente: </label>
+            <select class="form-control" id="ente" [(ngModel)]="scrittoDifensivo.enteRiferimentiNormativi" name="ente"
+              [compareWith]="byId" (change)="
+              changeEnte(scrittoDifensivo.enteRiferimentiNormativi.id)
+            " required *ngIf="!singoloEnte; else elseSingoloEnte">
+              <option *ngFor="let e of enteModel" [ngValue]="e">
+                {{ e.denominazione }}
+              </option>
+            </select>
+            <ng-template #elseSingoloEnte>
+              {{ scrittoDifensivo.enteRiferimentiNormativi.denominazione }}
+            </ng-template>
+          </div>
+
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
+            <label for="ambito" class="control-label">Acronimo ambito
+            </label>
+            <shared-spinner-form [diameter]="30" *ngIf="!loadedAmbito; else elseAmbito">
+            </shared-spinner-form>
+            <ng-template #elseAmbito>
+              <select class="form-control" id="ambito" [(ngModel)]="scrittoDifensivo.riferimentoNormativo.ambito"
+                [compareWith]="byId" name="ambito" (change)="changeAmbito()" required [disabled]="isDisabledAmbito()">
+                <option></option>
+                <option *ngFor="let ambito of ambitoModel" [ngValue]="ambito">
+                  {{ ambito.acronimo }}
+                </option>
+              </select>
+            </ng-template>
+          </div>
+          <div *ngIf="scrittoDifensivo.riferimentoNormativo.ambito && scrittoDifensivo.riferimentoNormativo.ambito.id"
+            class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
+            <label for="norViolata" class="control-label">Norma violata
+            </label>
+            <shared-spinner-form [diameter]="30" *ngIf="!loadedNorma; else elseNormativaViolata">
+            </shared-spinner-form>
+            <ng-template #elseNormativaViolata>
+              <select class="form-control" id="norViolata" [(ngModel)]="
+                  scrittoDifensivo.riferimentoNormativo.norma
+                " [compareWith]="byId" name="norViolata" (change)="changeNormativa()" [disabled]="isDisabledNorma()">
+                <option *ngFor="let norm of normaModel" [ngValue]="norm">
+                  {{ norm.denominazione }}
+                </option>
+              </select>
+            </ng-template>
+          </div>
+          <div *ngIf="scrittoDifensivo.riferimentoNormativo.norma && scrittoDifensivo.riferimentoNormativo.norma.id"
+            class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
+            <label for="articolo" class="control-label">Articolo</label>
+            <shared-spinner-form [diameter]="30" *ngIf="!loadedArticolo; else elseArticolo">
+            </shared-spinner-form>
+            <ng-template #elseArticolo>
+              <select class="form-control" id="articolo" [(ngModel)]="
+                  scrittoDifensivo.riferimentoNormativo.articolo
+                " [compareWith]="byId" name="articolo" (change)="changeArticolo()" [disabled]="isDisabledArticolo()">
+                <option *ngFor="let art of articoloModel" [ngValue]="art">
+                  {{ art.denominazione }}
+                </option>
+              </select>
+            </ng-template>
+          </div>
+          <div
+            *ngIf="scrittoDifensivo.riferimentoNormativo.articolo && scrittoDifensivo.riferimentoNormativo.articolo.id"
+            class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
+            <label for="comma" class="control-label">Comma</label>
+            <shared-spinner-form [diameter]="30" *ngIf="!loadedComma; else elseComma"></shared-spinner-form>
+            <ng-template #elseComma>
+              <select class="form-control" id="comma" [(ngModel)]="
+                  scrittoDifensivo.riferimentoNormativo.comma
+                " [compareWith]="byId" name="comma" (change)="changeComma()" [disabled]="isDisabledComma()">
+                <option *ngFor="let com of commaModel" [ngValue]="com">
+                  {{ com.denominazione }}
+                </option>
+              </select>
+            </ng-template>
+          </div>
+          <div *ngIf="scrittoDifensivo.riferimentoNormativo.comma && scrittoDifensivo.riferimentoNormativo.comma.id"
+            class="col-xs-12 col-sm-12 col-md-12 col-lg-2">
+            <label for="lettera" class="control-label">Lettera</label>
+            <shared-spinner-form [diameter]="30" *ngIf="!loadedLettera; else elseLettera">
+            </shared-spinner-form>
+            <ng-template #elseLettera>
+              <select class="form-control" id="lettera" [(ngModel)]="
+                  scrittoDifensivo.riferimentoNormativo.lettera
+                " [compareWith]="byId" name="lettera" [disabled]="isDisabledLettera()">
+                <option *ngFor="let lett of letteraModel" [ngValue]="lett">
+                  {{ lett.denominazione }}
+                </option>
+              </select>
+            </ng-template>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-top-15">
+            <shared-alert [message]="messageWarning" [type]="typeWarning" *ngIf="showWarning"></shared-alert>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

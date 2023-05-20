@@ -1,0 +1,55 @@
+<!-- Modal -->
+<div class="modal fade" [id]="id" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="closeX()">&times;</button>
+                <h4 class="modal-title">{{titolo}}</h4>
+            </div>
+            <div class="modal-body">
+                <p *ngIf="!subLinks || subLinks.length==0">
+                    <span *ngIf="testo!=null; else submessageElse">{{testo}}</span>
+                    <span #submessageElse *ngFor="let s of subMessages">{{s}}
+                        <br>
+                    </span>
+                </p>
+                <p *ngIf="subLinks && subLinks.length>0">
+                    <span *ngFor="let l of subLinks">
+                        <a (click)="clickLink(l)" style="cursor: pointer; line-height: 25px;">{{l.label}}</a>
+                        <br>
+                    </span>
+                </p>
+            </div>
+            <div class="modal-footer" *ngIf="!hideButton">
+                <button *ngIf="buttonAnnullaText" type="button" class="btn-conam button-light-blue" (click)="closeS()">
+                    <i class="glyphicon glyphicon-arrow-left btn-glyphicon img-circle text-light-blue-conam"></i>
+                    {{buttonAnnullaText}}</button>
+                <button type="button" class="btn-conam button-green" (click)="saveS()">
+                    <i class="glyphicon glyphicon-floppy-saved btn-glyphicon img-circle text-green-conam"></i>
+                    {{buttonConfirmText}}</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!--utilizza wiew child!-->
+<!--<div class="modal fade" #myModal2 role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" (click)="close()">&times;</button>
+                <h4 class="modal-title">{{titolo}}</h4>
+            </div>
+            <div class="modal-body">
+                <p>{{testo}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" (click)="close()">Close</button>
+                <button type="button" class="btn btn-primary">Salva</button>
+            </div>
+        </div>
+
+    </div>
+</div>-->

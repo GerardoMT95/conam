@@ -1,0 +1,154 @@
+<div class="container margin-top">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 month">
+        <div>
+            <div class="text-left col-md-2 col-lg-2 hidden-xs hidden-sm font-size-25">
+                <a href="javascript:void(0);" class="link-header" (click)="action.prev()">&#10094;</a>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 font-size-24">
+                {{actualMonth.descrizione}} {{actualYear}}
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                <select class="header-select form-control2" [ngModel]="view.id"
+                    (change)="action.changeView($event.target.value)" name="viewSelected">
+                    <option *ngFor="let v of viewOption" [value]="v.id">{{v.descrizione}}</option>
+                </select>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2 font-size-24">
+                <button type="button" class="btn-oggi button-oggi" (click)="action.oggi()">
+                    <i class="glyphicon glyphicon-share-alt btn-glyphicon-oggi img-circle text-oggi-conam"></i>
+                    OGGI</button>
+            </div>
+            <div class="text-right col-md-2 col-lg-2 hidden-xs hidden-sm  font-size-25">
+                <a href="javascript:void(0);" class="link-header" (click)="action.next()">&#10095;</a>
+            </div>
+
+            <div class="text-left col-xs-6 col-sm-6 hidden-md hidden-lg font-size-25">
+                <a href="javascript:void(0);" class="link-header" (click)="action.prev()">&#10094;</a>
+            </div>
+            <div class="text-right col-xs-6 col-sm-6 hidden-md hidden-lg font-size-25">
+                <a href="javascript:void(0);" class="link-header" (click)="action.next()">&#10095;</a>
+            </div>
+        </div>
+    </div>
+    <shared-alert [type]="type" [message]="message" *ngIf="showMessage"></shared-alert>
+</div>
+
+<shared-spinner *ngIf="!loaded"></shared-spinner>
+<div class="container  margin-bottom-calendar" *ngIf="view.id==1 && loaded">
+    <div class="days seven-cols hidden-xs hidden-sm">
+        <div class="col-md-1 text-center">Lunedì</div>
+        <div class="col-md-1 text-center">Martedì</div>
+        <div class="col-md-1 text-center">Mercoledì</div>
+        <div class="col-md-1 text-center">Giovedì</div>
+        <div class="col-md-1 text-center">Venerdì</div>
+        <div class="col-md-1 text-center">Sabato</div>
+        <div class="col-md-1 text-center">Domenica</div>
+    </div>
+    <div class="days-number seven-cols " *ngFor="let i of allDaysOfMonth; let ind = index">
+        <div *ngIf="i!=null" (click)="action.createEvent(i)" class="col-md-1  clickable no-padding">
+            <div class="text-left padding-lr">
+                <a href="javascript:void(0);" (click)="action.openDay(i)" class="bold">{{i}}</a>
+                <span class="hidden-md hidden-lg bold">{{getDayByDay(i)}}</span>
+            </div>
+            <div *ngFor="let e of  getEventFromDayOfMonth(i);let ind2=index;" class="event padding-lr">
+                <a *ngIf="ind2 < 3" href="javascript:void(0);" class="link-event"
+                    (click)="action.openDetailEvent(e,$event)" [style.background-color]="e!=null ? e.color:'none'">
+                    <span class="link-event-hour">
+                        {{e.dataInizio.getHours() | hour }}:{{ e.dataInizio.getMinutes() | hour}} - {{e.dataFine.getHours() | hour}}:{{e.dataFine.getMinutes()
+                        | hour }}
+                    </span>
+                    {{e.titolo}}</a>
+                <a *ngIf="ind2==3" class="link-event" (click)="action.openDialogMultipleEvent(3,i,$event)">...</a>
+
+            </div>
+        </div>
+        <div *ngIf="i==null" class="col-md-1 hidden-xs hidden-sm "></div>
+    </div>
+</div>
+<!--giorno-->
+<div class="container day-view  margin-bottom-calendar" *ngIf="view.id==2 && loaded">
+    <div class="row">
+        <div class="col-md-1 col-xs-2 col-lg-1 col-sm-1 header"> &nbsp;</div>
+        <div class="col-md-11 col-xs-10 col-lg-11 col-sm-11 header bold  padding-top-10">
+            {{dayTobeInsertEvent}} {{getDayByDay(dayTobeInsertEvent)}}
+        </div>
+    </div>
+    <div class="row" *ngFor="let i of hours">
+        <div class="col-md-1 col-xs-2 col-lg-1 col-sm-1 bold">
+            {{i}}:00
+        </div>
+        <div class="col-md-11 col-xs-10 col-lg-11 col-sm-11 no-padding  clickable"
+            (click)="action.createEventFromHour(i)">
+            <div *ngFor="let p of partOfHour">
+                <div *ngIf="getEventFromHours(i,p,p+15);let ev;">
+                    <div style="height:25px;">
+                        <div *ngFor="let e of ev" class="bold" [style.background-color]="e!=null ? e.color:'none'"
+                            [style.width]="100/ev.length +'%'" [style.float]="ev.length>1?'left':'none'">
+                            <a href="javascript:void(0);" class="link-event" (click)="action.openDetailEvent(e,$event)">
+                                <span class="link-event-hour">{{e.note}}</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--settimana-->
+<div class="container day-view  margin-bottom-calendar" *ngIf="view.id==3 && loaded">
+    <!--xs sm -->
+    <div class="row hidden-md  hidden-lg" *ngFor="let i of allDaysOfWeek">
+        <div class="col-xs-12 col-sm-12  text-center bold">{{i.getDate()}}{{getDayByDate(i)}}</div>
+        <div class="col-sm-12 col-xs-12" *ngFor="let h of hours">
+            <div class="col-sm-1 col-xs-12 bold">{{h}}:00</div>
+            <div class="col-sm-11 col-xs-12">
+                <div *ngFor="let p of partOfHour" class="clickable" (click)="action.createEventHourAndDate(i,h)">
+                    <div *ngIf="getEventFromDate(i,h,p,p+15);let ev;">
+                        <div style="height:20px;">
+                            <div *ngFor="let e of ev" class="bold" [style.background-color]="e!=null ? e.color:'none'"
+                                [style.width]="100/ev.length +'%'" [style.float]="ev.length>1?'left':'none'">
+                                <a href="javascript:void(0);" class="link-event"
+                                    (click)="action.openDetailEvent(e,$event)">
+                                    <span class="link-event-hour">{{e.note}}</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--lg md-->
+    <div class="row height-cols header  hidden-xs  hidden-sm">
+        <div class="col-md-1"> &nbsp;</div>
+        <div class="col-md-1 text-center  padding-top-10" *ngFor="let i of allDaysOfWeek">
+            {{i.getDate()}}{{getDayByDate(i)}}
+        </div>
+    </div>
+    <div class="row height-cols hidden-xs  hidden-sm" *ngFor="let i of hours">
+        <div class="col-md-1">{{i}}:00</div>
+        <div class="col-md-1 no-padding clickable" *ngFor="let d of allDaysOfWeek"
+            (click)="action.createEventHourAndDate(d,i)">
+            <div *ngFor="let p of partOfHour">
+                <div *ngIf="getEventFromDate(d,i,p,p+15);let ev;">
+                    <div style="height:25px;">
+                        <div *ngFor="let e of ev" class="bold" [style.background-color]="e!=null ? e.color:'none'"
+                            [style.width]="100/ev.length +'%'" [style.float]="ev.length>1?'left':'none'">
+                            <a href="javascript:void(0);" class="link-event" (click)="action.openDetailEvent(e,$event)">
+                                <span class="link-event-hour">{{e.note}}</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--creare modificare eventi-->
+<calendar-dialog [titolo]="titolo" [event]="event" [buttonAnnullaText]="buttonAnnullaText"
+    [buttonConfirmText]="buttonConfirmText"></calendar-dialog>
+<!--mostrare eventi-->
+<calendar-show-dialog [event]="eventToShow" (openEvent)="action.openDetailEvent($event,null)"></calendar-show-dialog>

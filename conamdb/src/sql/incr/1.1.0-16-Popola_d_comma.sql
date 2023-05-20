@@ -1,0 +1,143 @@
+SET client_encoding TO 'WIN1258';
+
+INSERT INTO cnm_d_comma
+(
+  id_comma,
+  desc_comma,
+  id_articolo,
+  inizio_validita,
+  id_user_insert
+)
+VALUES
+(
+  1,
+  'COMMA',
+  1,
+  '2019-08-06',
+  0
+);
+
+INSERT INTO cnm_d_comma
+(
+  id_comma,
+  desc_comma,
+  id_articolo,
+  inizio_validita,
+  fine_validita,
+  id_user_insert
+)
+VALUES
+(
+  2,
+  'COMMATEST',
+  2,
+  '2019-08-29',
+  '2019-09-30',
+  0
+);
+
+INSERT INTO cnm_d_comma
+(
+  id_comma,
+  desc_comma,
+  id_articolo,
+  inizio_validita,
+  fine_validita,
+  eliminato,
+  id_user_insert
+)
+VALUES
+(
+  3,
+  'NO COMMA',
+  3,
+  '2019-08-29',
+  '2019-09-07',
+  TRUE,
+  0
+);
+
+INSERT INTO cnm_d_comma
+(
+  id_comma,
+  desc_comma,
+  id_articolo,
+  inizio_validita,
+  id_user_insert
+)
+VALUES
+(
+  4,
+  '2',
+  4,
+  '2019-04-23',
+  0
+);
+
+INSERT INTO cnm_d_comma
+(
+  id_comma,
+  desc_comma,
+  id_articolo,
+  inizio_validita,
+  id_user_insert
+)
+VALUES
+(
+  5,
+  '1',
+  5,
+  '2019-04-23',
+  0
+);
+
+INSERT INTO cnm_d_comma
+(
+  id_comma,
+  desc_comma,
+  id_articolo,
+  inizio_validita,
+  id_user_insert
+)
+VALUES
+(
+  6,
+  '124',
+  6,
+  '2019-06-06',
+  0
+);
+
+INSERT INTO cnm_d_comma
+(
+  id_comma,
+  desc_comma,
+  id_articolo,
+  inizio_validita,
+  id_user_insert
+)
+VALUES
+(
+  7,
+  'NO COMMA',
+  7,
+  '2019-06-20',
+  0
+);
+
+INSERT INTO cnm_d_comma
+(
+  id_comma,
+  desc_comma,
+  id_articolo,
+  inizio_validita,
+  id_user_insert
+)
+VALUES
+(
+  8,
+  'NO COMMA',
+  8,
+  '2019-07-04',
+  0
+);

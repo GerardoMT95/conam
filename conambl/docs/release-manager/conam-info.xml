@@ -1,0 +1,20 @@
+<build>
+  <product>
+    <name>CONAM</name>
+    <subversion istanza="dsp"/>
+    <dimension dbname="RISFIN_2"/>
+    <buildlist>
+      <component name="conambl" build-order="1" technology="java">
+	    <svn presence="false"/>
+        <installation-list>
+          <installation-unit name="conambl" type="server" ext="tar"/>
+        </installation-list>
+      </component>
+	  <component name="conamdb" build-order="2" technology="db">
+        <installation-list>
+          <installation-unit name="conam" type="server" ext="zip"/>
+        </installation-list>
+      </component>
+	</buildlist>
+  </product>
+</build>

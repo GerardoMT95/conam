@@ -1,0 +1,273 @@
+@import 'app/color.scss';
+@import 'app/button.scss';
+@import 'app/input.scss';
+@import 'app/padding.scss';
+
+@font-face {
+  font-family: 'open_sansregular';
+  src: url('assets/fonts/opensans_regular/OpenSans-Regular-webfont.eot');
+  /* IE9 Compat Modes */
+  src: url('assets/fonts/opensans_regular/OpenSans-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+    /* IE6-IE8 */
+    url('assets/fonts/opensans_regular/OpenSans-Regular-webfont.woff2') format('woff2'),
+    /* Super Modern Browsers */
+    url('assets/fonts/opensans_regular/OpenSans-Regular-webfont.woff') format('woff'),
+    /* Pretty Modern Browsers */
+    url('assets/fonts/opensans_regular/OpenSans-Regular-webfont.ttf') format('truetype'),
+    /* Safari, Android, iOS */
+    url('assets/fonts/opensans_regular/OpenSans-Regular-webfont.svg#open_sansregular') format('svg');
+  /* Legacy iOS */
+  font-weight: normal;
+  font-style: normal;
+}
+/* titilliumweb versione 10 CONAM160 */
+/* latin-ext */
+@font-face {
+  font-family: 'Titillium Web';
+  font-style: italic;
+  font-weight: 400;
+  src: url(assets/fonts/titilliumweb-v10/NaPAcZTIAOhVxoMyOr9n_E7fdMbWAaxWXr0.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Titillium Web';
+  font-style: italic;
+  font-weight: 400;
+  src: url(assets/fonts/titilliumweb-v10/NaPAcZTIAOhVxoMyOr9n_E7fdMbWD6xW.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Titillium Web';
+  font-style: italic;
+  font-weight: 600;
+  src: url(assets/fonts/titilliumweb-v10/NaPFcZTIAOhVxoMyOr9n_E7fdMbe0IhDb5yciWM.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Titillium Web';
+  font-style: italic;
+  font-weight: 600;
+  src: url(assets/fonts/titilliumweb-v10/NaPFcZTIAOhVxoMyOr9n_E7fdMbe0IhDYZyc.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Titillium Web';
+  font-style: normal;
+  font-weight: 300;
+  src: url(assets/fonts/titilliumweb-v10/NaPDcZTIAOhVxoMyOr9n_E7ffGjEGIVzY4SY.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Titillium Web';
+  font-style: normal;
+  font-weight: 300;
+  src: url(assets/fonts/titilliumweb-v10/NaPDcZTIAOhVxoMyOr9n_E7ffGjEGItzYw.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Titillium Web';
+  font-style: normal;
+  font-weight: 400;
+  src: url(assets/fonts/titilliumweb-v10/NaPecZTIAOhVxoMyOr9n_E7fdM3mDbRS.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Titillium Web';
+  font-style: normal;
+  font-weight: 400;
+  src: url(assets/fonts/titilliumweb-v10/NaPecZTIAOhVxoMyOr9n_E7fdMPmDQ.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Titillium Web';
+  font-style: normal;
+  font-weight: 600;
+  src: url(assets/fonts/titilliumweb-v10/NaPDcZTIAOhVxoMyOr9n_E7ffBzCGIVzY4SY.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Titillium Web';
+  font-style: normal;
+  font-weight: 600;
+  src: url(assets/fonts/titilliumweb-v10/NaPDcZTIAOhVxoMyOr9n_E7ffBzCGItzYw.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Titillium Web';
+  font-style: normal;
+  font-weight: 700;
+  src: url(assets/fonts/titilliumweb-v10/NaPDcZTIAOhVxoMyOr9n_E7ffHjDGIVzY4SY.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Titillium Web';
+  font-style: normal;
+  font-weight: 700;
+  src: url(assets/fonts/titilliumweb-v10/NaPDcZTIAOhVxoMyOr9n_E7ffHjDGItzYw.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+
+
+//1 GENERAL
+.ng-valid[required],
+.ng-valid.required {
+    border-left: 5px solid #42A948;
+    /* green */
+}
+
+.ng-invalid:not(form) {
+  border-left: 5px solid #a94442;
+  /* red */
+}
+
+//altezza
+body {
+  font-family: open_sansregular, Fallback, sans-serif;
+  height: 100%;
+  color: #0153a9;
+}
+html{
+  height: 100%;
+}
+
+.margin-top {
+  margin-top: 30px;
+}
+
+
+//scrollbar
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cacaca;
+  border: 26px none #ffffff;
+  border-radius: 100px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #cacaca;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: #cacaca;
+}
+
+::-webkit-scrollbar-track {
+  background: #ffffff;
+  border: 31px none #ffffff;
+  border-radius: 0px;
+}
+
+::-webkit-scrollbar-track:hover {
+  background: #ffffff;
+}
+
+::-webkit-scrollbar-track:active {
+  background: #ffffff;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+@media screen and (max-width: 991px) {
+
+  .text-right {
+    text-align: center;
+  }
+
+  .text-left {
+    text-align: center;
+  }
+
+  .padding-top-25{
+    padding-top: 25px;
+  }
+
+}
+
+
+//panel
+.panel-conam {
+  margin-bottom: 5px;
+  background-color: #fff;
+  border: 1px solid #bebebe;
+  border-radius: 3px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+.panel-grey-conam>.panel-heading-conam {
+  color: #000000;
+  background-color: #d8d8d8;
+  border-color: #8e8e8d;
+}
+
+.panel-heading-conam {
+  padding: 10px 15px;
+  border-bottom: 1px solid transparent;
+  border-top-left-radius: 1px;
+  border-top-right-radius: 1px;
+}
+
+.panel-primary-conam>.panel-heading-conam {
+  color: #fff;
+  background-color: #0153a9;
+  border-color: #0153a9;
+}
+
+.panel-body-background{
+  background-color: #f9f9f9;
+}
+
+.border-title{
+  border-bottom: 2px solid #164ea7
+}
+
+.border-subtitle{
+  border-bottom: 1px solid #164ea7
+}
+
+//gestiscono la centratura
+.height-75{
+  min-height:85vh;
+}
+
+.vcenter{
+  display:table-cell;
+  vertical-align: middle;
+}
+
+.table{
+display: table;
+}
+
+.padding-checkbox{
+  padding: 20px 20px;
+}
+
+
+//template
+.small-font {
+  font-size: 10px;
+}
+

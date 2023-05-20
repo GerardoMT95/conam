@@ -1,0 +1,59 @@
+<div class="container-fluid">
+    <div class="principal-div col-xs-12 col-sm-12 col-md-12 col-lg-1"></div>
+    <div class="principal-div col-xs-12 col-sm-12 col-md-12 col-lg-10" style="padding-top: 30px">
+        <shared-spinner *ngIf="!loaded"></shared-spinner>
+        <div class="panel-conam panel-primary-conam" *ngIf="loaded">
+            <div class="panel-heading-conam">
+                <strong>Riepilogo Ordinanza</strong>
+            </div>
+            <div class="panel-body panel-body-background">
+                <shared-alert [message]="messageTop" [type]="typeMessageTop" *ngIf="showMessageTop"></shared-alert>
+                <div class="form-group row">
+                    <div id="scrollTop"></div>
+                    <shared-ordinanza-riepilogo [showAnnullamentoParts]="showAnnullamentoParts" [idVerbale]="idVerbale" [idOrdinanza]="idOrdinanza" [isFirstDownloadBollettini]="isFirstDownloadBollettini"></shared-ordinanza-riepilogo>
+                    <div *ngIf="azione?.dowloadBollettiniEnable && loadedAction" class="alert alert-warning col-xs-12 col-sm-12 col-md-12 col-lg-12" role="alert">
+                            <strong>Attenzione!</strong> La richiesta di creazione bollettini è stata inviata alla piattaforma dei pagamenti online PiemontePAY.
+                             Per poter generare il PDF dei bollettini, cliccare sul pulsante "Scarica Bollettini".
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                        <button type="button" *ngIf="azione?.letteraDaCompilareEnable && loaded"
+                            class="btn-conam button-blue" (click)="completaLetteraOrdinanza()">
+                            <i class="glyphicon glyphicon-share-alt btn-glyphicon img-circle text-blue-conam"></i>
+                            Compila Lettera</button>
+
+                        <button type="button" class="btn-conam button-green" 
+                            *ngIf="azione?.bollettiniDaInviareEnable && loadedAction"
+                            (click)="inviaRichiestaBollettini()">
+                            <i class="glyphicon glyphicon-send btn-glyphicon img-circle text-green-conam"></i>
+                            Invia Richiesta Bollettini</button>
+
+                        <button type="button" class="btn-conam button-grey"
+                            *ngIf="azione?.dowloadBollettiniEnable && loadedAction" (click)="dowloadBollettini()">
+                            <i class="glyphicon glyphicon-floppy-save btn-glyphicon img-circle text-grey-conam"></i>
+                            Scarica Bollettini</button>
+
+                        <button type="button" class="btn-conam button-grey"
+                            *ngIf="!azione?.letteraDaCompilareEnable && loadedAction" (click)="dowloadLettera()">
+                            <i class="glyphicon glyphicon-print btn-glyphicon img-circle text-grey-conam"></i>
+                            Scarica Lettera</button>
+                        <!--azione.aggiungiNotifica-->
+                        <button type="button" class="btn-conam button-blue"
+                            *ngIf="azione?.aggiungiNotificaEnable && loadedAction" (click)="goToAggiungiNotifica()">
+                            <i class="glyphicon glyphicon-share-alt btn-glyphicon img-circle text-blue-conam"></i>
+                            Aggiungi Notifica</button>
+                        <button type="button" class="btn-conam  button-blue"
+                            *ngIf="azione?.visualizzaNotificaEnable && loadedAction" (click)="goToVisualizzaNotifica()">
+                            <i class="glyphicon glyphicon-share-alt btn-glyphicon img-circle text-blue-conam"></i>
+                            Visualizza Notifica</button>
+                            <button type="button" class="btn-conam  button-blue"
+                            *ngIf="showAnnullamentoParts" (click)="goToInserisciAnnullamento()">
+                            <i class="glyphicon glyphicon-share-alt btn-glyphicon img-circle text-blue-conam"></i>
+                           Inserisci annullamento</button>
+                        <shared-spinner-form *ngIf="!loadedAction" [diameter]="30" [position]="'right'">
+                        </shared-spinner-form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="principal-div col-xs-12 col-sm-12 col-md-12 col-lg-1"></div>
+    </div>

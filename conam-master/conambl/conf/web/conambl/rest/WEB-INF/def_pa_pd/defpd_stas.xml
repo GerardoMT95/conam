@@ -1,0 +1,256 @@
+<porta-delegata name="ServiziTauFCDSB">
+<services>
+	<service name="ServiziTauFCDSB" public-interface-class="it.csi.gmssrvreg.client.interfaceCSI.ServiziTauITF">
+		<operations>
+			<operation name="aggiornaDomicilioFiscaleImpresa" type="synch-call">
+				<param-list>
+					<param name="p0" type="java.lang.Long"/>
+					<param name="p1" type="it.csi.gmscore.dto.Indirizzo"/>
+					<param name="p2" type="java.lang.String"/>
+				</param-list>
+				<ret-val type="void"/>
+			</operation>
+			<operation name="aggiornaDomicilioFiscalePersonaFisica" type="synch-call">
+				<param-list>
+					<param name="p0" type="java.lang.Long"/>
+					<param name="p1" type="it.csi.gmscore.dto.Indirizzo"/>
+					<param name="p2" type="java.lang.String"/>
+				</param-list>
+				<ret-val type="void"/>
+			</operation>
+			<operation name="aggiornaAnagraficaImpresa" type="synch-call">
+				<param-list>
+					<param name="p0" type="java.lang.Long"/>
+					<param name="p1" type="it.csi.gmscore.dto.SoggettoImpresa"/>
+					<param name="p2" type="java.lang.String"/>
+				</param-list>
+				<ret-val type="void"/>
+			</operation>
+			<operation name="aggiornaPersonaFisica" type="synch-call">
+				<param-list>
+					<param name="p0" type="java.lang.Long"/>
+					<param name="p1" type="it.csi.gmscore.dto.SoggettoPF"/>
+					<param name="p2" type="java.lang.String"/>
+				</param-list>
+				<ret-val type="void"/>
+			</operation>
+			<operation name="inserisciDomicilioFiscalePersonaFisica" type="synch-call">
+				<param-list>
+					<param name="p0" type="java.lang.Long"/>
+					<param name="p1" type="it.csi.gmscore.dto.Indirizzo"/>
+					<param name="p2" type="java.lang.String"/>
+				</param-list>
+				<ret-val type="void"/>
+			</operation>
+			<operation name="inserisciImpresa" type="synch-call">
+				<param-list>
+					<param name="p0" type="it.csi.gmscore.dto.SoggettoImpresa"/>
+					<param name="p1" type="java.lang.String"/>
+				</param-list>
+				<ret-val type="java.lang.Long"/>
+			</operation>
+			<operation name="inserisciPersonaFisica" type="synch-call">
+				<param-list>
+					<param name="p0" type="it.csi.gmscore.dto.SoggettoPF"/>
+					<param name="p1" type="java.lang.String"/>
+				</param-list>
+				<ret-val type="java.lang.Long"/>
+			</operation>
+			<operation name="inserisciIndirizzoSpedizione" type="synch-call">
+				<param-list>
+					<param name="p0" type="java.lang.Long"/>
+					<param name="p1" type="it.csi.gmscore.dto.Indirizzo"/>
+					<param name="p2" type="java.lang.String"/>
+				</param-list>
+				<ret-val type="void"/>
+			</operation>
+			<operation name="modificaCodiceFiscale" type="synch-call">
+				<param-list>
+					<param name="p0" type="it.csi.gmscore.dto.ModuloModificaCF"/>
+					<param name="p1" type="java.lang.String"/>
+				</param-list>
+				<ret-val type="void"/>
+			</operation>
+			<operation name="ricercaSoggettoCF" type="synch-call">
+				<param-list>
+					<param name="p0" type="java.lang.String"/>
+               <param name="p1" type="java.lang.String"/>
+				</param-list>
+				<ret-val type="it.csi.gmscore.dto.Anagrafica[]"/>
+			</operation>
+			<operation name="ricercaSoggettoCF" type="synch-call">
+				<param-list>
+					<param name="p0" type="java.lang.String"/>
+				</param-list>
+				<ret-val type="it.csi.gmscore.dto.Anagrafica[]"/>
+			</operation>
+			<operation name="ricercaSoggettoID" type="synch-call">
+				<param-list>
+					<param name="p0" type="java.lang.Long"/>
+          <param name="p1" type="java.lang.String"/>
+				</param-list>
+				<ret-val type="it.csi.gmscore.dto.Anagrafica"/>
+			</operation>
+			<operation name="ricercaSoggettoID" type="synch-call">
+				<param-list>
+					<param name="p0" type="java.lang.Long"/>
+				</param-list>
+				<ret-val type="it.csi.gmscore.dto.Anagrafica"/>
+			</operation>
+			<operation name="ricercaStoricaSoggettoCF" type="synch-call">
+				<param-list>
+					<param name="p0" type="java.lang.String"/>
+					<param name="p1" type="java.util.Date"/>
+          <param name="p2" type="java.lang.String"/>
+				</param-list>
+				<ret-val type="it.csi.gmscore.dto.Anagrafica[]"/>
+			</operation>
+			<operation name="ricercaStoricaSoggettoID" type="synch-call">
+				<param-list>
+					<param name="p0" type="java.lang.Long"/>
+					<param name="p1" type="java.util.Date"/>
+          <param name="p2" type="java.lang.String"/>
+				</param-list>
+				<ret-val type="it.csi.gmscore.dto.Anagrafica"/>
+			</operation>
+			<operation name="ricercaIdentitaDaCF" type="synch-call">
+				<param-list>
+					<param name="p0" type="java.lang.String"/>
+                    <param name="p1" type="java.lang.String"/>
+				</param-list>
+				<ret-val type="it.csi.gmscore.dto.Identita[]"/>
+			</operation>
+			<operation name="ricercaIdentitaDaCF" type="synch-call">
+				<param-list>
+					<param name="p0" type="java.lang.String"/>
+				</param-list>
+				<ret-val type="it.csi.gmscore.dto.Identita[]"/>
+			</operation>
+			<operation name="ricercaIdentitaDaID" type="synch-call">
+				<param-list>
+					<param name="p0" type="java.lang.Long"/>
+                    <param name="p1" type="java.lang.String"/>
+				</param-list>
+				<ret-val type="it.csi.gmscore.dto.Identita"/>
+			</operation>
+			<operation name="ricercaCFDaID" type="synch-call">
+				<param-list>
+					<param name="p0" type="java.lang.Long"/>
+                    <param name="p1" type="java.lang.String"/>
+				</param-list>
+				<ret-val type="java.lang.String"/>
+			</operation>
+			<operation name="ricercaCFDaID" type="synch-call">
+				<param-list>
+					<param name="p0" type="java.lang.Long"/>
+                </param-list>
+				<ret-val type="java.lang.String"/>
+			</operation>
+			<operation name="ricercaImpresa" type="synch-call">
+				<param-list>
+					<param name="p0" type="java.lang.String"/>
+          <param name="p1" type="java.lang.String"/>
+				</param-list>
+				<ret-val type="it.csi.gmscore.dto.SoggettoImpresa[]"/>
+			</operation>
+			<operation name="ricercaPersonaFisica" type="synch-call">
+				<param-list>
+					<param name="p0" type="java.lang.String"/>
+					<param name="p1" type="java.lang.String"/>
+					<param name="p2" type="java.util.Date"/>
+          <param name="p3" type="java.lang.String"/>
+				</param-list>
+				<ret-val type="it.csi.gmscore.dto.SoggettoPF[]"/>
+			</operation>
+			<operation name="ricercaPersonaFisica" type="synch-call">
+				<param-list>
+					<param name="p0" type="java.lang.String"/>
+					<param name="p1" type="java.lang.String"/>
+          <param name="p2" type="java.lang.String"/>
+				</param-list>
+				<ret-val type="it.csi.gmscore.dto.SoggettoPF[]"/>
+			</operation>
+			<operation name="ricercaPersonaFisicaCompleta" type="synch-call">
+				<param-list>
+					<param name="p0" type="it.csi.gmscore.dto.ModuloRicercaPF"/>
+					<param name="p1" type="java.lang.String"/>
+				</param-list>
+				<ret-val type="it.csi.gmscore.dto.SoggettoPF[]"/>
+			</operation>
+			<operation name="elencoFontiDisponibili" type="synch-call">
+				<param-list>
+				</param-list>
+				<ret-val type="it.csi.gmscore.dto.FonteProvenienza[]"/>
+			</operation>
+			<operation name="listaSintetica" type="synch-call">
+				<param-list>
+					<param name="p0" type="java.lang.Long[]"/>
+          <param name="p1" type="java.lang.String"/>
+				</param-list>
+				<ret-val type="it.csi.gmscore.dto.Identita[]"/>
+			</operation>
+			<operation name="ricercaSoggettiSimili" type="synch-call">
+				<param-list>
+					<param name="p0" type="it.csi.gmscore.dto.AnagraficaDefinitiva"/>
+					<param name="p1" type="java.lang.String"/>
+				</param-list>
+				<ret-val type="it.csi.gmscore.dto.AnagraficaDefinitiva[]"/>
+			</operation>      
+			<operation name="ricercaIndirizziID" type="synch-call">
+				<param-list>
+					<param name="p0" type="java.lang.Long"/>
+					<param name="p1" type="java.lang.String"/>
+				</param-list>
+				<ret-val type="it.csi.gmscore.dto.Indirizzo[]"/>
+			</operation>      
+            <operation name="inserisciSoggettoSimilePF" type="synch-call">
+				<param-list>
+					<param name="soggettoPF" type="it.csi.gmscore.dto.SoggettoPF"/>
+					<param name="identitaIride" type="java.lang.String"/>
+				</param-list>
+				<ret-val type="java.lang.Long"/>
+			</operation>                  
+            <operation name="inserisciSoggettoSimilePG" type="synch-call">
+				<param-list>
+					<param name="impresa" type="it.csi.gmscore.dto.SoggettoImpresa"/>
+					<param name="identitaIride" type="java.lang.String"/>
+				</param-list>
+				<ret-val type="java.lang.Long"/>
+			</operation>                  
+		</operations>
+	</service>
+</services>
+<config>
+	<url-pa>multi://pc41012.csi.it</url-pa>
+	<pluggable-pd-list chooser-class="it.csi.csi.porte.FixedDelegateChooser">
+		<pluggable-pd name="it.csi.stacore.staon.ServiziTauFCDSB" class="it.csi.csi.porte.ejb20.PortaDelegataEJB" url-pa="gmsrpsrvj/ejb/ServiziTauFCDSBPA" url-gm="">
+		<properties>
+		<!-- AMBIENTE DI SERVIZIO -->
+			<property  name="java.naming.provider.url" value="@defpd_stas_url@"/>
+          	<property name="java.naming.factory.initial" value="weblogic.jndi.WLInitialContextFactory" />
+		</properties>
+		</pluggable-pd>
+	</pluggable-pd-list>
+	<!--
+		    <pre-function-handler-list>
+		      <pluggable-fh name="PD TXID Handler(pre) pd_GMS_TAU" class="it.csi.cooptrace.business.handler.PdTracingHandler" >
+		        <properties>
+		          <property name="componentname" value="staon" />
+		          <property name="callername" value="staon" />
+		          <property name="interfacename" value="ServiziTauITF" />
+		       </properties>
+		      </pluggable-fh>
+		    </pre-function-handler-list>
+		    <post-function-handler-list>
+		      <pluggable-fh name="PD TXID Handler(post) pd_GMS_TAU" class="it.csi.cooptrace.business.handler.PdTracingHandler" >
+		        <properties>
+		          <property name="componentname" value="staon" />
+		          <property name="callername" value="staon" />
+		          <property name="interfacename" value="ServiziTauITF" />
+		        </properties>
+		      </pluggable-fh>
+		    </post-function-handler-list>
+    -->	
+	<queue-manager url="qualsiasicosa"/>
+</config>
+</porta-delegata>

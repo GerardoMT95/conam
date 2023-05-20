@@ -1,0 +1,159 @@
+table {
+  border-collapse: collapse;
+  background-color:#f9f9f9;
+  border:none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  table-layout: auto
+}
+
+.responsive {
+  word-wrap: break-word;
+}
+
+table caption {
+  font-size: 1.5em;
+  margin: .5em 0 .75em;
+}
+
+table tr {
+  border-bottom: 1px solid #ddd;
+  padding: .35em;
+}
+
+table th,
+table td {
+  padding: .625em;
+  text-align: center;
+}
+
+table tr:nth-child(even) {
+  background-color: #edecec
+}
+
+.elem-1,
+.elem-2,
+.elem-3 {
+  text-align: center;
+}
+
+/*non abilitare se non ci sono poche colonne*/
+
+/*@media screen and (max-width: 700px) {
+  table {
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    table-layout: fixed
+  }
+}*/
+
+
+margin-top5{
+  margin-top: 7px;
+}
+@media screen and (min-width: 768px) {
+  .elem-1 {
+    text-align: left;
+    padding: 25px;
+  }
+  .elem-3 {
+    text-align: right;
+  }
+}
+
+/*portare il max-width a 600px solo se si hanno tante colonne*/
+
+@media screen and (max-width: 992px) {
+  table {
+    border: 0;
+  }
+  table caption {
+    font-size: 1.3em;
+  }
+  table thead {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+  table tr {
+    border-bottom: 3px solid #ddd;
+    display: block;
+    margin-bottom: .625em;
+  }
+  table td {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    font-size: .9em;
+    text-align: right;
+    height: 60px;
+  }
+  table td::before {
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+  table td:last-child {
+    border-bottom: 0;
+  }
+}
+
+.text-color {
+  color: #005bae;
+  font-weight: bold;
+  font-size: 25px;
+}
+
+.btn-paginazione {
+  border: none;
+  outline: none;
+  padding: 10px 16px;
+  background-color: white;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 5px;
+}
+
+.active,
+.btn-paginazione:hover {
+  background-color: #005598;
+  color: white;
+}
+
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  cursor: pointer;
+}
+
+.padding {
+  padding: 25px;
+  font-size: 16px;
+}
+
+.select {
+  border-radius: 3px;
+  border-color: #005cad;
+  font-size: 16px;
+  padding-left: 3px;
+  padding-right: 3px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+.button-text { 
+  background:none; 
+  border:none; 
+  color: #337ab7; 
+}

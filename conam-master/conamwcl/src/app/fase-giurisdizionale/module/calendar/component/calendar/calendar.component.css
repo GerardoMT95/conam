@@ -1,0 +1,120 @@
+@import '../commons/custom-bootstrap-col.css';
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding-inline-start: 0px;
+    padding-inline-end: 0px;
+}
+
+/* Month header */
+.month {
+    background: #0153a9;
+    text-align: center;
+    padding:2%;
+    color:white;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+.link-header{
+  color:white;
+  text-decoration: none;
+}
+
+.font-size-25{
+  font-size: 25px;
+}
+
+.font-size-24{
+  font-size: 24px;
+}
+
+.header-select{
+color:black;
+}
+ 
+.event{
+  font-size: 12px;
+}
+.link-event{
+  color:black;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.link-event-hour{
+  color:black;
+  font-weight: normal;
+}
+
+
+.days >div{
+ /*border:1px solid #cecece;*/
+ box-shadow: 1px 0 0 0 #cecece, 0 1px 0 0 #cecece, 1px 1px 0 0 #cecece, 1px 0 0 0 #cecece inset, 0 1px 0 0 #cecece inset;
+ padding:2%;
+ font-weight: 900;
+ color: #0153a9;
+ font-size: 15px;
+}
+
+.days-number > div{
+ height: 100px;
+ /*border:1px solid #cecece;*/
+ box-shadow: 1px 0 0 0 #cecece, 0 1px 0 0 #cecece, 1px 1px 0 0 #cecece, 1px 0 0 0 #cecece inset, 0 1px 0 0 #cecece inset;
+}
+
+.clickable{
+  cursor: pointer;
+}
+
+
+/*view 2 */
+.day-view > .row >div{
+  box-shadow: 1px 0 0 0 #cecece, 0 1px 0 0 #cecece, 1px 1px 0 0 #cecece, 1px 0 0 0 #cecece inset, 0 1px 0 0 #cecece inset;
+ /* border-top:1px solid #cecece;
+  border-left: 1px solid #cecece;
+  border-right:1px solid #cecece;*/
+  height:100px;
+  font-weight: 900;
+ color: #0153a9;
+ font-size: 15px;
+}
+.day-view>.row{
+  margin:0px;
+}
+
+.no-padding{
+  padding: 0px;
+}
+
+
+.bold{
+  font-weight: bold;
+  color: #0153a9
+}
+
+.padding-lr{
+  padding-left: 2%;
+  padding-right: 2%;
+}
+
+.form-control2 {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 15px;
+  line-height: 1.42857143;
+  color: #0153a9;
+  background-color: #ffffff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+
+.margin-bottom-calendar {
+  margin-bottom: 30px;
+}

@@ -1,0 +1,16 @@
+<shared-spinner *ngIf="!loaded"></shared-spinner>
+<div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="hasOneSog() && soggettoSelected && isVerbaleAudizione">
+    <h4 class="border-title"><strong>Soggetto collegato al verbale di audizione</strong></h4>
+</div>
+<div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="!hasOneSog() && soggettoSelected && isVerbaleAudizione">
+    <h4 class="border-title"><strong>Soggetti collegati al verbale di audizione</strong></h4>
+</div>
+<datatable [data]="soggetti" [config]="config" *ngIf="loaded" (selected)="onSelected($event)">
+</datatable>
+<div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="soggettoSelected && isVerbaleAudizione">
+    <div class="text-right">
+        <button type="button" class="btn-conam button-light-blue" (click)="vediTuttiISoggetti()">
+            <span class="glyphicon glyphicon-arrow-left btn-glyphicon img-circle text-light-blue-conam"></span> Vedi tutti i soggetti
+        </button> 
+    </div>   
+</div>

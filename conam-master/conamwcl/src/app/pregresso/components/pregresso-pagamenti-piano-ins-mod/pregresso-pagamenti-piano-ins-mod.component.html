@@ -1,0 +1,165 @@
+<div class="container-fluid">
+    <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+    <div id="scrollTop"></div>
+    <shared-spinner *ngIf="!loaded"></shared-spinner>
+    <div class="principal-div col-xs-12 col-sm-12 col-md-10 col-lg-10" *ngIf="loaded" style="padding-top: 30px">
+        <div class="panel-conam panel-primary-conam">
+            <div class="panel-heading-conam">
+                <strong>Rateizzazione</strong>
+            </div>
+            <form #pianoRateizzazione="ngForm">
+                <div class="panel-body panel-body-background">
+                    <shared-alert [message]="messageTop" [type]="typeMessageTop" *ngIf="showMessageTop"></shared-alert>
+                    <div class="form-group row">
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left">
+                            <datatable [data]="listaSoggetti" [config]="configSoggetti" 
+                            (selected)="onSelected($event)"
+                            >
+                            </datatable>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <h4 class="border-title"><strong>Dati piano rateizzazione</strong></h4>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left">
+                                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="isModifica">
+                                    <label for="dataCreazione" class="control-label">Data creazione</label>
+                                    <div class="form-control-view">{{piano.dataCreazione}}</div>
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <label for="statoPiano" class="control-label">Stato del piano</label>
+                                    <div class="form-control-view">{{piano.stato.denominazione}}</div>
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <label for="numeroRate" class="control-label">Numero Rate
+                                    </label>
+                                    <input type="number" id="numeroRate" class="form-control" name="numeroRate"
+                                        #numRate="ngModel" [(ngModel)]="piano.numeroRate" required numeroRate
+                                        [disabled]="(isRataCalcolata || isRataRicalcolata) && !abilitaModifica">
+                                    <div *ngIf="numRate.invalid && (numRate.dirty || numRate.touched)"
+                                        class="alert alert-danger">
+                                        <div *ngIf="numRate.errors.required">
+                                            Inserire il numero di rate
+                                        </div>
+                                        <div *ngIf="numRate.errors.wrongAmount">
+                                            Inserire un numero compreso tra 3 e 30 rate
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <label for="importoTitoloSanzione" class="control-label">Importo a titolo di
+                                        sanzione
+                                    </label>
+                                    <input type="number" id="importoTitoloSanzione" class="form-control"
+                                        name="importoTitoloSanzione" [(ngModel)]="piano.importoSanzione" required
+                                        [disabled]="(isRataCalcolata || isRataRicalcolata) && !abilitaModifica"
+                                        (keydown)="isKeyPressed($event.keyCode)" decimalPlaces [min]="0">
+                                </div>
+
+                                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <label for="importoSpeseProcessuali" class="control-label">Importo per spese
+                                        processuali
+                                    </label>
+                                    <input type="number" id="importoSpeseProcessuali" class="form-control"
+                                        name="importoSpeseProcessuali" [(ngModel)]="piano.importoSpeseProcessuali"
+                                        required [disabled]="(isRataCalcolata || isRataRicalcolata) && !abilitaModifica"
+                                        (keydown)="isKeyPressed($event.keyCode)" decimalPlaces [min]="0">
+                                </div>                                
+                                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <label for="importoSpeseNotifica" class="control-label">Importo per spese di
+                                        notifica</label>
+                                    <input type="number" id="importoSpeseNotifica" class="form-control"
+                                        name="importoSpeseNotifica" [(ngModel)]="piano.importoSpeseNotifica" required
+                                        [disabled]="(isRataCalcolata || isRataRicalcolata) && !abilitaModifica"
+                                        (keydown)="isKeyPressed($event.keyCode)" decimalPlaces [min]="0">
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <label for="importoMaggiorazione" class="control-label">Importo a titolo di maggiorazione</label>
+                                    <input type="number" id="importoMaggiorazione" class="form-control"
+                                        name="importoMaggiorazione" [(ngModel)]="piano.importoMaggiorazione" 
+                                        [disabled]="(isRataCalcolata || isRataRicalcolata) && !abilitaModifica"
+                                        (keydown)="isKeyPressed($event.keyCode)" decimalPlaces [min]="0">
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <label for="statoPiano" class="control-label">Importo Totale</label>
+                                    <div class="form-control-view">{{importoTotale | currency:'EUR':'symbol'}}</div>
+                                </div>
+                                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                    <label class="control-label">Scadenza prima rata</label>
+                                    <div class='input-group date' id='datetimepicker1'>
+                                        <input type='text' id="scadPrimaRata" [(ngModel)]="piano.dataScadenzaPrimaRata"
+                                            name="scadPrimaRata" #datePicker="ngModel"
+                                            (blur)="manageDatePicker($event, 1)" class="form-control date-picker"
+                                            [disabled]="(isRataCalcolata || isRataRicalcolata) && !abilitaModifica">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-xs-12 col-sm-12  col-md-12 col-lg-12">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                                    <button type="button" class="btn-conam button-green" (click)="calcolaRata()"
+                                        [disabled]="((isRataCalcolata || isRataRicalcolata) && !abilitaModifica) || !pianoRateizzazione.form.valid">
+                                        <i
+                                            class="glyphicon glyphicon-euro btn-glyphicon img-circle text-green-conam"></i>
+                                        Calcola rata</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="isRataCalcolata">
+                            <datatable [data]="piano.rate" [config]="configRate" (onEdit)="modificaRata($event)">
+                            </datatable>
+                            <div *ngIf="isRataDaModificare">
+                                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                        <label class="control-label">Importo {{numeroRataSelezionata}} rata</label>
+                                        <input type="number" id="importoRata" class="form-control" name="importoRata"
+                                            [(ngModel)]="nuovoImportoRata" (keydown)="isKeyPressed($event.keyCode)"
+                                            decimalPlaces [min]="0">
+                                    </div>
+                                </div>
+                                <div id="scrollImporto"></div>
+                                <div class="form-group col-xs-12 col-sm-12  col-md-12 col-lg-12">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                                        <button type="button" class="btn-conam button-green" (click)="ricalcolaRata()"
+                                            [disabled]="isDisabledRicalcola()">
+                                            <i
+                                                class="glyphicon glyphicon-repeat btn-glyphicon img-circle text-green-conam"></i>
+                                            Ricalcola rata</button>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                                    <button type="button" class="btn-conam button-light-blue" (click)="annulla()">
+                                        <i
+                                            class="glyphicon glyphicon-arrow-left btn-glyphicon img-circle text-light-blue-conam"></i>
+                                        Annulla Calcolo</button>
+                                    <button style="display: none;" type="button" class="btn-conam button-green" (click)="salva()"
+                                        [disabled]="!isRataCalcolata">
+                                        <i
+                                            class="glyphicon glyphicon-floppy-saved btn-glyphicon img-circle text-green-conam"></i>
+                                        Salva</button>
+                                    <button style="display: none;" type="button" class="btn-conam button-green" *ngIf="isModifica"
+                                        (click)="creaPiano()" [disabled]="!isRataCalcolata">
+                                        <i
+                                            class="glyphicon glyphicon-floppy-save btn-glyphicon img-circle text-green-conam"></i>
+                                        Crea piano</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+</div>

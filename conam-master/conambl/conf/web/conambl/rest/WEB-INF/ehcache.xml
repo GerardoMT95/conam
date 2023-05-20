@@ -1,0 +1,58 @@
+ <ehcache
+    	xsi:noNamespaceSchemaLocation="ehcache.xsd"
+    	updateCheck="true"
+    	monitoring="autodetect"
+    	dynamicConfig="true"
+    	maxBytesLocalHeap="150M"
+    	>
+    	
+    	<diskStore path="java.io.tmpdir"/>
+    	
+    	<sizeOfPolicy maxDepth="100" maxDepthExceededBehavior="abort" />
+  
+  
+  <!-- 
+   timeToIdleSeconds –  The maximum number of seconds an element can exist in the cache without being accessed. 
+					    The element expires at this limit and will no longer be returned from the cache. 
+					    The default value is 0, which means no TTI eviction takes place (infinite lifetime).
+   timeToLiveSeconds  : The maximum number of seconds an element can exist in the cache regardless of use.
+					    The element expires at this limit and will no longer be returned from the cache. The default value is 0, 
+					    which means no TTL eviction takes place (infinite lifetime).
+   maxEntriesLocalDisk: The maximum sum total number of elements (cache entries) allowed on the disk tier for the cache. 
+						   If this target is exceeded, eviction occurs to bring the count within the allowed target. 
+						   The default value is 0, which means no eviction takes place (infinite size is allowed). 
+						   A setting of 0 means that no eviction of the cache’s entries takes place, 
+						   and consequently can cause the node to run out of disk space.
+   eternal: 			If the cache’s eternal flag is set, it overrides any finite TTI/TTL values that have been set.
+   maxEntriesLocalHeap 
+   maxBytesLocalHeap	
+   maxBytesLocalHeap: 
+					   The maximum number of cache entries or bytes a cache can use in local heap memory, 
+					   or, when set at the CacheManager level (maxBytesLocalHeap only), a local pool available to all caches under that CacheManager. 
+					   This setting is required for every cache or at the CacheManager level.
+   memoryStoreEvictionPolicy:
+   						A typesafe enumeration of eviction policies. The policy used to evict elements from the MemoryStore. This can be one of:
+						LRU - least recently used
+						LFU - least frequently used
+						FIFO - first in first out, the oldest element by creation time
+   overflowToDisk: Elements start to overflow to the disk when you have more than maxElementsInMemory of them in the memory store
+   -->
+    	
+    	<cache name="luoghi"
+    	      maxBytesLocalHeap="50M"
+    	      eternal="false"
+    	      timeToIdleSeconds="300"
+    	      overflowToDisk="true"
+    	      maxElementsOnDisk="1000"
+    	      memoryStoreEvictionPolicy="LRU"/>
+    	      
+    	<cache name="verbale"
+    	      maxBytesLocalHeap="100M"
+    	      eternal="false"
+    	      timeToIdleSeconds="300"
+    	      overflowToDisk="true"
+    	      maxElementsOnDisk="5000"
+    	      memoryStoreEvictionPolicy="LRU"/>
+    	      
+ </ehcache>
+ 

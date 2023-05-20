@@ -1,0 +1,99 @@
+<div class="container-fluid">
+    <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+    <shared-spinner *ngIf="!loaded"></shared-spinner>
+    <div id="scrollTop"></div>
+    <div class="principal-div col-xs-12 col-sm-12 col-md-10 col-lg-10" *ngIf="loaded" style="padding-top: 30px">
+        <div class="panel-primary-conam panel-conam">
+            <div class="panel-heading-conam">
+                <strong>Creazione Ricevuta di Pagamento Ordinanza</strong>
+            </div>
+            <shared-alert [message]="messageTop" [type]="typeMessageTop" *ngIf="showMessageTop"></shared-alert>
+            <form #creaDisposizioneForm="ngForm">
+                <div class="panel-body panel-body-background">
+                    <div class="form-group row">
+
+                        <pregresso-seleziona-soggetti 
+                            [numDeterminazione]="numDeterminazione"
+                            isSollecito="true"
+                            (onSelect)="onSelect($event)">
+                        ></pregresso-seleziona-soggetti>
+                        <div *ngIf="idOrdinanzaVerbaleSoggetto && idOrdinanzaVerbaleSoggetto.length>0" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <shared-ordinanza-dettaglio [idSoggettiOrdinanza]="idOrdinanzaVerbaleSoggetto">
+                            </shared-ordinanza-dettaglio>
+                        </div>
+                        <!--Metadati degli allegati-->
+                        <div *ngIf="loadedConfig">
+                            <ng-container *ngFor="let cc of configAllegatoSelezionato;let j=index">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 allineamento-top">
+                                    <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2"></div>
+                                    <ng-container *ngFor="let r of cc; let i=index;">
+                                        <div class="form-group col-md-4">
+                                            <label for="{{r.label}}"
+                                                [ngClass]="{'control-label':true}">{{r.label}}</label>
+                                            <ng-container *ngIf="!typeAction.isCombo(r.fieldType)">
+                                                <div [ngClass]="{'input-group':typeAction.isDate(r.fieldType) || typeAction.isDataOra(r.fieldType), 
+                                        'date':typeAction.isDate(r.fieldType) || typeAction.isDataOra(r.fieldType)}"
+                                                    id="datetimepicker_{{r.idModel}}">{{r.nomeCampo}}
+                                                    <input [(ngModel)]="tmpModel[r.idModel].value"
+                                                        type="{{typeAction.getInputType(r.fieldType)}}"
+                                                        name="{{r.label}}" id="{{r.label}}" [ngClass]="{'form-control': !typeAction.isCheckbox(r.fieldType),
+                                'date-picker':typeAction.isDate(r.fieldType) || typeAction.isDataOra(r.fieldType)}"
+                                                        [maxlength]="r.maxLength" min="0" [step]="r.scale"
+                                                        [required]="r.required"
+                                                        [pattern]="typeAction.isNumeric(r.fieldType)? '[0-9]+(\.[0-9]{1,2})?' :''"
+                                                        (change)="check(r.idModel, r.fieldType)"
+                                                        (blur)="onBlur($event, r.idModel, r.fieldType)"
+                                                        [disabled]="disableAll"
+                                                        (keydown)="isKeyPressed($event.keyCode, r.fieldType)"
+                                                        decimalPlaces="r.fieldType.id">
+                                                    <!--
+                                [pattern]="dynamicForm.getPattern(r.fieldType)"
+                            -->
+                                                    <span
+                                                        *ngIf="typeAction.isDate(r.fieldType)  || typeAction.isDataOra(r.fieldType)"
+                                                        class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
+                                                </div>
+                                            </ng-container>
+                                            <!--div *ngIf="r.connectorType==1 &&
+                                typeAction.isDate(r.fieldType) && 
+                                metadata.form.controls[dynamicForm.camelize(r.nomeCampo)] && 
+                                metadata.form.controls[dynamicForm.camelize(r.nomeCampo)].invalid &&
+                                (metadata.form.controls[dynamicForm.camelize(r.nomeCampo)].dirty || 
+                                    metadata.form.controls[dynamicForm.camelize(r.nomeCampo)].touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="metadata.form.controls[dynamicForm.camelize(r.nomeCampo)].errors.required">
+                        La data è richiesta.
+                    </div>
+                    <div *ngIf="metadata.form.controls[dynamicForm.camelize(r.nomeCampo)].errors.dateWrong">
+                        La data di fine deve essere successiva a quella di inizio.
+                    </div>
+                </div-->
+                                            <ng-container *ngIf="typeAction.isCombo(r.fieldType)">
+                                                <shared-spinner-form [diameter]="30" *ngIf="!comboLoaded[r.idModel]">
+                                                </shared-spinner-form>
+                                                <ng-container *ngIf="comboLoaded[r.idModel]">
+                                                    <select class="form-control" name="{{(r.label)}}"
+                                                        [(ngModel)]="tmpModel[r.idModel].value" [required]="r.required"
+                                                        [compareWith]="byId" [disabled]="disableAll">
+                                                        <option *ngFor="let elem of comboModel[r.idModel]"
+                                                            [ngValue]="elem">
+                                                            {{elem.denominazione}}</option>
+                                                    </select>
+                                                </ng-container>
+                                            </ng-container>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+        </div>
+    </div>
+</div>
+<shared-dialog [titolo]="'Attenzione'" [subMessages]="subMessages" [buttonConfirmText]="buttonConfirmText"
+    [buttonAnnullaText]="buttonAnnullaText"></shared-dialog>

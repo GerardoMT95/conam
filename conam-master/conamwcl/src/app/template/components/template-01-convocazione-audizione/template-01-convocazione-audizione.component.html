@@ -1,0 +1,75 @@
+<shared-spinner *ngIf="!loaded"></shared-spinner>
+<div class="form-group row" *ngIf="loaded">
+
+    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+        <shared-template-soggetti [listaSoggetti]="data.listaSoggetti" *ngIf="data!=null && data.listaSoggetti!=null">
+        </shared-template-soggetti>
+    </div>
+
+    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            OGGETTO:
+            <input type="text" id="ogg" class="form-control" name="ogg" [(ngModel)]="oggetto" required>
+        </div>
+    </div>
+
+    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            Si comunica al{{signoriaVostra}} che per il giorno:
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-top-15">
+            <input type="text" id="data" class="form-control" style="display: inline-block; width: 40%" name="data"
+                [(ngModel)]="dataOra" placeholder="Giorno e orario" required>
+            {{convocare}} presso
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-top-15">
+            <input type="text" id="luogoIndirizzo" class="form-control" name="luogoIndirizzo" [(ngModel)]="luogo"
+                placeholder="Luogo e indirizzo" required>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-top-15">
+            per essere {{sentire}} in relazione all'istanza in oggetto. Ciò, nell'ambito del procedimento instaurato
+            per la verifica dei presupposti fondanti la contestazione dell'illecito, con relativo esperimento di ogni
+            necessaria attività istruttoria.
+        </div>
+    </div>
+
+    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            Si rammenta che la presenza all'audizione è facoltativa, tuttavia le affermazioni eventualmente solo
+            confermative di quanto già indicato negli scritti difensivi, saranno considerate ai fini della valutazione
+            delle {{sue}} responsabilità rispetto all'illecito contestato.
+        </div>
+    </div>
+
+    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            Ove {{signoriaVostra}} non {{comparire}}, l'Amministrazione definirà la pratica sulla base della
+            documentazione in atti.
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-top-15">
+            Distinti saluti.
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right padding-top-25">
+            Avv. {{avvocato}}
+        </div>
+    </div>
+
+    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 small-font">
+            Corso Regina Margherita, 153 bis
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 small-font">
+            10122 Torino
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 small-font">
+            Tel: 011 4321288
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 small-font">
+            Fax: 011 4325386
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 small-font">
+            Email: settore.tributi@regione.piemonte.it
+        </div>
+    </div>
+
+</div>

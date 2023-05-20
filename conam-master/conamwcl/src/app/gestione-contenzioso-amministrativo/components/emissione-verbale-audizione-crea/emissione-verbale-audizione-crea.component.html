@@ -1,0 +1,67 @@
+<div class="container-fluid">
+    <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+    <div id="scrollTop"></div>
+    <shared-spinner *ngIf="!loaded"></shared-spinner>
+    <div class="principal-div col-xs-12 col-sm-12 col-md-10 col-lg-10" style="padding-top: 30px" *ngIf="loaded">
+        <div class="panel-conam panel-primary-conam">
+            <div class="panel-heading-conam">
+                <strong>Emissione Verbale audizione </strong>
+            </div>
+
+            <div *ngIf="allega" class="alert alert-warning" role="alert">
+                <strong>Attenzione!</strong> L'utente deve scaricare il documento creato tramite l'applicativo, 
+                porre la propria firma e caricare un PDF contenente la scansione dello stesso documento.
+            </div>
+
+            <div class="panel-body panel-body-background">
+                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <shared-alert [message]="messageTop" [type]="typeMessageTop" *ngIf="showMessageTop">
+                    </shared-alert>
+                    <div class="form-group row">
+                        <shared-verbale-dettaglio-soggetti [config]="config" [idVerbale]="idVerbale" (selected)="addToArraySoggettiSelezionati($event)" (notSelected)="notViewTableAllegati($event)" [isVerbaleAudizione]="isVerbaleAudizione"></shared-verbale-dettaglio-soggetti>
+                    </div>
+
+                    <div *ngIf="allega && verbaleAudizioneTrovato && viewTableAllegati" id="riepilogoVerbale"  role="tabpanel" aria-labelledby="headingThree">
+                        <div class="panel-body">
+                            <shared-verbale-allegato-tabella [riepilogoAllegato]="riepilogoVerbaleAudizione.allegati"
+                                [configDocumentiVerbale]="configVerb" [verbaleAudizione]="allega" > 
+                            </shared-verbale-allegato-tabella>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body panel-body-background">
+                <div class="form-group col-xs-12 col-sm-12  col-md-12 col-lg-12">
+                    <div *ngIf="!allega"  class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                        <button type="button" class="btn-conam button-blue" (click)="goToEmittiVerbaleAudizione()" [disabled]="soggettiArray.length==0">
+                            <i class="glyphicon glyphicon-share-alt btn-glyphicon img-circle text-blue-conam"></i>
+                            Crea Verbale Audizione</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-body panel-body-background">
+                <div class="form-group col-xs-12 col-sm-12  col-md-12 col-lg-12">
+                    <div *ngIf="!viewTableAllegati" class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                        <button type="button" class="btn-conam button-light-blue" (click)="goBackToRiepilogo()">
+                            <i class="glyphicon glyphicon-arrow-left btn-glyphicon img-circle text-light-blue-conam"></i>
+                            Indietro</button>
+                    </div>
+                </div>
+            </div>
+
+            <div  *ngIf="allega && verbaleAudizioneTrovato && viewTableAllegati"  class="panel-body panel-body-background">
+                <div class="form-group row">
+                
+                    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <shared-allegato-metadati-inserimento
+                            [tipoAllegatoInput]="tipoAllegatoModel" (onNewFile)="salvaAllegato($event)">
+                        </shared-allegato-metadati-inserimento>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="principal-div col-xs-12 col-sm-12 col/-md-1 col-lg-1"></div>
+</div>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jee="http://www.springframework.org/schema/jee"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    					http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+    					http://www.springframework.org/schema/tx  http://www.springframework.org/schema/tx/spring-tx.xsd
+    					http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<bean class="it.csi.conam.conambl.business.SpringApplicationContextHelper"/>
+			
+  	<context:component-scan base-package="it.csi.conam.conambl.integration.mapper" />
+	<context:component-scan base-package="it.csi.conam.conambl.business.facade" />	
+	<context:component-scan base-package="it.csi.conam.conambl.business.service.impl" />
+	<context:component-scan base-package="it.csi.conam.conambl.common.config"/>
+	<context:component-scan base-package="it.csi.conam.conambl.scheduled.impl" />
+	
+	<bean id="userDetailsService" class="it.csi.conam.conambl.security.UserDetailsService" />
+	
+	
+	<context:property-placeholder location="classpath*:it/csi/conam/conambl/testContext/enviromentTest.properties" />
+	 
+	<import resource="/spring-data-context-test.xml"/>
+	   
+</beans>

@@ -1,0 +1,37 @@
+<div class="container-fluid">
+    <div class="principal-div col-xs-12 col-sm-12 col-md-0 col-lg-1"></div>
+    <div id="scrollTop"></div>
+    <shared-spinner *ngIf="!(loaded)"></shared-spinner>
+    <div class="principal-div col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="loaded" style="padding-top: 30px">
+        <form>
+            <shared-alert [message]="messageTop" [type]="typeMessageTop" *ngIf="showMessageTop"></shared-alert>
+
+            <shared-allegato-form-ricerca-protocollo [numeroProtocollo]="searchFormRicercaProtocol"
+                (onSearch)="ricercaProtocollo($event)">
+
+            </shared-allegato-form-ricerca-protocollo>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"  *ngIf="configRicercaProtocollo">
+                <datatable *ngIf="dataRicercaProtocollo" 
+                    [data]="dataRicercaProtocollo"
+                    [dataSelected]="allegatiProtocollati"
+                    [config]="configRicercaProtocollo" (selected)="_onSelected($event)"
+                    (download)="getAllegato($event)">
+                </datatable>
+            </div>
+            <div *ngIf="printNameFiles && nameFiles" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <span *ngIf="multipleSelection">
+                    Nome files:
+
+                </span>
+                <span *ngIf="!multipleSelection">
+                    Nome file:
+
+                </span>
+                {{nameFiles}}
+            </div>
+        </form>
+    </div>
+</div>
+<shared-dialog [titolo]="'Allegato da ACTA'" [subMessages]="subMessagess" [subLinks]="subLinks"
+    [buttonConfirmText]="buttonConfirmTexts" [buttonAnnullaText]="buttonAnnullaTexts"  [id]="'modalAllegatoACTA_2'"
+    (clickLinkEvent)="openAllegatoFisico($event)"></shared-dialog>

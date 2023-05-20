@@ -1,0 +1,14 @@
+<div class="panel-body panel-body-background">
+    <div class="form-group row">
+        <shared-spinner *ngIf="!loaded" ></shared-spinner>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="loaded && soggettiVerbale">
+            <h4 class="border-title"><strong>Casi di recidività</strong></h4>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <datatable [data]="soggettiVerbale" [config]="config" (selected)="onSelected($event)">
+                    </datatable>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

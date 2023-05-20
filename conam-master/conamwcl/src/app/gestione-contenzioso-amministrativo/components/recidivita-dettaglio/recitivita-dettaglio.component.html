@@ -1,0 +1,337 @@
+<div class="container-fluid">
+  <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+  <shared-spinner *ngIf="!loaded"></shared-spinner>
+  <div
+    class="principal-div col-xs-12 col-sm-12 col-md-10 col-lg-10"
+    style="padding-top: 30px"
+    *ngIf="loaded"
+  >
+    <div class="panel-primary-conam panel-conam">
+      <div class="panel-heading-conam">
+        <strong>Inserimento casi di recidività</strong>
+      </div>
+
+      <!-- persona giuridica -->
+      <div class="panel-body panel-body-background">
+        <div
+          class="panel-group padding-top-20"
+          role="tablist"
+          aria-multiselectable="true"
+        >
+          <div
+            class="panel-conam panel-grey-conam"
+            *ngIf="!soggetto.personaFisica"
+          >
+            <div class="panel-heading-conam" role="tab" id="headingOne">
+              <h4 class="panel-title">
+                <a
+                  data-toggle="collapse"
+                  href="#personaGiuridica"
+                  aria-expanded="true"
+                  aria-controls="personaGiuridica"
+                >
+                  Persona giuridica
+                </a>
+              </h4>
+            </div>
+            <div
+              id="personaGiuridica"
+              class="panel-collapse collapse in"
+              role="tabpanel"
+              aria-labelledby="headingOne"
+            >
+              <div class="panel-body">
+                <div
+                  class="col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-top-20"
+                >
+                  <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                      <label for="numeroProtocollo" class="control-label"
+                        >Ragione sociale</label
+                      >
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                      {{ soggetto.ragioneSociale }}
+                    </div>
+                  </div>
+                  <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                      <label for="numeroProtocollo" class="control-label"
+                        >Codice fiscale</label
+                      >
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                      {{ soggetto.codiceFiscale }}
+                    </div>
+                  </div>
+                  <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                      <label for="numeroProtocollo" class="control-label"
+                        >Partita iva</label
+                      >
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                      {{ soggetto.partitaIva }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                      <label for="numeroProtocollo" class="control-label"
+                        >Comune di residenza</label
+                      >
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                      {{ soggetto.comuneResidenza.denominazione }}
+                    </div>
+                  </div>
+                  <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                      <label for="numeroProtocollo" class="control-label"
+                        >Provincia</label
+                      >
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                      {{ soggetto.provinciaResidenza.denominazione }}
+                    </div>
+                  </div>
+                  <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                      <label for="numeroProtocollo" class="control-label"
+                        >Indirizzo di residenza</label
+                      >
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                      {{ soggetto.indirizzoResidenza }}, {{ soggetto.civicoResidenza }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <shared-dialog
+            [titolo]="'Attenzione'"
+            [subMessages]="subMessages"
+            [testo]="messageDialog"
+            [buttonConfirmText]="buttonConfirmText"
+            [buttonAnnullaText]="buttonAnnullaText"
+          ></shared-dialog>
+        </div>
+
+        <!-- persona fisica -->
+
+        <div
+          class="panel-group"
+          role="tablist"
+          aria-multiselectable="true"
+          *ngIf="soggetto.personaFisica"
+        >
+          <div class="panel-conam panel-grey-conam">
+            <div class="panel-heading-conam" role="tab" id="headingOne">
+              <h4 class="panel-title">
+                <a
+                  data-toggle="collapse"
+                  href="#personaFisica"
+                  aria-expanded="true"
+                  aria-controls="personaFisica"
+                >
+                  Persona fisica
+                </a>
+              </h4>
+            </div>
+            <div
+              id="personaFisica"
+              class="panel-collapse collapse in"
+              role="tabpanel"
+              aria-labelledby="headingOne"
+            >
+              <div class="panel-body">
+                <div
+                  class="col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-top-20"
+                >
+                  <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                      <label for="numeroProtocollo" class="control-label"
+                        >Cognome</label
+                      >
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                      {{ soggetto.cognome }}
+                    </div>
+                  </div>
+                  <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                      <label for="numeroProtocollo" class="control-label"
+                        >Nome</label
+                      >
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                      {{ soggetto.nome }}
+                    </div>
+                  </div>
+                  <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                      <label for="numeroProtocollo" class="control-label"
+                        >Codice fiscale</label
+                      >
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                      {{ soggetto.codiceFiscale }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                      <label for="numeroProtocollo" class="control-label"
+                        >Data di nascita</label
+                      >
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                      {{ soggetto.dataNascita }}
+                    </div>
+                  </div>
+                  <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                      <label for="numeroProtocollo" class="control-label"
+                        >Comune di nascita</label
+                      >
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                      {{ soggetto.comuneNascita.denominazione }}
+                    </div>
+                  </div>
+                  <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                      <label for="numeroProtocollo" class="control-label"
+                        >Provincia di nascita</label
+                      >
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                      {{ soggetto.provinciaNascita.denominazione }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                      <label for="numeroProtocollo" class="control-label"
+                        >Sesso</label
+                      >
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                      {{ soggetto.sesso }}
+                    </div>
+                  </div>
+                  <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                      <label for="numeroProtocollo" class="control-label"
+                        >Comune di residenza</label
+                      >
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                      {{ soggetto.comuneResidenza.denominazione }}
+                    </div>
+                  </div>
+                  <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                      <label for="numeroProtocollo" class="control-label"
+                        >Provincia di residenza</label
+                      >
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                      {{ soggetto.provinciaResidenza.denominazione }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <div class="form-group col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+                      <label for="numeroProtocollo" class="control-label"
+                        >Indirizzo di residenza</label
+                      >
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+                      {{ soggetto.indirizzoResidenza }}, {{ soggetto.civicoResidenza }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <shared-dialog
+            [titolo]="'Attenzione'"
+            [subMessages]="subMessages"
+            [testo]="messageDialog"
+            [buttonConfirmText]="buttonConfirmText"
+            [buttonAnnullaText]="buttonAnnullaText"
+          ></shared-dialog>
+        </div>
+
+        <!-- verbali soggetto -->
+
+        <div class="panel-group" role="tablist" aria-multiselectable="true">
+          <div class="panel-conam panel-grey-conam">
+            <div class="panel-heading-conam" role="tab" id="headingOne">
+              <h4 class="panel-title">
+                <a
+                  data-toggle="collapse"
+                  href="#verbaliSoggetto"
+                  aria-expanded="true"
+                  aria-controls="verbaliSoggetto"
+                >
+                  Verbali collegati al soggetto
+                </a>
+              </h4>
+            </div>
+            <div
+              id="verbaliSoggetto"
+              class="panel-collapse collapse in"
+              role="tabpanel"
+              aria-labelledby="headingOne"
+            >
+              <div class="panel-body">
+                <shared-alert
+                  [message]="messageTop"
+                  [type]="typeMessageTop"
+                  *ngIf="showMessageTop"
+                ></shared-alert>
+                <div
+                  class="col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-top-20"
+                >
+                  <datatable
+                    [data]="soggettiVerbale"
+                    [config]="config"
+                    (selected)="onSelected($event)"
+                  >
+                  </datatable>
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right padding-botton-20">
+                  <button
+                    type="button"
+                    class="btn-conam button-green"
+                    (click)="save()"
+                    [disabled]="saveDisabled"
+                  >
+                    <i
+                      class="glyphicon glyphicon-floppy-saved btn-glyphicon img-circle text-green-conam"
+                    ></i>
+                    Aggiorna recidività
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <shared-dialog
+            [titolo]="'Attenzione'"
+            [subMessages]="subMessages"
+            [testo]="messageDialog"
+            [buttonConfirmText]="buttonConfirmText"
+            [buttonAnnullaText]="buttonAnnullaText"
+          ></shared-dialog>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

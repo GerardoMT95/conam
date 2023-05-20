@@ -1,0 +1,168 @@
+<div class="container-fluid">
+  <div class="principal-div col-xs-12 col-sm-12 col-md-12 col-lg-1"></div>
+  <div
+    class="principal-div col-xs-12 col-sm-12 col-md-12 col-lg-10"
+    style="padding-top: 30px"
+  >
+    <shared-spinner *ngIf="!loaded"></shared-spinner>
+    <div class="panel-conam panel-primary-conam" *ngIf="loaded">
+      <div class="panel-heading-conam">
+        <strong>Riepilogo Ordinanza</strong>
+      </div>
+      <div class="panel-body panel-body-background">
+        <shared-alert
+          [message]="messageTop"
+          [type]="typeMessageTop"
+          *ngIf="showMessageTop"
+        ></shared-alert>
+        <div class="form-group row">
+          <div id="scrollTop"></div>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <shared-ordinanza-dettaglio
+              [idOrdinanza]="idOrdinanza"
+              [showDatiPagamento]="true"
+            ></shared-ordinanza-dettaglio>
+          </div>
+
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <shared-ordinanza-dettaglio-soggetti
+              [idOrdinanza]="idOrdinanza"
+              [idVerbale]="idVerbale"
+              [config]="configSoggetti"
+              (selected)="onSelected($event)"
+            >
+            </shared-ordinanza-dettaglio-soggetti>
+          </div>
+
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="selected">
+            <h4 class="border-title">
+              <strong>Dati pagamento dell’acconto</strong>
+            </h4>
+            <shared-spinner *ngIf="!loaded"></shared-spinner>
+            <div
+              class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+              style="padding-top: 30px"
+            >
+              <form #accontoVerbale="ngForm">
+                <!--Data di pagamento-->
+                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <label for="dataPagamento " class="control-label"
+                      >Data di pagamento
+                    </label>
+                    <div class="input-group date" id="datetimepicker1">
+                      <input
+                        type="text"
+                        id="dataV"
+                        [(ngModel)]="acconto.dataPagamento"
+                        name="dataPagamento "
+                        #datePicker="ngModel"
+                        (blur)="manageDatePicker($event, 1)"
+                        class="form-control date-picker"
+                        required
+                      />
+                      <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                      </span>
+                    </div>
+                    <div
+                      *ngIf="
+                        datePicker.invalid &&
+                        (datePicker.dirty || datePicker.touched)
+                      "
+                      class="alert alert-danger"
+                    >
+                      <div *ngIf="datePicker.errors.required">
+                        La data di pagamento è richiesta
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!--contoCorrenteVersamento -->
+                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <label for="importo" class="control-label"
+                      >Importo pagato
+                    </label>
+                    <input
+                      type="number"
+                      id="importo"
+                      class="form-control"
+                      name="importo"
+                      [(ngModel)]="acconto.importo"
+                      required
+                      #importo="ngModel"
+                    />
+                    <div
+                      *ngIf="
+                        importo.invalid && (importo.dirty || importo.touched)
+                      "
+                      class="alert alert-danger"
+                    >
+                      <div *ngIf="importo.errors.required">
+                        L'importo pagato è richiesto
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!--conto corrente di versamentoo -->
+                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <label for="contoCorrenteVersamento" class="control-label"
+                      >Conto corrente di versamentoo
+                    </label>
+                    <input
+                      type="text"
+                      id="contoCorrenteVersamento"
+                      class="form-control"
+                      name="contoCorrenteVersamento"
+                      [(ngModel)]="acconto.contoCorrenteVersamento"
+                      required
+                      #contoCorrenteVersamento="ngModel"
+                    />
+                    <div
+                      *ngIf="
+                        contoCorrenteVersamento.invalid &&
+                        (contoCorrenteVersamento.dirty ||
+                          contoCorrenteVersamento.touched)
+                      "
+                      class="alert alert-danger"
+                    >
+                      <div *ngIf="contoCorrenteVersamento.errors.required">
+                        Il conto corrente versamento è richiesto
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <shared-allegato (onNewFile)="salvaAllegato($event)">
+                    </shared-allegato>
+                  </div>
+                </div>
+                <div
+                  class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right"
+                >
+                  <button
+                    type="button"
+                    class="btn-conam button-green"
+                    (click)="salvaAcconto()"
+                    [disabled]="accontoVerbale.form.invalid"
+                  >
+                    <i
+                      class="glyphicon glyphicon-pencil btn-glyphicon img-circle text-green-conam"
+                    ></i>
+                    Salva acconto
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="principal-div col-xs-12 col-sm-12 col-md-12 col-lg-1"></div>
+      </div>
+    </div>
+  </div>
+</div>

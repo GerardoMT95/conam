@@ -1,0 +1,438 @@
+<div class="container-fluid">
+    <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+    <shared-spinner *ngIf="!loaded"></shared-spinner>
+    <div id="scrollTop"></div>
+    <div class="principal-div col-xs-12 col-sm-12 col-md-10 col-lg-10" *ngIf="loaded" style="padding-top: 30px">
+        <div class="panel-primary-conam panel-conam">
+            <div class="panel-heading-conam">
+                <strong>Inserimento e ricerca Riferimenti Normativi</strong>
+            </div>
+            <shared-alert [message]="messageTop" [type]="typeMessageTop" *ngIf="showMessageTop"></shared-alert>           
+            <form #inserimentoAmbito="ngForm">
+                <div class="panel-body panel-body-background">
+                    <div class="form-group row">
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <h4 class="border-title"><strong>Inserimento/Eliminazione Ambito</strong></h4>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                <label class="control-label">Ambito</label>
+                                <input type="text" id="nuovoAmb" class="form-control" name="nuovoAmb"
+                                    [(ngModel)]="nuovoAmbito.denominazione" required [disabled]="loadedRiferimento || disable('salva')" >
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2">
+                                <label class="control-label">Acronimo</label>
+                                <input type="text" id="acronimoAmb" class="form-control" name="acronimoAmb"
+                                    [(ngModel)]="nuovoAmbito.acronimo" maxlength="5" required 
+                                    [disabled]="loadedRiferimento || disable('salva')">
+                            </div>
+
+                            <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 padding-top-25">
+                                <button type="button" class="btn-conam button-green"
+                                    [disabled]="!inserimentoAmbito.form.valid" (click)="salvaAmbito()">
+                                    <i class="glyphicon glyphicon-plus btn-glyphicon img-circle text-green-conam"></i>
+                                    Salva Ambito</button>
+                                <button type="button" class="btn-conam button-garnet" (click)="clearAmbito()"
+                                    [disabled]="!(nuovoAmbito.denominazione)">
+                                    <i class="glyphicon glyphicon-erase btn-glyphicon img-circle text-garnet-conam"></i>
+                                    Pulisci Ambito</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <h4 class="border-subtitle padding-top-15"></h4>
+                    </div>
+                </div>
+
+            </form>
+
+            <form #eliminaAmbitoForm="ngForm">
+                <div class="panel-body panel-body-background">
+                    <div class="form-group row">
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                                <label class="control-label">Ambito</label>
+                                <shared-spinner-form [diameter]="30"
+                                    *ngIf="!loadedAmbitoEliminabile; else elseAmbitoEliminabile"></shared-spinner-form>
+                                <ng-template #elseAmbitoEliminabile>
+                                    <select class="form-control" id="ambitoElim" [compareWith]="byId" required name="ambitoElim"
+                                        [(ngModel)]="ambitoDaEliminare" [disabled]="loadedRiferimento || disable('elimina')" >
+                                        <option *ngFor="let amb of ambitoEliminabileModel" [ngValue]="amb" >
+                                            {{amb.denominazione}}</option>
+                                    </select>
+                                </ng-template>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1" *ngIf = ambitoDaEliminare>
+                                <label class="control-label">Acronimo</label>
+                                <div>{{ambitoDaEliminare.acronimo}}</div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 padding-top-25">
+                                <button type="button" class="btn-conam button-garnet"
+                                    [disabled]="!(eliminaAmbitoForm.form.valid) || ambitoDaEliminare == null || ambitoDaEliminare.acronimo == null" 
+                                    (click)="richiediEliminazioneRiferimentoNormativo('E')">
+                                    <i class="glyphicon glyphicon-trash btn-glyphicon img-circle text-garnet-conam"></i>
+                                    Elimina Ambito</button>
+                                <button type="button" class="btn-conam button-garnet" (click)="clearElimina()"
+                                    [disabled]="!(eliminaAmbitoForm.form.valid) || ambitoDaEliminare == null || ambitoDaEliminare.acronimo == null">
+                                    <i class="glyphicon glyphicon-erase btn-glyphicon img-circle text-garnet-conam"></i>
+                                    Pulisci</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <form #inserisciRicercaNorme="ngForm">
+                <div class="panel-body panel-body-background">
+                    <div class="form-group row">
+                        <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                <h4 class="border-title"><strong>Inserimento/Modifica Riferimenti Normativi</strong>
+                                </h4>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                <label class="control-label">Ente Sanzionatore</label>
+                                <shared-spinner-form [diameter]="30" *ngIf="!loadedEnte; else elseEnte">
+                                </shared-spinner-form>
+                                <ng-template #elseEnte>
+                                    <select class="form-control" id="enteLegge" [compareWith]="byId" name="enteLegge"
+                                        [(ngModel)]="riferimentoNormativo.enteLegge" required
+                                        [disabled]="loadedRiferimento || disable('modifica')"  (change)="changeCriterioDiRicerca()">
+                                        <option *ngFor="let ente of enteModel" [ngValue]="ente">{{ente.denominazione}}
+                                        </option>
+                                    </select>
+                                </ng-template>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                <label class="control-label">Ambito</label>
+                                <shared-spinner-form [diameter]="30" *ngIf="!loadedAmbito; else elseAmbito">
+                                </shared-spinner-form>
+                                <ng-template #elseAmbito>
+                                    <select class="form-control" id="ambito" [compareWith]="byId" name="ambito"
+                                        [(ngModel)]="riferimentoNormativo.ambito" required
+                                        [disabled]="loadedRiferimento || disable('modifica')"  (change)="changeCriterioDiRicerca()">
+                                        <option *ngFor="let amb of ambitoModel" [ngValue]="amb">{{amb.denominazione}}
+                                        </option>
+                                    </select>
+                                </ng-template>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-1 col-lg-1" *ngIf = riferimentoNormativo.ambito>
+                                <label class="control-label">Acronimo</label>
+                                <div>{{riferimentoNormativo.ambito.acronimo}}</div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 padding-top-25">
+                                <button type="button" class="btn-conam button-green"
+                                    (click)="nuovoRiferimentoNormativo()"
+                                    [disabled]="!(riferimentoNormativo.enteLegge && riferimentoNormativo.ambito) || loadedRiferimento || isSearching">
+                                    <i class="glyphicon glyphicon-plus btn-glyphicon img-circle text-green-conam"></i>
+                                    Nuovo Riferimento Normativo</button>
+
+                                <button type="button" class="btn-conam button-yellow"
+                                    (click)="cercaRiferimentoNormativo()"
+                                    [disabled]="!(riferimentoNormativo.enteLegge && riferimentoNormativo.ambito) || loadedRiferimento || isSearching">
+                                    <i
+                                        class="glyphicon glyphicon-search btn-glyphicon img-circle text-yellow-conam"></i>
+                                    Cerca</button>
+
+                                <button type="button" class="btn-conam button-garnet" (click)="clearModifica()"
+                                    [disabled]="!(riferimentoNormativo.enteLegge && riferimentoNormativo.ambito) || loadedRiferimento || isSearching">
+                                    <i class="glyphicon glyphicon-erase btn-glyphicon img-circle text-garnet-conam"></i>
+                                    Pulisci</button>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-top-15" *ngIf="loadedRiferimento">
+                            <div class="form-group col-md-12">
+
+                                <shared-alert [message]="messageMid" [type]="typeMessageMid"
+                                    *ngIf="loadedRiferimento && !isEdit"></shared-alert>
+                                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                        <label class="control-label">Norma</label>
+                                        <input type="text" id="norma" class="form-control" name="norma"
+                                            [(ngModel)]="riferimentoNormativo.norma.denominazione" required
+                                            [disabled]="isEdit" maxlength="100">
+                                    </div>
+
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                        <label class="control-label">Articolo</label>
+                                        <input type="text" id="articolo" class="form-control" name="articolo"
+                                            [(ngModel)]="riferimentoNormativo.articolo.denominazione" required
+                                            [disabled]="isEdit" maxlength="10">
+                                    </div>
+
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                        <label class="control-label">Comma</label>
+                                        <input type="text" id="comma" class="form-control" name="comma"
+                                            [(ngModel)]="riferimentoNormativo.comma.denominazione" [disabled]="isEdit"
+                                            maxlength="10">
+                                    </div>
+
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                        <label class="control-label">Lettera</label>
+                                        <input type="text" id="lettera" class="form-control" name="lettera"
+                                            [(ngModel)]="riferimentoNormativo.lettera.denominazione" [disabled]="isEdit"
+                                            maxlength="10">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                        <label class="control-label">Data inizio validità Norma</label>
+                                        <div class='input-group date' id='datetimepicker6'>
+                                            <input type='text' id="dataInizioNorma" required
+                                                [(ngModel)]="riferimentoNormativo.norma.dataInizioValidita"
+                                                name="dataInizioNorma" #datePicker="ngModel"
+                                                (blur)="manageDatePicker($event, 6)" class="form-control date-picker" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                        <label class="control-label">Data inizio validità Articolo</label>
+                                        <div class='input-group date' id='datetimepicker7'>
+                                            <input type='text' id="dataInizioArticolo" required
+                                                [(ngModel)]="riferimentoNormativo.articolo.dataInizioValidita"
+                                                name="dataInizioArticolo" #datePicker="ngModel"
+                                                (blur)="manageDatePicker($event, 7)" class="form-control date-picker" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                        <label class="control-label">Data inizio validità Comma</label>
+                                        <div class='input-group date' id='datetimepicker8'>
+                                            <input type='text' id="dataInizioComma"
+                                                [(ngModel)]="riferimentoNormativo.comma.dataInizioValidita"
+                                                name="dataInizioComma" #datePicker="ngModel"
+                                                (blur)="manageDatePicker($event, 8)" class="form-control date-picker"
+                                                [required]="riferimentoNormativo.comma.denominazione" 
+                                                [disabled]="isDisabled('DATACOMMA')" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                        <label class="control-label">Data inizio validità Lettera</label>
+                                        <div class='input-group date' id='datetimepicker9'>
+                                            <input type='text' id="dataInizioLettera"
+                                                [(ngModel)]="riferimentoNormativo.lettera.dataInizioValidita"
+                                                name="dataInizioLettera" #datePicker="ngModel"
+                                                (blur)="manageDatePicker($event, 9)" class="form-control date-picker"
+                                                [required]="riferimentoNormativo.lettera.denominazione"
+                                                [disabled]="isDisabled('DATALETTERA')" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                        <label class="control-label">Data fine validità Norma</label>
+                                        <div class='input-group date' id='datetimepicker2'>
+                                            <input type='text' id="dataFineNorma"
+                                                [(ngModel)]="riferimentoNormativo.norma.dataFineValidita"
+                                                name="dataFineNorma" #datePicker="ngModel"
+                                                (blur)="manageDatePicker($event, 2)" class="form-control date-picker" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                        <label class="control-label">Data fine validità Articolo</label>
+                                        <div class='input-group date' id='datetimepicker3'>
+                                            <input type='text' id="dataFineArticolo"
+                                                [(ngModel)]="riferimentoNormativo.articolo.dataFineValidita"
+                                                name="dataFineArticolo" #datePicker="ngModel"
+                                                (blur)="manageDatePicker($event, 3)" class="form-control date-picker" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                        <label class="control-label">Data fine validità Comma</label>
+                                        <div class='input-group date' id='datetimepicker4'>
+                                            <input type='text' id="dataFineComma"
+                                                [(ngModel)]="riferimentoNormativo.comma.dataFineValidita"
+                                                name="dataFineComma" #datePicker="ngModel"
+                                                (blur)="manageDatePicker($event, 4)" class="form-control date-picker"
+                                                [disabled]="isDisabled('DATACOMMA')" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-3 col-lg-3">
+                                        <label class="control-label">Data fine validità Lettera</label>
+                                        <div class='input-group date' id='datetimepicker5'>
+                                            <input type='text' id="dataFineLettera"
+                                                [(ngModel)]="riferimentoNormativo.lettera.dataFineValidita"
+                                                name="dataFineLettera" #datePicker="ngModel"
+                                                (blur)="manageDatePicker($event, 5)" class="form-control date-picker"
+                                                [disabled]="isDisabled('DATALETTERA')" />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        <label class="control-label">Sanzione minima</label>
+                                        <input type="number" id="sanzMin" class="form-control" name="sanzMin"
+                                            [(ngModel)]="riferimentoNormativo.lettera.sanzioneMinima" min=0 step="0.01"
+                                            (keydown)="isKeyPressed($event.keyCode)" decimalPlaces
+                                            #sanzioneMinima="ngModel">
+                                        <div *ngIf="sanzioneMinima.invalid && (sanzioneMinima.dirty || sanzioneMinima.touched)"
+                                            class="alert alert-danger">
+                                            <div *ngIf="sanzioneMinima.errors.decimalPlaces">
+                                                Sanzione minima deve contenere solamente due cifre decimali
+                                            </div>
+                                            <div *ngIf="sanzioneMinima.errors.negativeNumber">
+                                                Sanzione minima deve essere maggiore o uguale di zero
+                                            </div>
+                                            <div *ngIf="sanzioneMinima.errors.maxNumber">
+                                                Sanzione minima deve essere minore di 100000000
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        <label class="control-label">Sanzione massima</label>
+                                        <input type="number" id="sanzMass" class="form-control" name="sanzMass"
+                                            [(ngModel)]="riferimentoNormativo.lettera.sanzioneMassima" min=0 step="0.01"
+                                            (keydown)="isKeyPressed($event.keyCode)" decimalPlaces
+                                            #sanzioneMassima="ngModel">
+                                        <div *ngIf="sanzioneMassima.invalid && (sanzioneMassima.dirty || sanzioneMassima.touched)"
+                                            class="alert alert-danger">
+                                            <div *ngIf="sanzioneMassima.errors.decimalPlaces">
+                                                Sanzione massima deve contenere solamente due cifre decimali
+                                            </div>
+                                            <div *ngIf="sanzioneMassima.errors.negativeNumber">
+                                                Sanzione massima deve essere maggiore o uguale di zero
+                                            </div>
+                                            <div *ngIf="sanzioneMassima.errors.maxNumber">
+                                                Sanzione massima deve essere minore di 100000000
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        <label class="control-label">Importo in misura ridotta</label>
+                                        <input type="number" id="impMisRid" class="form-control" name="impMisRid"
+                                            [(ngModel)]="riferimentoNormativo.lettera.importoMisuraRidotta" required
+                                            min=0 step="0.01" (keydown)="isKeyPressed($event.keyCode)" decimalPlaces
+                                            #importomisuraRidotta="ngModel">
+
+                                        <div *ngIf="importomisuraRidotta.invalid && (importomisuraRidotta.dirty || importomisuraRidotta.touched)"
+                                            class="alert alert-danger">
+                                            <div *ngIf="importomisuraRidotta.errors.required">
+                                                Importo misura ridotta è richiesto
+                                            </div>
+                                            <div *ngIf="importomisuraRidotta.errors.decimalPlaces">
+                                                Importo misura ridotta deve contenere solamente due cifre decimali
+                                            </div>
+                                            <div *ngIf="importomisuraRidotta.errors.negativeNumber">
+                                                Importo misura ridotta deve essere maggiore o uguale di zero
+                                            </div>
+                                            <div *ngIf="importomisuraRidotta.errors.maxNumber">
+                                                Importo misura ridotta deve essere minore di 100000000
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                        <label class="control-label">Scadenza importi</label>
+                                        <div class='input-group date' id='datetimepicker1'>
+                                            <input type='text' id="scadImp"
+                                                [(ngModel)]="riferimentoNormativo.lettera.scadenzaImporti"
+                                                name="scadImp" #datePicker="ngModel"
+                                                (blur)="manageDatePicker($event, 1)" class="form-control date-picker"
+                                                required />
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        </div>
+                                        <div *ngIf="datePicker.invalid && (datePicker.dirty || datePicker.touched)"
+                                            class="alert alert-danger">
+                                            <div *ngIf="datePicker.errors.required ">
+                                                La data di scadenza è richiesta
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="form-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                        <label class="control-label">Descrizione dell'illecito sanzionabile</label>
+                                        <input type="text" id="descrIll" class="form-control" name="descrIll"
+                                            [(ngModel)]="riferimentoNormativo.lettera.descrizioneIllecito" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-top-25">
+                                    <button type="button" class="btn-conam button-light-blue"
+                                        (click)="annullaRiferimentoNormativo()">
+                                        <i
+                                            class="glyphicon glyphicon-arrow-left btn-glyphicon img-circle text-light-blue-conam"></i>
+                                        Annulla</button>
+
+                                    <button type="button" class="btn-conam button-green pull-right"
+                                        (click)="salvaRiferimentoNormativo()"
+                                        [disabled]="!inserisciRicercaNorme.form.valid">
+                                        <i
+                                            class="glyphicon glyphicon-floppy-saved btn-glyphicon img-circle text-green-conam"></i>
+                                        Salva</button>
+
+                                    <button type="button" class="btn-conam button-garnet pull-right btn-glyphicon"
+                                        (click)="richiediEliminazioneRiferimentoNormativo('M')"
+                                        *ngIf="isEdit && riferimentoNormativo.eliminaEnable">
+                                        <i
+                                            class="glyphicon glyphicon-trash btn-glyphicon img-circle text-garnet-conam"></i>
+                                        Elimina</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 padding-top-25" *ngIf="enableTable">
+                            <shared-spinner *ngIf="(isSearching && !loadedTabella)"></shared-spinner>
+                            <datatable [data]="riferimentoNormativoModel" [config]="configProntuario"
+                                (onEdit)="editRiferimentoNormativo($event)" (onDelete)="deleteFromTable($event)"
+                                *ngIf="loadedTabella">
+                            </datatable>
+                        </div>
+
+                    </div>
+                </div>
+            </form>
+
+            <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+        </div>
+    </div>
+</div>
+<shared-dialog [titolo]="'Attenzione'" [subMessages]="subMessages" [buttonConfirmText]="buttonConfirmText"
+    [buttonAnnullaText]="buttonAnnullaText"></shared-dialog>

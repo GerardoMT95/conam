@@ -1,0 +1,35 @@
+<div class="container-fluid">
+    <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+    <div id="scrollTop"></div>
+    <shared-spinner *ngIf="!loaded"></shared-spinner>
+    <div class="principal-div col-xs-12 col-sm-12 col-md-10 col-lg-10" [class.opa0]="!loaded" style="padding-top: 30px">
+        <div class="panel-conam panel-primary-conam">
+            <div class="panel-heading-conam" [class.opa0]="!loaded">
+                <strong>Riepilogo  <b style="font-size:17px;" *ngIf="riepilogoVerbale?.verbale.pregresso">Fascicolo Pregresso</b></strong>
+            </div>
+            <div class="panel-body panel-body-background" [class.opa0]="!loaded">
+                <shared-alert [message]="messageTop" [type]="typeMessageTop" *ngIf="showMessageTop"></shared-alert>
+                <shared-verbale-riepilogo (delete)="refreshService()" pregresso="true"></shared-verbale-riepilogo>
+                <pregresso-stato [idVerbale]="idVerbale" 
+                                 [riepilogoVerbale]="riepilogoVerbale"   
+                                 (onLoadChange)="onLoadChange($event)" [class.opa0]="!loaded">
+
+                </pregresso-stato>
+                <div class="row" [class.opa0]="!loaded">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                        <button *ngIf="azioneVerbale?.aggiungiAllegatoEnable" type="button" class="btn-conam button-blue" (click)="goToVerbaleAllegato()">
+                            <i class="glyphicon glyphicon-share-alt btn-glyphicon img-circle text-blue-conam"></i>
+                            Aggiungi Allegato Pregresso</button>
+
+                        <button *ngIf="azioneVerbale?.riepilogoOrdinanzaEnable" type="button" class="btn-conam button-blue" (click)="goToRiepilogoOrdinanze()">
+                            <i class="glyphicon glyphicon-share-alt btn-glyphicon img-circle text-blue-conam"></i>
+                            Riepilogo Ordinanze Pregresse</button>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+</div>

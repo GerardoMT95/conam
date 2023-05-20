@@ -1,0 +1,59 @@
+<form *ngIf="!allegatoM" #metadatiAllegato="ngForm">
+  <div
+    class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left"
+    style="padding-bottom: 30px;padding-left:0;"
+  >
+    <div
+      *ngIf="!senzaAllegatiForce && !senzaAllegati"
+      class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+      style="padding-bottom: 30px;padding-left:0;"
+    >
+      <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5">
+        <button
+          type="button"
+          class="btn-conam button-red"
+          (click)="upload.actions.addFile()"
+        >
+          <i
+            class="glyphicon glyphicon-paperclip btn-glyphicon img-circle text-red-conam"
+          ></i>
+          Carica Allegato
+        </button>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-7 col-lg-7">
+        <div
+          *ngIf="!senzaAllegati && nomeAllegatoTmp != null"
+          class="col-xs-12 col-sm-12 col-md-10 col-lg-10 paddig-10px"
+        >
+          <label for="nomeFile" class="control-label"> Nome file: </label>
+          <span> {{ nomeAllegatoTmp }}</span>
+        </div>
+      </div>
+    </div>
+
+    <input
+      *ngIf="!senzaAllegati"
+      type="file"
+      #file
+      style="display: none"
+      (change)="upload.actions.onFilesAdded()"
+    />
+  </div>
+
+  <div *ngIf="sizeAlert" class="alert alert-danger" role="alert">
+    <strong>Attenzione!</strong> L'allegato supera le dimensioni massime
+    consentite.
+  </div>
+  <div *ngIf="typeAlert" class="alert alert-danger" role="alert">
+    <strong>Attenzione!</strong> {{ allowedFilesTypeMessage }}.
+  </div>
+</form>
+
+<shared-dialog
+  *ngIf="allegatoM"
+  [titolo]="'Attenzione'"
+  [subMessages]="subMessages"
+  [testo]="messageDialog"
+  [buttonConfirmText]="buttonConfirmText"
+  [buttonAnnullaText]="buttonAnnullaText"
+></shared-dialog>

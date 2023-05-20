@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   * SPDX-License-Identifier: EUPL-1.2
+   * Copyright Regione Piemonte - 2020
+-->
+<web-app version="3.0"
+         xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee web-app_3_0.xsd">
+
+
+      <session-config>
+          <cookie-config>
+             <http-only>true</http-only>
+             <secure>true</secure>
+          </cookie-config>
+          <tracking-mode>COOKIE</tracking-mode>
+      </session-config>
+
+
+	<listener>
+		<listener-class>it.csi.conam.conambl.util.AppServletContextListener</listener-class>
+   	</listener>
+   
+   <listener>
+      <listener-class>org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>
+   </listener>
+   
+	<listener>
+      <listener-class>org.jboss.resteasy.plugins.spring.SpringContextLoaderListener</listener-class>
+   </listener>
+   
+	<listener>
+    	<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+   	</listener>
+ 
+   	
+   <!-- filtro di protezione ad attacchi XSRF -->
+   <filter>
+		<filter-name>XSRFProtectionFilter</filter-name>
+		<filter-class>it.csi.conam.conambl.filter.XSRFProtectionFilter</filter-class>
+		<init-param>
+    		<param-name>disabled</param-name>
+    		<param-value>@@@XSRFFILTER.DISABLED@@@</param-value>
+  		</init-param>
+   </filter>
+   <filter-mapping>
+		<filter-name>XSRFProtectionFilter</filter-name>
+		<url-pattern>*</url-pattern>
+   </filter-mapping>
+	<!-- filtro di recepimento token autenticazione -->
+	
+   
+   
+
+	<!-- Richiesto affinche' il controllo sulle sessioni concorrenti funzioni nel modo corretto -->
+	<listener>
+		<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+	</listener>
+   <!-- Abilitazione della filter chain di Spring Security -->
+   
+   
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+
+	<filter>
+		<filter-name>encoding-filter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<!-- Spring Security per tutte le request -->
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>*</url-pattern>
+	</filter-mapping>
+	
+	
+	<!-- servizio soap da esporre a piemonte pay --> 
+	<servlet>
+		  <servlet-name>Epay</servlet-name>
+		  <servlet-class>it.csi.conam.conambl.web.soap.EpaySoapResource</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		  <servlet-name>Epay</servlet-name>
+		  <url-pattern>/soap/epay</url-pattern>
+	</servlet-mapping>
+	
+	
+	
+	<welcome-file-list>
+	  	<welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+
+	 
+	<!-- duplicazione sessione -->
+    <distributable />	
+    
+    
+    
+</web-app>

@@ -1,0 +1,8 @@
+<div class="container-fluid  height-75 table">
+    <div class="row vcenter">
+        <div *ngIf="!ie9" id="loader" [style.width.px]="size" [style.height.px]="size" [style.margin-left]="left"
+            [style.margin-right]="right"></div>
+        <div *ngIf="ie9" class="loaderIE9" [style.width.px]="size" [style.height.px]="size" [style.margin-left]="left"
+            [style.margin-right]="right"></div>
+    </div>
+</div>

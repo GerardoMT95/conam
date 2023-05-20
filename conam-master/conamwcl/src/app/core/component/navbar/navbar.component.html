@@ -1,0 +1,309 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <img _ngcontent-c1="" alt="ServiziOnline" src="assets/logo_sp.jpg" height="50px">
+            <a class="navbar-brand" href="#">
+                CONAM
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" *ngIf="loaded">
+            <ul class="nav navbar-nav navbar-right">
+
+                <!--<li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                        aria-expanded="false" class="text-navbar">PROVA TEMPLATE
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goToTemplate(1)" class="text-navbar">Template-01 (Convocazione
+                                Audizione)</a>
+                        </li>
+                        <li>
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goToTemplate(2)" class="text-navbar">Template-02 (Verbale Audizione)</a>
+                        </li>
+                        <li>
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goToTemplate(3)" class="text-navbar">Template-03 (Lettera
+                                Accompagnamento)</a>
+                        </li>
+                        <li>
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goToTemplate(4)" class="text-navbar">Template-04 (Rateizzazione)</a>
+                        </li>
+                        <li>
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goToTemplate(5)" class="text-navbar">Template-05 (Sollecito Pagamento)</a>
+                        </li>
+                    </ul>
+                </li>-->
+
+                <li>
+                    <a routerLink="/home" class="text-navbar">Home</a>
+                </li>
+
+                <li *ngIf="isUtilityNormeEnabled[0]">
+                    <a role="button" (click)="actions.goToProntuarioUtilityNorme()" class="text-navbar">Utility
+                        norme</a>
+                </li>
+
+                <li class="dropdown" *ngIf="isGestioneFascicoloPregressoEnabled[0]">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                        aria-expanded="false" class="text-navbar">Gestione pregresso
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li *ngIf="isGestioneFascicoloPregressoEnabled[1]">
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goToInserimentoPregresso()" class="text-navbar">Inserimento verbale ed
+                                allegati pregressi</a>
+                        </li>
+                        <li *ngIf="isGestioneFascicoloPregressoEnabled[2]">
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goToRicercaPregresso()" class="text-navbar">Ricerca fascicolo pregresso</a>
+                        </li>
+                    </ul>
+                </li>
+
+
+            
+                <li class="dropdown" *ngIf="isGestioneFascicoloEnabled[0]">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                        aria-expanded="false" class="text-navbar">Gestione fascicolo
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li *ngIf="isGestioneFascicoloEnabled[1]">
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goToDatiVerbale()" class="text-navbar">Inserimento verbale ed
+                                allegati</a>
+                        </li>
+                        <li *ngIf="isGestioneFascicoloEnabled[2]">
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goToRicercaVerbale()" class="text-navbar">Ricerca fascicolo</a>
+                        </li>
+                        <li >
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goToInserimentoScrittiDifensivi()" class="text-navbar">Inserimento scritti difensivi</a>
+                        </li>
+                        <li>
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goToRicercaScrittiDifensivi()" class="text-navbar">Ricerca scritti difensivi</a>
+                        </li>
+                    </ul>
+                </li>
+
+
+
+                <li class="dropdown" *ngIf="isGestioneContenziosoAmministativoEnabled[0]">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                        aria-expanded="false" class="text-navbar">Gestione contenzioso amministrativo
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li *ngIf="isGestioneContenziosoAmministativoEnabled[1]">
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goToInserimentoControDeduzioni()" class="text-navbar">Inserimento
+                                controdeduzioni</a>
+                        </li>                        
+                        <li *ngIf="isGestioneContenziosoAmministativoEnabled[5]">
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goToEmissioneConvocazioneAudizione()" class="text-navbar">Emissione convocazione 
+                                audizione
+                            </a>
+                        </li>
+                        <li *ngIf="isGestioneContenziosoAmministativoEnabled[2]">
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goToEmissioneVerbaleAudizione()" class="text-navbar">Emissione verbale
+                                di audizione</a>
+                        </li>
+                        <li *ngIf="isGestioneContenziosoAmministativoEnabled[3]">
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goToInserimentoOrdinanza()" class="text-navbar">Inserimento
+                                ordinanza</a>
+                        </li>
+                        <li *ngIf="isGestioneContenziosoAmministativoEnabled[4]">
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goToInserimentoOrdinanzaAnnullamento()" class="text-navbar">Inserimento ordinanza 
+                                di annullamento</a>
+                        </li>
+                        <li *ngIf="isGestioneContenziosoAmministativoEnabled[4]">
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goToRicercaOrdinanza()" class="text-navbar">Ricerca
+                                ordinanza</a>
+                        </li>
+                        <li *ngIf="isGestioneContenziosoAmministativoEnabled[4]">
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goToInserimentoRecidivita()" class="text-navbar">Inserimento
+                                 casi di recidività</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="dropdown" *ngIf="isGestioneFaseGiurisdizionaleEnabled[0]">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                        aria-expanded="false" class="text-navbar">Gestione fase giurisdizionale
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li *ngIf="isGestioneFaseGiurisdizionaleEnabled[1]">
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goToInserimentoComunicazioniCancelleriaFaseGiurisdizionale()"
+                                class="text-navbar">Inserimento comunicazioni cancelleria</a>
+                        </li>
+                        <li *ngIf="isGestioneFaseGiurisdizionaleEnabled[2]">
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goToInserimentoIstanzaRateizzazione()"
+                                class="text-navbar">Inserimento istanza di rateizzazione</a>
+                        </li>
+                        <li *ngIf="isGestioneFaseGiurisdizionaleEnabled[3]">
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goToInserimentoRicorsoFaseGiurisdizionale()"
+                                class="text-navbar">Inserimento opposizione giurisdizionale</a>
+                        </li>
+                        <li *ngIf="isGestioneFaseGiurisdizionaleEnabled[4]">
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goToCalendarioUdienzeFaseGiurisdizionale()"
+                                class="text-navbar">Calendario
+                                udienze</a>
+                        </li>
+                        <li *ngIf="isGestioneFaseGiurisdizionaleEnabled[5]">
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goToAcquisizioneFaseGiurisdizionale()" class="text-navbar">
+                                Inserimento disposizione del giudice</a>
+                        </li>
+                        <li *ngIf="isGestioneFaseGiurisdizionaleEnabled[6]">
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goToInserimentoComparse()" class="text-navbar">Inserimento comparsa di
+                                costituzione e risposta
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="dropdown" *ngIf="isRiscossioneEnabled[0]">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                        aria-expanded="false" class="text-navbar">Riscossione
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li *ngIf="isRiscossioneEnabled[1]">
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goToSollecitoPagamento()" class="text-navbar">Sollecito di
+                                pagamento ordinanza</a>
+                        </li>
+                        <li *ngIf="isRiscossioneEnabled[1]">
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goToSollecitoPagamentoRate()" class="text-navbar">Sollecito di
+                                pagamento rate</a>
+                        </li>
+                        <li *ngIf="isRiscossioneEnabled[2]">
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goToRiscossioneCoattiva()" class="text-navbar">Riscossione coattiva</a>
+                        </li>
+                        <li *ngIf="isRiscossioneEnabled[2]">
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goToRiscossioneCoattivaElenco()" class="text-navbar">Elenco soggetti in
+                                riscossione
+                                coattiva</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="dropdown" *ngIf="isGestionePagamentiEnabled[0]">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                        aria-expanded="false" class="text-navbar">Gestione pagamenti
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li *ngIf="isGestionePagamentiEnabled[1]">
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goToCreaPianoPagamenti()" class="text-navbar">Crea nuovo piano di
+                                rateizzazione</a>
+                        </li>
+                        <li *ngIf="isGestionePagamentiEnabled[2]">
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goToRicercaPianoPagamenti()" class="text-navbar">Ricerca piano di
+                                rateizzazione</a>
+                        </li>
+
+                        <li *ngIf="isGestionePagamentiEnabled[3]">
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goToRiconciliaPagamentoVerbale()" class="text-navbar">Riconciliazione
+                                manuale del pagamento del verbale</a>
+                        </li>
+                        <li *ngIf="isGestionePagamentiEnabled[4]">
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goToRiconciliaPagamentoOrdinanza()" class="text-navbar">Riconciliazione
+                                manuale del pagamento dell'ordinanza</a>
+                        </li>
+                        <li *ngIf="isGestionePagamentiEnabled[5]">
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goRiconciliaPagamentiPianoRate()" class="text-navbar">Riconciliazione
+                                manuale del pagamento delle rate</a>
+                        </li>
+                        <li *ngIf="isGestionePagamentiEnabled[6]">
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goRiconciliaPagamentiSollecito()" class="text-navbar">Riconciliazione
+                                manuale del sollecito di pagamento ordinanza</a>
+                        </li>
+                        <li *ngIf="isGestionePagamentiEnabled[7]">
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goRiconciliaPagamentiSollecitoRate()" class="text-navbar">Riconciliazione 
+                                manuale del sollecito di pagamento rate</a>
+                        </li>
+                        <li *ngIf="isGestionePagamentiEnabled[7]">
+                            <a href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"
+                                (click)="actions.goRiconciliaManualePagamentiAccontiOrdinanza()" class="text-navbar">Riconciliazione 
+                                manuale pagamenti acconti ordinanza</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                        aria-expanded="false" class="text-navbar">Utente
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#" class="text-navbar">
+                                <span class="glyphicon glyphicon-user"></span> {{profilo.nome}}
+                                {{profilo.cognome}}</a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-navbar">
+                                <span class=""></span>RAI : {{profilo.rai}}</a>
+                        </li>
+                        <li>
+                            <a [routerLink]="" (click)="logOut()" class="text-navbar">
+                                Esci
+                                <span class="glyphicon glyphicon-log-out"></span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- <li>
+                    <a href="#">Help</a>
+                </li>
+                <li>
+                    <a href="#">Contatti</a>
+                </li>-->
+
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,34 @@
+<div class="container-fluid">
+    <div class="principal-div col-xs-12 col-sm-12 col-md-1 col-lg-1"></div>
+    <shared-spinner *ngIf="!loaded"></shared-spinner>
+    <div class="principal-div col-xs-12 col-sm-12 col-md-10 col-lg-10" *ngIf="loaded" style="padding-top: 30px">
+        <div class="panel-primary-conam panel-conam ">
+            <form #intestazione="ngForm">
+                <div class="panel-body panel-body-background" style="background-color: #ffffff">
+                    <shared-template-intestazione></shared-template-intestazione>
+
+                    <div [ngSwitch]="id">
+                        <div *ngSwitchCase="1">
+                            <template-01-convocazione-audizione></template-01-convocazione-audizione>
+                        </div>
+                        <div *ngSwitchCase="2">
+                            <template-02-verbale-audizione></template-02-verbale-audizione>
+                        </div>
+                        <div *ngSwitchCase="3">
+                            <template-03-lettera-accompagnamento></template-03-lettera-accompagnamento>
+                        </div>
+                        <div *ngSwitchCase="4">
+                            <template-04-rateizzazione></template-04-rateizzazione>
+                        </div>
+                        <div *ngSwitchCase="5">
+                            <template-05-sollecito-pagamento></template-05-sollecito-pagamento>
+                        </div>
+                        <div *ngSwitchCase="6">
+                            <template-06-convocazione-audizione></template-06-convocazione-audizione>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
